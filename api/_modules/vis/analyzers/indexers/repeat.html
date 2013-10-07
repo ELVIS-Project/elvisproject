@@ -1,0 +1,187 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>vis.analyzers.indexers.repeat &mdash; vis X documentation</title>
+    
+    <link rel="stylesheet" href="../../../../_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../../',
+        VERSION:     'X',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+    <link rel="top" title="vis X documentation" href="../../../../index.html" />
+    <link rel="up" title="Module code" href="../../../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../../index.html">vis X documentation</a> &raquo;</li>
+          <li><a href="../../../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for vis.analyzers.indexers.repeat</h1><div class="highlight"><pre>
+<span class="c">#!/usr/bin/env python</span>
+<span class="c"># -*- coding: utf-8 -*-</span>
+<span class="c">#--------------------------------------------------------------------------------------------------</span>
+<span class="c"># Program Name:           vis</span>
+<span class="c"># Program Description:    Helps analyze music with computers.</span>
+<span class="c">#</span>
+<span class="c"># Filename:               controllers/indexers/repeat.py</span>
+<span class="c"># Purpose:                Indexers that somehow consider repetition.</span>
+<span class="c">#</span>
+<span class="c"># Copyright (C) 2013 Christopher Antila</span>
+<span class="c">#</span>
+<span class="c"># This program is free software: you can redistribute it and/or modify</span>
+<span class="c"># it under the terms of the GNU Affero General Public License as</span>
+<span class="c"># published by the Free Software Foundation, either version 3 of the</span>
+<span class="c"># License, or (at your option) any later version.</span>
+<span class="c">#</span>
+<span class="c"># This program is distributed in the hope that it will be useful,</span>
+<span class="c"># but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span class="c"># MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
+<span class="c"># GNU Affero General Public License for more details.</span>
+<span class="c">#</span>
+<span class="c"># You should have received a copy of the GNU Affero General Public License</span>
+<span class="c"># along with this program.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
+<span class="c">#--------------------------------------------------------------------------------------------------</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Indexers that somehow consider repetition.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span>
+<span class="kn">import</span> <span class="nn">pandas</span>
+<span class="kn">from</span> <span class="nn">vis.analyzers</span> <span class="kn">import</span> <span class="n">indexer</span>
+
+
+<div class="viewcode-block" id="FilterByRepeatIndexer"><a class="viewcode-back" href="../../../../vis.analyzers.indexers.html#vis.analyzers.indexers.repeat.FilterByRepeatIndexer">[docs]</a><span class="k">class</span> <span class="nc">FilterByRepeatIndexer</span><span class="p">(</span><span class="n">indexer</span><span class="o">.</span><span class="n">Indexer</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Filter consecutive identical events, leaving only the event at the first offset.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">required_score_type</span> <span class="o">=</span> <span class="n">pandas</span><span class="o">.</span><span class="n">Series</span>
+    <span class="s">&quot;The :class:`FilterByRepeatIndexer` requires :class:`pandas.Series` as input.&quot;</span>
+
+<div class="viewcode-block" id="FilterByRepeatIndexer.__init__"><a class="viewcode-back" href="../../../../vis.analyzers.indexers.html#vis.analyzers.indexers.repeat.FilterByRepeatIndexer.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">score</span><span class="p">,</span> <span class="n">settings</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Create a new :class:`FilterByRepeatIndexer`.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ==========</span>
+<span class="sd">        :param score: The indices from which to remove consecutive identical events.</span>
+<span class="sd">        :type score: :obj:`list` of :obj:`pandas.Series`</span>
+
+<span class="sd">        :param settings: This indexer uses no settings, so this is ignored.</span>
+<span class="sd">        :type settings: :obj:`dict` or :obj:`None`</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        ======</span>
+<span class="sd">        :raises: :exc:`RuntimeError` if :obj:`score` is the wrong type.</span>
+<span class="sd">        :raises: :exc:`RuntimeError` if :obj:`score` is not a list of the same types.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">FilterByRepeatIndexer</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="n">score</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span>
+
+        <span class="c"># If self._score is a Stream (subclass), change to a list of types you want to process</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_types</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="c"># This Indexer uses pandas magic, not an _indexer_func().</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_indexer_func</span> <span class="o">=</span> <span class="bp">None</span>
+</div>
+<div class="viewcode-block" id="FilterByRepeatIndexer.run"><a class="viewcode-back" href="../../../../vis.analyzers.indexers.html#vis.analyzers.indexers.repeat.FilterByRepeatIndexer.run">[docs]</a>    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Make a new index of the piece, removing any event that is identical to the preceding.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        =======</span>
+<span class="sd">        :returns: A list of the new indices. The index of each Series corresponds to the index of</span>
+<span class="sd">            the Part used to generate it, in the order specified to the constructor. Each element</span>
+<span class="sd">            in the Series is a :obj:`basestring`.</span>
+<span class="sd">        :rtype: :obj:`list` of :obj:`pandas.Series`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c"># I&#39;m relying on pandas&#39; efficiency. In the future, maybe we should use multiprocessing?</span>
+        <span class="n">post</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">part</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_score</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">part</span><span class="o">.</span><span class="n">index</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">:</span>
+                <span class="n">post</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">part</span><span class="p">)</span>
+                <span class="k">continue</span>
+            <span class="n">axe_me</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="n">prev_off</span> <span class="o">=</span> <span class="bp">None</span>
+            <span class="k">for</span> <span class="n">offset</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="n">part</span><span class="o">.</span><span class="n">index</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">prev_off</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+                    <span class="k">pass</span>  <span class="c"># prevent the other tests from being tried</span>
+                <span class="k">elif</span> <span class="n">part</span><span class="p">[</span><span class="n">offset</span><span class="p">]</span> <span class="o">==</span> <span class="n">part</span><span class="p">[</span><span class="n">prev_off</span><span class="p">]:</span>
+                    <span class="n">axe_me</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">offset</span><span class="p">)</span>
+                <span class="n">prev_off</span> <span class="o">=</span> <span class="n">offset</span>
+            <span class="k">for</span> <span class="n">axed</span> <span class="ow">in</span> <span class="n">axe_me</span><span class="p">:</span>
+                <span class="n">part</span><span class="p">[</span><span class="n">axed</span><span class="p">]</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">nan</span>
+            <span class="n">post</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">part</span><span class="o">.</span><span class="n">dropna</span><span class="p">())</span>
+        <span class="k">return</span> <span class="n">post</span></div></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../../index.html">vis X documentation</a> &raquo;</li>
+          <li><a href="../../../index.html" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013, Christopher Antila.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2b2.
+    </div>
+  </body>
+</html>

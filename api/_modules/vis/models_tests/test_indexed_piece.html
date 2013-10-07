@@ -1,0 +1,432 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>vis.models_tests.test_indexed_piece &mdash; vis X documentation</title>
+    
+    <link rel="stylesheet" href="../../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     'X',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <link rel="top" title="vis X documentation" href="../../../index.html" />
+    <link rel="up" title="Module code" href="../../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../index.html">vis X documentation</a> &raquo;</li>
+          <li><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for vis.models_tests.test_indexed_piece</h1><div class="highlight"><pre>
+<span class="c">#!/usr/bin/env python</span>
+<span class="c"># -*- coding: utf-8 -*-</span>
+<span class="c">#--------------------------------------------------------------------------------------------------</span>
+<span class="c"># Program Name:           vis</span>
+<span class="c"># Program Description:    Helps analyze music with computers.</span>
+<span class="c">#</span>
+<span class="c"># Filename:               models_tests/test_indexed_piece.py</span>
+<span class="c"># Purpose:                Tests for models/indexed_piece.py.</span>
+<span class="c">#</span>
+<span class="c"># Copyright (C) 2013 Christopher Antila</span>
+<span class="c">#</span>
+<span class="c"># This program is free software: you can redistribute it and/or modify</span>
+<span class="c"># it under the terms of the GNU Affero General Public License as</span>
+<span class="c"># published by the Free Software Foundation, either version 3 of the</span>
+<span class="c"># License, or (at your option) any later version.</span>
+<span class="c">#</span>
+<span class="c"># This program is distributed in the hope that it will be useful,</span>
+<span class="c"># but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span class="c"># MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
+<span class="c"># GNU Affero General Public License for more details.</span>
+<span class="c">#</span>
+<span class="c"># You should have received a copy of the GNU Affero General Public License</span>
+<span class="c"># along with this program.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
+<span class="c">#--------------------------------------------------------------------------------------------------</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Tests for :py:class:`~vis.models.indexed_piece.IndexedPiece`.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span> <span class="nn">unittest</span> <span class="kn">import</span> <span class="n">TestCase</span><span class="p">,</span> <span class="n">TestLoader</span>
+<span class="kn">from</span> <span class="nn">mock</span> <span class="kn">import</span> <span class="n">call</span><span class="p">,</span> <span class="n">patch</span><span class="p">,</span> <span class="n">MagicMock</span><span class="p">,</span> <span class="n">Mock</span>
+<span class="kn">import</span> <span class="nn">pandas</span>
+<span class="kn">import</span> <span class="nn">music21</span>
+<span class="kn">from</span> <span class="nn">vis.analyzers.indexer</span> <span class="kn">import</span> <span class="n">Indexer</span>
+<span class="kn">from</span> <span class="nn">vis.analyzers.indexers</span> <span class="kn">import</span> <span class="n">noterest</span>
+<span class="kn">from</span> <span class="nn">vis.analyzers.experimenter</span> <span class="kn">import</span> <span class="n">Experimenter</span>
+<span class="kn">from</span> <span class="nn">vis.models.indexed_piece</span> <span class="kn">import</span> <span class="n">IndexedPiece</span><span class="p">,</span> <span class="n">_find_piece_title</span><span class="p">,</span> <span class="n">_find_part_names</span>
+
+
+<span class="c"># pylint: disable=R0904</span>
+<span class="c"># pylint: disable=C0111</span>
+<span class="nd">@patch</span><span class="p">(</span><span class="s">&#39;music21.converter.parse&#39;</span><span class="p">,</span> <span class="n">new</span><span class="o">=</span><span class="k">lambda</span> <span class="n">path</span><span class="p">:</span> <span class="n">MagicMock</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">u&#39;ScoreMock: &#39;</span> <span class="o">+</span> <span class="n">path</span><span class="p">,</span>
+                                                             <span class="n">spec</span><span class="o">=</span><span class="n">music21</span><span class="o">.</span><span class="n">stream</span><span class="o">.</span><span class="n">Score</span><span class="p">))</span>
+<div class="viewcode-block" id="TestIndexedPieceA"><a class="viewcode-back" href="../../../vis.models_tests.html#vis.models_tests.test_indexed_piece.TestIndexedPieceA">[docs]</a><span class="k">class</span> <span class="nc">TestIndexedPieceA</span><span class="p">(</span><span class="n">TestCase</span><span class="p">):</span>
+<div class="viewcode-block" id="TestIndexedPieceA.setUp"><a class="viewcode-back" href="../../../vis.models_tests.html#vis.models_tests.test_indexed_piece.TestIndexedPieceA.setUp">[docs]</a>    <span class="k">def</span> <span class="nf">setUp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_pathname</span> <span class="o">=</span> <span class="s">u&#39;test_path&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ind_piece</span> <span class="o">=</span> <span class="n">IndexedPiece</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_pathname</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="TestIndexedPieceA.test_metadata"><a class="viewcode-back" href="../../../vis.models_tests.html#vis.models_tests.test_indexed_piece.TestIndexedPieceA.test_metadata">[docs]</a>    <span class="k">def</span> <span class="nf">test_metadata</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c"># access fields which are set by default</span>
+        <span class="n">pathname</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ind_piece</span><span class="o">.</span><span class="n">metadata</span><span class="p">(</span><span class="s">&#39;pathname&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEquals</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_pathname</span><span class="p">,</span> <span class="n">pathname</span><span class="p">,</span> <span class="s">&quot;pathname has changed!&quot;</span><span class="p">)</span>
+        <span class="c"># assign a value to a valid field</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ind_piece</span><span class="o">.</span><span class="n">metadata</span><span class="p">(</span><span class="s">&#39;date&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+        <span class="n">value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ind_piece</span><span class="o">.</span><span class="n">metadata</span><span class="p">(</span><span class="s">&#39;date&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEquals</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="s">&quot;extracted metadata field doesn&#39;t match assigned value&quot;</span><span class="p">)</span>
+        <span class="c"># assign a value to an invalid field</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertRaises</span><span class="p">(</span><span class="ne">AttributeError</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ind_piece</span><span class="o">.</span><span class="n">metadata</span><span class="p">,</span> <span class="s">&#39;field&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+        <span class="c"># access an invalid value</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertRaises</span><span class="p">(</span><span class="ne">AttributeError</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ind_piece</span><span class="o">.</span><span class="n">metadata</span><span class="p">,</span> <span class="s">&#39;invalid_field&#39;</span><span class="p">)</span>
+        <span class="c"># try accessing keys with invalid types</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertRaises</span><span class="p">(</span><span class="ne">TypeError</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ind_piece</span><span class="o">.</span><span class="n">metadata</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertRaises</span><span class="p">(</span><span class="ne">TypeError</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ind_piece</span><span class="o">.</span><span class="n">metadata</span><span class="p">,</span> <span class="p">[])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertRaises</span><span class="p">(</span><span class="ne">TypeError</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ind_piece</span><span class="o">.</span><span class="n">metadata</span><span class="p">,</span> <span class="p">{})</span>
+</div>
+<div class="viewcode-block" id="TestIndexedPieceA.test_get_data_0"><a class="viewcode-back" href="../../../vis.models_tests.html#vis.models_tests.test_indexed_piece.TestIndexedPieceA.test_get_data_0">[docs]</a>    <span class="k">def</span> <span class="nf">test_get_data_0</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c"># try getting data for a non-Indexer, non-Experimenter class</span>
+        <span class="n">non_analyzer</span> <span class="o">=</span> <span class="n">Mock</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertRaises</span><span class="p">(</span><span class="ne">TypeError</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ind_piece</span><span class="o">.</span><span class="n">get_data</span><span class="p">,</span> <span class="n">non_analyzer</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="TestIndexedPieceA.test_get_data_1"><a class="viewcode-back" href="../../../vis.models_tests.html#vis.models_tests.test_indexed_piece.TestIndexedPieceA.test_get_data_1">[docs]</a>    <span class="k">def</span> <span class="nf">test_get_data_1</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c"># get data for an Indexer requiring a Score</span>
+        <span class="n">mock_indexer_cls</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="s">&#39;MockIndexer&#39;</span><span class="p">,</span> <span class="p">(</span><span class="n">Indexer</span><span class="p">,),</span> <span class="p">{})</span>
+        <span class="n">mock_indexer_cls</span><span class="o">.</span><span class="n">requires_score</span> <span class="o">=</span> <span class="bp">True</span>
+        <span class="n">mock_indexer_cls</span><span class="o">.</span><span class="n">run</span> <span class="o">=</span> <span class="n">MagicMock</span><span class="p">()</span>
+        <span class="n">mock_indexer_cls</span><span class="o">.</span><span class="n">run</span><span class="o">.</span><span class="n">return_value</span> <span class="o">=</span> <span class="s">u&#39;ahhh!&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEquals</span><span class="p">(</span><span class="s">u&#39;ahhh!&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ind_piece</span><span class="o">.</span><span class="n">get_data</span><span class="p">([</span><span class="n">mock_indexer_cls</span><span class="p">]))</span>
+        <span class="n">mock_indexer_cls</span><span class="o">.</span><span class="n">run</span><span class="o">.</span><span class="n">assert_called_once_with</span><span class="p">()</span>
+</div>
+<div class="viewcode-block" id="TestIndexedPieceA.test_get_data_2"><a class="viewcode-back" href="../../../vis.models_tests.html#vis.models_tests.test_indexed_piece.TestIndexedPieceA.test_get_data_2">[docs]</a>    <span class="k">def</span> <span class="nf">test_get_data_2</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c"># get data for an Indexer requiring other data</span>
+        <span class="n">mock_indexer_cls</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="s">&#39;MockIndexer&#39;</span><span class="p">,</span> <span class="p">(</span><span class="n">Indexer</span><span class="p">,),</span> <span class="p">{})</span>
+        <span class="n">mock_init</span> <span class="o">=</span> <span class="n">MagicMock</span><span class="p">()</span>
+        <span class="n">mock_init</span><span class="o">.</span><span class="n">return_value</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="n">mock_indexer_cls</span><span class="o">.</span><span class="n">__init__</span> <span class="o">=</span> <span class="n">mock_init</span>
+        <span class="n">mock_indexer_cls</span><span class="o">.</span><span class="n">run</span> <span class="o">=</span> <span class="n">MagicMock</span><span class="p">()</span>
+        <span class="n">mock_indexer_cls</span><span class="o">.</span><span class="n">run</span><span class="o">.</span><span class="n">return_value</span> <span class="o">=</span> <span class="s">u&#39;ahhh!&#39;</span>
+        <span class="n">mock_indexer_cls</span><span class="o">.</span><span class="n">requires_score</span> <span class="o">=</span> <span class="bp">False</span>
+        <span class="n">mock_indexer_cls</span><span class="o">.</span><span class="n">required_score_type</span> <span class="o">=</span> <span class="nb">int</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="s">u&#39;ahhh!&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ind_piece</span><span class="o">.</span><span class="n">get_data</span><span class="p">([</span><span class="n">mock_indexer_cls</span><span class="p">],</span> <span class="n">data</span><span class="o">=</span><span class="p">[</span><span class="mi">14</span><span class="p">]))</span>
+        <span class="n">mock_indexer_cls</span><span class="o">.</span><span class="n">run</span><span class="o">.</span><span class="n">assert_called_once_with</span><span class="p">()</span>
+        <span class="n">mock_init</span><span class="o">.</span><span class="n">assert_called_once_with</span><span class="p">([</span><span class="mi">14</span><span class="p">],</span> <span class="bp">None</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="TestIndexedPieceA.test_get_data_3"><a class="viewcode-back" href="../../../vis.models_tests.html#vis.models_tests.test_indexed_piece.TestIndexedPieceA.test_get_data_3">[docs]</a>    <span class="k">def</span> <span class="nf">test_get_data_3</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c"># get data from a chained Indexer</span>
+        <span class="n">first_indexer_cls</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="s">&#39;MockIndexer&#39;</span><span class="p">,</span> <span class="p">(</span><span class="n">Indexer</span><span class="p">,),</span> <span class="p">{})</span>
+        <span class="n">first_init</span> <span class="o">=</span> <span class="n">MagicMock</span><span class="p">()</span>
+        <span class="n">first_init</span><span class="o">.</span><span class="n">return_value</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="n">first_indexer_cls</span><span class="o">.</span><span class="n">__init__</span> <span class="o">=</span> <span class="n">first_init</span>
+        <span class="n">first_indexer_cls</span><span class="o">.</span><span class="n">run</span> <span class="o">=</span> <span class="n">MagicMock</span><span class="p">()</span>
+        <span class="n">first_indexer_cls</span><span class="o">.</span><span class="n">run</span><span class="o">.</span><span class="n">return_value</span> <span class="o">=</span> <span class="p">[</span><span class="mi">14</span><span class="p">]</span>
+        <span class="n">first_indexer_cls</span><span class="o">.</span><span class="n">requires_score</span> <span class="o">=</span> <span class="bp">True</span>
+        <span class="n">second_indexer_cls</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="s">&#39;MockIndexer&#39;</span><span class="p">,</span> <span class="p">(</span><span class="n">Indexer</span><span class="p">,),</span> <span class="p">{})</span>
+        <span class="n">second_init</span> <span class="o">=</span> <span class="n">MagicMock</span><span class="p">()</span>
+        <span class="n">second_init</span><span class="o">.</span><span class="n">return_value</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="n">second_indexer_cls</span><span class="o">.</span><span class="n">__init__</span> <span class="o">=</span> <span class="n">second_init</span>
+        <span class="n">second_indexer_cls</span><span class="o">.</span><span class="n">run</span> <span class="o">=</span> <span class="n">MagicMock</span><span class="p">()</span>
+        <span class="n">second_indexer_cls</span><span class="o">.</span><span class="n">run</span><span class="o">.</span><span class="n">return_value</span> <span class="o">=</span> <span class="s">u&#39;ahhh!&#39;</span>
+        <span class="n">second_indexer_cls</span><span class="o">.</span><span class="n">requires_score</span> <span class="o">=</span> <span class="bp">False</span>
+        <span class="n">second_indexer_cls</span><span class="o">.</span><span class="n">required_score_type</span> <span class="o">=</span> <span class="nb">int</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="s">u&#39;ahhh!&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ind_piece</span><span class="o">.</span><span class="n">get_data</span><span class="p">([</span><span class="n">first_indexer_cls</span><span class="p">,</span> <span class="n">second_indexer_cls</span><span class="p">]))</span>
+        <span class="n">first_init</span><span class="o">.</span><span class="n">assert_called_once_with</span><span class="p">([],</span> <span class="bp">None</span><span class="p">)</span>
+        <span class="n">second_init</span><span class="o">.</span><span class="n">assert_called_once_with</span><span class="p">(</span><span class="n">first_indexer_cls</span><span class="o">.</span><span class="n">run</span><span class="o">.</span><span class="n">return_value</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span>
+        <span class="n">first_indexer_cls</span><span class="o">.</span><span class="n">run</span><span class="o">.</span><span class="n">assert_called_once_with</span><span class="p">()</span>
+        <span class="n">second_indexer_cls</span><span class="o">.</span><span class="n">run</span><span class="o">.</span><span class="n">assert_called_once_with</span><span class="p">()</span>
+</div>
+<div class="viewcode-block" id="TestIndexedPieceA.test_get_data_4"><a class="viewcode-back" href="../../../vis.models_tests.html#vis.models_tests.test_indexed_piece.TestIndexedPieceA.test_get_data_4">[docs]</a>    <span class="k">def</span> <span class="nf">test_get_data_4</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c"># chained Indexer plus settings</span>
+        <span class="n">first_indexer_cls</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="s">&#39;MockIndexer&#39;</span><span class="p">,</span> <span class="p">(</span><span class="n">Indexer</span><span class="p">,),</span> <span class="p">{})</span>
+        <span class="n">first_init</span> <span class="o">=</span> <span class="n">MagicMock</span><span class="p">()</span>
+        <span class="n">first_init</span><span class="o">.</span><span class="n">return_value</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="n">first_indexer_cls</span><span class="o">.</span><span class="n">__init__</span> <span class="o">=</span> <span class="n">first_init</span>
+        <span class="n">first_indexer_cls</span><span class="o">.</span><span class="n">run</span> <span class="o">=</span> <span class="n">MagicMock</span><span class="p">()</span>
+        <span class="n">first_indexer_cls</span><span class="o">.</span><span class="n">run</span><span class="o">.</span><span class="n">return_value</span> <span class="o">=</span> <span class="p">[</span><span class="mi">14</span><span class="p">]</span>
+        <span class="n">first_indexer_cls</span><span class="o">.</span><span class="n">requires_score</span> <span class="o">=</span> <span class="bp">True</span>
+        <span class="n">second_indexer_cls</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="s">&#39;MockIndexer&#39;</span><span class="p">,</span> <span class="p">(</span><span class="n">Indexer</span><span class="p">,),</span> <span class="p">{})</span>
+        <span class="n">second_init</span> <span class="o">=</span> <span class="n">MagicMock</span><span class="p">()</span>
+        <span class="n">second_init</span><span class="o">.</span><span class="n">return_value</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="n">second_indexer_cls</span><span class="o">.</span><span class="n">__init__</span> <span class="o">=</span> <span class="n">second_init</span>
+        <span class="n">second_indexer_cls</span><span class="o">.</span><span class="n">run</span> <span class="o">=</span> <span class="n">MagicMock</span><span class="p">()</span>
+        <span class="n">second_indexer_cls</span><span class="o">.</span><span class="n">run</span><span class="o">.</span><span class="n">return_value</span> <span class="o">=</span> <span class="s">u&#39;ahhh!&#39;</span>
+        <span class="n">second_indexer_cls</span><span class="o">.</span><span class="n">requires_score</span> <span class="o">=</span> <span class="bp">False</span>
+        <span class="n">second_indexer_cls</span><span class="o">.</span><span class="n">required_score_type</span> <span class="o">=</span> <span class="nb">int</span>
+        <span class="n">settings_dict</span> <span class="o">=</span> <span class="p">{</span><span class="s">u&#39;fake setting&#39;</span><span class="p">:</span> <span class="s">u&#39;so good!&#39;</span><span class="p">}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="s">u&#39;ahhh!&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ind_piece</span><span class="o">.</span><span class="n">get_data</span><span class="p">([</span><span class="n">first_indexer_cls</span><span class="p">,</span> <span class="n">second_indexer_cls</span><span class="p">],</span>
+                                                           <span class="n">settings_dict</span><span class="p">))</span>
+        <span class="n">first_init</span><span class="o">.</span><span class="n">assert_called_once_with</span><span class="p">([],</span> <span class="n">settings_dict</span><span class="p">)</span>
+        <span class="n">second_init</span><span class="o">.</span><span class="n">assert_called_once_with</span><span class="p">(</span><span class="n">first_indexer_cls</span><span class="o">.</span><span class="n">run</span><span class="o">.</span><span class="n">return_value</span><span class="p">,</span> <span class="n">settings_dict</span><span class="p">)</span>
+        <span class="n">first_indexer_cls</span><span class="o">.</span><span class="n">run</span><span class="o">.</span><span class="n">assert_called_once_with</span><span class="p">()</span>
+        <span class="n">second_indexer_cls</span><span class="o">.</span><span class="n">run</span><span class="o">.</span><span class="n">assert_called_once_with</span><span class="p">()</span>
+</div>
+<div class="viewcode-block" id="TestIndexedPieceA.test_get_data_5"><a class="viewcode-back" href="../../../vis.models_tests.html#vis.models_tests.test_indexed_piece.TestIndexedPieceA.test_get_data_5">[docs]</a>    <span class="k">def</span> <span class="nf">test_get_data_5</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c"># get data from an Experimenter that requires an Indexer</span>
+        <span class="c"># (same as test 3, but second_indexer_cls is an Experimenter subclass)</span>
+        <span class="n">mock_indexer_cls</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="s">&#39;MockIndexer&#39;</span><span class="p">,</span> <span class="p">(</span><span class="n">Indexer</span><span class="p">,),</span> <span class="p">{})</span>
+        <span class="n">mock_init</span> <span class="o">=</span> <span class="n">MagicMock</span><span class="p">()</span>
+        <span class="n">mock_init</span><span class="o">.</span><span class="n">return_value</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="n">mock_indexer_cls</span><span class="o">.</span><span class="n">__init__</span> <span class="o">=</span> <span class="n">mock_init</span>
+        <span class="n">mock_indexer_cls</span><span class="o">.</span><span class="n">run</span> <span class="o">=</span> <span class="n">MagicMock</span><span class="p">()</span>
+        <span class="n">mock_indexer_cls</span><span class="o">.</span><span class="n">run</span><span class="o">.</span><span class="n">return_value</span> <span class="o">=</span> <span class="p">[</span><span class="mi">14</span><span class="p">]</span>
+        <span class="n">mock_indexer_cls</span><span class="o">.</span><span class="n">requires_score</span> <span class="o">=</span> <span class="bp">True</span>
+        <span class="n">mock_experimenter_cls</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="s">&#39;MockIndexer&#39;</span><span class="p">,</span> <span class="p">(</span><span class="n">Experimenter</span><span class="p">,),</span> <span class="p">{})</span>
+        <span class="n">exp_init</span> <span class="o">=</span> <span class="n">MagicMock</span><span class="p">()</span>
+        <span class="n">exp_init</span><span class="o">.</span><span class="n">return_value</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="n">mock_experimenter_cls</span><span class="o">.</span><span class="n">__init__</span> <span class="o">=</span> <span class="n">exp_init</span>
+        <span class="n">mock_experimenter_cls</span><span class="o">.</span><span class="n">run</span> <span class="o">=</span> <span class="n">MagicMock</span><span class="p">()</span>
+        <span class="n">mock_experimenter_cls</span><span class="o">.</span><span class="n">run</span><span class="o">.</span><span class="n">return_value</span> <span class="o">=</span> <span class="s">u&#39;ahhh!&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="s">u&#39;ahhh!&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ind_piece</span><span class="o">.</span><span class="n">get_data</span><span class="p">([</span><span class="n">mock_indexer_cls</span><span class="p">,</span>
+                                                            <span class="n">mock_experimenter_cls</span><span class="p">]))</span>
+        <span class="n">mock_init</span><span class="o">.</span><span class="n">assert_called_once_with</span><span class="p">([],</span> <span class="bp">None</span><span class="p">)</span>
+        <span class="n">exp_init</span><span class="o">.</span><span class="n">assert_called_once_with</span><span class="p">(</span><span class="n">mock_indexer_cls</span><span class="o">.</span><span class="n">run</span><span class="o">.</span><span class="n">return_value</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span>
+        <span class="n">mock_indexer_cls</span><span class="o">.</span><span class="n">run</span><span class="o">.</span><span class="n">assert_called_once_with</span><span class="p">()</span>
+        <span class="n">mock_experimenter_cls</span><span class="o">.</span><span class="n">run</span><span class="o">.</span><span class="n">assert_called_once_with</span><span class="p">()</span>
+</div>
+<div class="viewcode-block" id="TestIndexedPieceA.test_get_data_6"><a class="viewcode-back" href="../../../vis.models_tests.html#vis.models_tests.test_indexed_piece.TestIndexedPieceA.test_get_data_6">[docs]</a>    <span class="k">def</span> <span class="nf">test_get_data_6</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c"># That get_data() complains when an Indexer expects the results of another Indexer but</span>
+        <span class="c"># doesn&#39;t get them.</span>
+        <span class="n">mock_indexer_cls</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="s">&#39;MockIndexer&#39;</span><span class="p">,</span> <span class="p">(</span><span class="n">Indexer</span><span class="p">,),</span> <span class="p">{})</span>
+        <span class="n">mock_indexer_cls</span><span class="o">.</span><span class="n">requires_score</span> <span class="o">=</span> <span class="bp">False</span>
+        <span class="n">mock_indexer_cls</span><span class="o">.</span><span class="n">required_score_type</span> <span class="o">=</span> <span class="n">pandas</span><span class="o">.</span><span class="n">Series</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertRaises</span><span class="p">(</span><span class="ne">RuntimeError</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ind_piece</span><span class="o">.</span><span class="n">get_data</span><span class="p">,</span> <span class="p">[</span><span class="n">mock_indexer_cls</span><span class="p">])</span>
+</div>
+<div class="viewcode-block" id="TestIndexedPieceA.test_get_data_7"><a class="viewcode-back" href="../../../vis.models_tests.html#vis.models_tests.test_indexed_piece.TestIndexedPieceA.test_get_data_7">[docs]</a>    <span class="k">def</span> <span class="nf">test_get_data_7</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c"># That get_data() complains when you call it with something that isn&#39;t either an Indexer</span>
+        <span class="c"># or Experimenter.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertRaises</span><span class="p">(</span><span class="ne">TypeError</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ind_piece</span><span class="o">.</span><span class="n">get_data</span><span class="p">,</span> <span class="p">[</span><span class="n">TestIndexedPieceB</span><span class="p">])</span>
+</div>
+<div class="viewcode-block" id="TestIndexedPieceA.test_get_data_8"><a class="viewcode-back" href="../../../vis.models_tests.html#vis.models_tests.test_indexed_piece.TestIndexedPieceA.test_get_data_8">[docs]</a>    <span class="k">def</span> <span class="nf">test_get_data_8</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c"># That get_data() calls _get_note_rest_index() if asked for NoteRestIndexer.</span>
+        <span class="k">with</span> <span class="n">patch</span><span class="o">.</span><span class="n">object</span><span class="p">(</span><span class="n">IndexedPiece</span><span class="p">,</span> <span class="s">u&#39;_get_note_rest_index&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">mock_gnri</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">ind_piece</span><span class="o">.</span><span class="n">get_data</span><span class="p">([</span><span class="n">noterest</span><span class="o">.</span><span class="n">NoteRestIndexer</span><span class="p">])</span>
+            <span class="n">mock_gnri</span><span class="o">.</span><span class="n">assert_called_once_with</span><span class="p">()</span>
+</div>
+<div class="viewcode-block" id="TestIndexedPieceA.test_get_data_9"><a class="viewcode-back" href="../../../vis.models_tests.html#vis.models_tests.test_indexed_piece.TestIndexedPieceA.test_get_data_9">[docs]</a>    <span class="k">def</span> <span class="nf">test_get_data_9</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c"># That get_data() calls _get_note_rest_index() if asked for NoteRestIndexer, and another</span>
+        <span class="c"># test Indexer is also called. This is a regression test to monitor a bug found after</span>
+        <span class="c"># implementing caching of NoteRestIndexer results.</span>
+        <span class="k">with</span> <span class="n">patch</span><span class="o">.</span><span class="n">object</span><span class="p">(</span><span class="n">IndexedPiece</span><span class="p">,</span> <span class="s">u&#39;_get_note_rest_index&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">mock_gnri</span><span class="p">:</span>
+            <span class="n">expected</span> <span class="o">=</span> <span class="p">[</span><span class="mi">400</span><span class="p">]</span>
+            <span class="n">mock_indexer_cls</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="s">&#39;MockIndexer&#39;</span><span class="p">,</span> <span class="p">(</span><span class="n">Indexer</span><span class="p">,),</span> <span class="p">{})</span>
+            <span class="n">mock_indexer_cls</span><span class="o">.</span><span class="n">run</span> <span class="o">=</span> <span class="n">MagicMock</span><span class="p">()</span>
+            <span class="n">mock_indexer_cls</span><span class="o">.</span><span class="n">run</span><span class="o">.</span><span class="n">return_value</span> <span class="o">=</span> <span class="p">[</span><span class="mi">400</span><span class="p">]</span>
+            <span class="n">mock_indexer_cls</span><span class="o">.</span><span class="n">requires_score</span> <span class="o">=</span> <span class="bp">False</span>
+            <span class="n">actual</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ind_piece</span><span class="o">.</span><span class="n">get_data</span><span class="p">([</span><span class="n">noterest</span><span class="o">.</span><span class="n">NoteRestIndexer</span><span class="p">,</span> <span class="n">mock_indexer_cls</span><span class="p">])</span>
+            <span class="n">mock_gnri</span><span class="o">.</span><span class="n">assert_called_once_with</span><span class="p">()</span>
+            <span class="n">mock_indexer_cls</span><span class="o">.</span><span class="n">run</span><span class="o">.</span><span class="n">assert_called_once_with</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">expected</span><span class="p">,</span> <span class="n">actual</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="TestIndexedPieceA.test_get_nrindex_1"><a class="viewcode-back" href="../../../vis.models_tests.html#vis.models_tests.test_indexed_piece.TestIndexedPieceA.test_get_nrindex_1">[docs]</a>    <span class="k">def</span> <span class="nf">test_get_nrindex_1</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c"># pylint: disable=W0212</span>
+        <span class="c"># That _get_note_rest_index() returns self._noterest_results if it&#39;s not None.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ind_piece</span><span class="o">.</span><span class="n">_noterest_results</span> <span class="o">=</span> <span class="mi">42</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="mi">42</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ind_piece</span><span class="o">.</span><span class="n">_get_note_rest_index</span><span class="p">())</span>
+</div>
+<div class="viewcode-block" id="TestIndexedPieceA.test_get_nrindex_2"><a class="viewcode-back" href="../../../vis.models_tests.html#vis.models_tests.test_indexed_piece.TestIndexedPieceA.test_get_nrindex_2">[docs]</a>    <span class="k">def</span> <span class="nf">test_get_nrindex_2</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c"># pylint: disable=W0212</span>
+        <span class="c"># That we run the NoteRestIndexer and store results in self._note_rest_results if is None.</span>
+        <span class="k">with</span> <span class="n">patch</span><span class="p">(</span><span class="s">u&#39;vis.models.indexed_piece.noterest.NoteRestIndexer&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">mock_nri_cls</span><span class="p">:</span>
+            <span class="n">mock_nri</span> <span class="o">=</span> <span class="n">MagicMock</span><span class="p">(</span><span class="n">return_value</span><span class="o">=</span><span class="p">[</span><span class="mi">14</span><span class="p">])</span>
+            <span class="n">mock_nri</span><span class="o">.</span><span class="n">run</span> <span class="o">=</span> <span class="n">MagicMock</span><span class="p">()</span>
+            <span class="n">mock_nri</span><span class="o">.</span><span class="n">run</span><span class="o">.</span><span class="n">return_value</span> <span class="o">=</span> <span class="p">[</span><span class="mi">14</span><span class="p">]</span>
+            <span class="c">#mock_nri.requires_score = True</span>
+            <span class="n">mock_nri_cls</span><span class="o">.</span><span class="n">return_value</span> <span class="o">=</span> <span class="n">mock_nri</span>
+            <span class="n">expected</span> <span class="o">=</span> <span class="p">[</span><span class="mi">14</span><span class="p">]</span>
+            <span class="n">actual</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ind_piece</span><span class="o">.</span><span class="n">_get_note_rest_index</span><span class="p">()</span>
+            <span class="n">mock_nri</span><span class="o">.</span><span class="n">run</span><span class="o">.</span><span class="n">assert_called_once_with</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">expected</span><span class="p">,</span> <span class="n">actual</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">expected</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ind_piece</span><span class="o">.</span><span class="n">_noterest_results</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="TestIndexedPieceA.test_unicode_1"><a class="viewcode-back" href="../../../vis.models_tests.html#vis.models_tests.test_indexed_piece.TestIndexedPieceA.test_unicode_1">[docs]</a>    <span class="k">def</span> <span class="nf">test_unicode_1</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c"># __unicode__() without having imported yet</span>
+        <span class="c"># NB: adjusting _imported is the whole point of the test</span>
+        <span class="c"># pylint: disable=W0212</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ind_piece</span><span class="o">.</span><span class="n">_imported</span> <span class="o">=</span> <span class="bp">False</span>
+        <span class="k">with</span> <span class="n">patch</span><span class="p">(</span><span class="s">u&#39;vis.models.indexed_piece.IndexedPiece.metadata&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">mock_meta</span><span class="p">:</span>
+            <span class="n">mock_meta</span><span class="o">.</span><span class="n">return_value</span> <span class="o">=</span> <span class="s">u&#39;42&#39;</span>
+            <span class="n">expected</span> <span class="o">=</span> <span class="s">u&#39;&lt;IndexedPiece (42)&gt;&#39;</span>
+            <span class="n">actual</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ind_piece</span><span class="o">.</span><span class="n">__unicode__</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">expected</span><span class="p">,</span> <span class="n">actual</span><span class="p">)</span>
+            <span class="n">mock_meta</span><span class="o">.</span><span class="n">assert_called_once_with</span><span class="p">(</span><span class="s">u&#39;pathname&#39;</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="TestIndexedPieceA.test_unicode_2"><a class="viewcode-back" href="../../../vis.models_tests.html#vis.models_tests.test_indexed_piece.TestIndexedPieceA.test_unicode_2">[docs]</a>    <span class="k">def</span> <span class="nf">test_unicode_2</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c"># __unicode__() with proper title and composer</span>
+        <span class="c"># NB: adjusting _imported is the whole point of the test</span>
+        <span class="c"># pylint: disable=W0212</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ind_piece</span><span class="o">.</span><span class="n">_imported</span> <span class="o">=</span> <span class="bp">True</span>
+        <span class="k">with</span> <span class="n">patch</span><span class="p">(</span><span class="s">u&#39;vis.models.indexed_piece.IndexedPiece.metadata&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">mock_meta</span><span class="p">:</span>
+            <span class="n">returns</span> <span class="o">=</span> <span class="p">[</span><span class="s">u&#39;some ridiculous piece&#39;</span><span class="p">,</span> <span class="s">u&#39;a no-name composer&#39;</span><span class="p">]</span>
+            <span class="k">def</span> <span class="nf">side_effect</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">):</span>
+                <span class="c"># NB: we need to accept &quot;args&quot; as a mock framework formality</span>
+                <span class="c"># pylint: disable=W0613</span>
+                <span class="k">return</span> <span class="n">returns</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+            <span class="n">mock_meta</span><span class="o">.</span><span class="n">side_effect</span> <span class="o">=</span> <span class="n">side_effect</span>
+            <span class="n">expected</span> <span class="o">=</span> <span class="s">u&#39;&lt;IndexedPiece (some ridiculous piece by a no-name composer)&gt;&#39;</span>
+            <span class="n">actual</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ind_piece</span><span class="o">.</span><span class="n">__unicode__</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">expected</span><span class="p">,</span> <span class="n">actual</span><span class="p">)</span>
+            <span class="n">expected_calls</span> <span class="o">=</span> <span class="p">[</span><span class="n">call</span><span class="p">(</span><span class="s">u&#39;title&#39;</span><span class="p">),</span> <span class="n">call</span><span class="p">(</span><span class="s">u&#39;composer&#39;</span><span class="p">)]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertSequenceEqual</span><span class="p">(</span><span class="n">expected_calls</span><span class="p">,</span> <span class="n">mock_meta</span><span class="o">.</span><span class="n">call_args_list</span><span class="p">)</span>
+
+</div></div>
+<div class="viewcode-block" id="TestIndexedPieceB"><a class="viewcode-back" href="../../../vis.models_tests.html#vis.models_tests.test_indexed_piece.TestIndexedPieceB">[docs]</a><span class="k">class</span> <span class="nc">TestIndexedPieceB</span><span class="p">(</span><span class="n">TestCase</span><span class="p">):</span>
+    <span class="c"># NB: These are longer tests.</span>
+<div class="viewcode-block" id="TestIndexedPieceB.test_import_score_1"><a class="viewcode-back" href="../../../vis.models_tests.html#vis.models_tests.test_indexed_piece.TestIndexedPieceB.test_import_score_1">[docs]</a>    <span class="k">def</span> <span class="nf">test_import_score_1</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c"># pylint: disable=W0212</span>
+        <span class="c"># That get_data() fails with a file that imports as a music21.stream.Opus. Fixing this</span>
+        <span class="c"># properly is issue #234 on GitHub.</span>
+        <span class="n">test_piece</span> <span class="o">=</span> <span class="n">IndexedPiece</span><span class="p">(</span><span class="s">u&#39;test_corpus/Sanctus.krn&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertRaises</span><span class="p">(</span><span class="ne">NotImplementedError</span><span class="p">,</span> <span class="n">test_piece</span><span class="o">.</span><span class="n">_import_score</span><span class="p">)</span>
+
+</div></div>
+<div class="viewcode-block" id="TestPartsAndTitles"><a class="viewcode-back" href="../../../vis.models_tests.html#vis.models_tests.test_indexed_piece.TestPartsAndTitles">[docs]</a><span class="k">class</span> <span class="nc">TestPartsAndTitles</span><span class="p">(</span><span class="n">TestCase</span><span class="p">):</span>
+   <span class="c"># NB: These tests take a while because they involve actual imports, then run the</span>
+   <span class="c"># _find_part_names() and _find_piece_title() methods.</span>
+   <span class="c"># NOTE: not testing &quot;Sanctus.krn&quot; because it&#39;s an Opus, and we can&#39;t deal with them yet.</span>
+<div class="viewcode-block" id="TestPartsAndTitles.test_bwv77"><a class="viewcode-back" href="../../../vis.models_tests.html#vis.models_tests.test_indexed_piece.TestPartsAndTitles.test_bwv77">[docs]</a>    <span class="k">def</span> <span class="nf">test_bwv77</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">path</span> <span class="o">=</span> <span class="s">u&#39;test_corpus/bwv77.mxl&#39;</span>
+        <span class="n">expected_title</span> <span class="o">=</span> <span class="s">u&#39;bwv77&#39;</span>
+        <span class="n">expected_parts</span> <span class="o">=</span> <span class="p">[</span><span class="s">u&#39;Soprano&#39;</span><span class="p">,</span> <span class="s">u&#39;Alto&#39;</span><span class="p">,</span> <span class="s">u&#39;Tenor&#39;</span><span class="p">,</span> <span class="s">u&#39;Bass&#39;</span><span class="p">]</span>
+        <span class="n">the_score</span> <span class="o">=</span> <span class="n">music21</span><span class="o">.</span><span class="n">converter</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+        <span class="n">actual_title</span> <span class="o">=</span> <span class="n">_find_piece_title</span><span class="p">(</span><span class="n">the_score</span><span class="p">)</span>
+        <span class="n">actual_parts</span> <span class="o">=</span> <span class="n">_find_part_names</span><span class="p">(</span><span class="n">the_score</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">expected_title</span><span class="p">,</span> <span class="n">actual_title</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertSequenceEqual</span><span class="p">(</span><span class="n">expected_parts</span><span class="p">,</span> <span class="n">actual_parts</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="TestPartsAndTitles.test_jos2308_krn"><a class="viewcode-back" href="../../../vis.models_tests.html#vis.models_tests.test_indexed_piece.TestPartsAndTitles.test_jos2308_krn">[docs]</a>    <span class="k">def</span> <span class="nf">test_jos2308_krn</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">path</span> <span class="o">=</span> <span class="s">u&#39;test_corpus/Jos2308.krn&#39;</span>
+        <span class="n">expected_title</span> <span class="o">=</span> <span class="s">u&#39;Jos2308&#39;</span>
+        <span class="n">expected_parts</span> <span class="o">=</span> <span class="p">[</span><span class="s">u&#39;spine_3&#39;</span><span class="p">,</span> <span class="s">u&#39;spine_2&#39;</span><span class="p">,</span> <span class="s">u&#39;spine_1&#39;</span><span class="p">,</span> <span class="s">u&#39;spine_0&#39;</span><span class="p">]</span>
+        <span class="n">the_score</span> <span class="o">=</span> <span class="n">music21</span><span class="o">.</span><span class="n">converter</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+        <span class="n">actual_title</span> <span class="o">=</span> <span class="n">_find_piece_title</span><span class="p">(</span><span class="n">the_score</span><span class="p">)</span>
+        <span class="n">actual_parts</span> <span class="o">=</span> <span class="n">_find_part_names</span><span class="p">(</span><span class="n">the_score</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">expected_title</span><span class="p">,</span> <span class="n">actual_title</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertSequenceEqual</span><span class="p">(</span><span class="n">expected_parts</span><span class="p">,</span> <span class="n">actual_parts</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="TestPartsAndTitles.test_kyrie"><a class="viewcode-back" href="../../../vis.models_tests.html#vis.models_tests.test_indexed_piece.TestPartsAndTitles.test_kyrie">[docs]</a>    <span class="k">def</span> <span class="nf">test_kyrie</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">path</span> <span class="o">=</span> <span class="s">u&#39;test_corpus/Kyrie.krn&#39;</span>
+        <span class="n">expected_title</span> <span class="o">=</span> <span class="s">u&#39;Kyrie&#39;</span>
+        <span class="n">expected_parts</span> <span class="o">=</span> <span class="p">[</span><span class="s">u&#39;spine_4&#39;</span><span class="p">,</span> <span class="s">u&#39;spine_3&#39;</span><span class="p">,</span> <span class="s">u&#39;spine_2&#39;</span><span class="p">,</span> <span class="s">u&#39;spine_1&#39;</span><span class="p">,</span> <span class="s">u&#39;spine_0&#39;</span><span class="p">]</span>
+        <span class="n">the_score</span> <span class="o">=</span> <span class="n">music21</span><span class="o">.</span><span class="n">converter</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+        <span class="n">actual_title</span> <span class="o">=</span> <span class="n">_find_piece_title</span><span class="p">(</span><span class="n">the_score</span><span class="p">)</span>
+        <span class="n">actual_parts</span> <span class="o">=</span> <span class="n">_find_part_names</span><span class="p">(</span><span class="n">the_score</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">expected_title</span><span class="p">,</span> <span class="n">actual_title</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertSequenceEqual</span><span class="p">(</span><span class="n">expected_parts</span><span class="p">,</span> <span class="n">actual_parts</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="TestPartsAndTitles.test_madrigal51"><a class="viewcode-back" href="../../../vis.models_tests.html#vis.models_tests.test_indexed_piece.TestPartsAndTitles.test_madrigal51">[docs]</a>    <span class="k">def</span> <span class="nf">test_madrigal51</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">path</span> <span class="o">=</span> <span class="s">u&#39;test_corpus/madrigal51.mxl&#39;</span>
+        <span class="n">expected_title</span> <span class="o">=</span> <span class="s">u&#39;madrigal51&#39;</span>
+        <span class="n">expected_parts</span> <span class="o">=</span> <span class="p">[</span><span class="s">u&#39;Canto&#39;</span><span class="p">,</span> <span class="s">u&#39;Alto&#39;</span><span class="p">,</span> <span class="s">u&#39;Tenor&#39;</span><span class="p">,</span> <span class="s">u&#39;Quinto&#39;</span><span class="p">,</span> <span class="s">u&#39;Basso&#39;</span><span class="p">,</span> <span class="s">u&#39;Continuo&#39;</span><span class="p">]</span>
+        <span class="n">the_score</span> <span class="o">=</span> <span class="n">music21</span><span class="o">.</span><span class="n">converter</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+        <span class="n">actual_title</span> <span class="o">=</span> <span class="n">_find_piece_title</span><span class="p">(</span><span class="n">the_score</span><span class="p">)</span>
+        <span class="n">actual_parts</span> <span class="o">=</span> <span class="n">_find_part_names</span><span class="p">(</span><span class="n">the_score</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">expected_title</span><span class="p">,</span> <span class="n">actual_title</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertSequenceEqual</span><span class="p">(</span><span class="n">expected_parts</span><span class="p">,</span> <span class="n">actual_parts</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="TestPartsAndTitles.test_sinfony"><a class="viewcode-back" href="../../../vis.models_tests.html#vis.models_tests.test_indexed_piece.TestPartsAndTitles.test_sinfony">[docs]</a>    <span class="k">def</span> <span class="nf">test_sinfony</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">path</span> <span class="o">=</span> <span class="s">u&#39;test_corpus/sinfony.md&#39;</span>
+        <span class="n">expected_title</span> <span class="o">=</span> <span class="s">u&#39;Messiah&#39;</span>
+        <span class="n">expected_parts</span> <span class="o">=</span> <span class="p">[</span><span class="s">u&#39;Violino I&#39;</span><span class="p">,</span> <span class="s">u&#39;Violino II&#39;</span><span class="p">,</span> <span class="s">u&#39;Viola&#39;</span><span class="p">,</span> <span class="s">u&#39;Bassi&#39;</span><span class="p">]</span>
+        <span class="n">the_score</span> <span class="o">=</span> <span class="n">music21</span><span class="o">.</span><span class="n">converter</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+        <span class="n">actual_title</span> <span class="o">=</span> <span class="n">_find_piece_title</span><span class="p">(</span><span class="n">the_score</span><span class="p">)</span>
+        <span class="n">actual_parts</span> <span class="o">=</span> <span class="n">_find_part_names</span><span class="p">(</span><span class="n">the_score</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">expected_title</span><span class="p">,</span> <span class="n">actual_title</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertSequenceEqual</span><span class="p">(</span><span class="n">expected_parts</span><span class="p">,</span> <span class="n">actual_parts</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="TestPartsAndTitles.test_opus76"><a class="viewcode-back" href="../../../vis.models_tests.html#vis.models_tests.test_indexed_piece.TestPartsAndTitles.test_opus76">[docs]</a>    <span class="k">def</span> <span class="nf">test_opus76</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">path</span> <span class="o">=</span> <span class="s">u&#39;test_corpus/sqOp76-4-i.midi&#39;</span>
+        <span class="n">expected_title</span> <span class="o">=</span> <span class="s">u&#39;sqOp76-4-i&#39;</span>
+        <span class="n">expected_parts</span> <span class="o">=</span> <span class="p">[</span><span class="s">u&#39;Part 1&#39;</span><span class="p">,</span> <span class="s">u&#39;Part 2&#39;</span><span class="p">,</span> <span class="s">u&#39;Part 3&#39;</span><span class="p">,</span> <span class="s">u&#39;Part 4&#39;</span><span class="p">]</span>
+        <span class="n">the_score</span> <span class="o">=</span> <span class="n">music21</span><span class="o">.</span><span class="n">converter</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+        <span class="n">actual_title</span> <span class="o">=</span> <span class="n">_find_piece_title</span><span class="p">(</span><span class="n">the_score</span><span class="p">)</span>
+        <span class="n">actual_parts</span> <span class="o">=</span> <span class="n">_find_part_names</span><span class="p">(</span><span class="n">the_score</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">expected_title</span><span class="p">,</span> <span class="n">actual_title</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertSequenceEqual</span><span class="p">(</span><span class="n">expected_parts</span><span class="p">,</span> <span class="n">actual_parts</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="TestPartsAndTitles.test_bwv2"><a class="viewcode-back" href="../../../vis.models_tests.html#vis.models_tests.test_indexed_piece.TestPartsAndTitles.test_bwv2">[docs]</a>    <span class="k">def</span> <span class="nf">test_bwv2</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">path</span> <span class="o">=</span> <span class="s">u&#39;test_corpus/bwv2.xml&#39;</span>
+        <span class="n">expected_title</span> <span class="o">=</span> <span class="s">u&#39;bwv2&#39;</span>
+        <span class="n">expected_parts</span> <span class="o">=</span> <span class="p">[</span><span class="s">u&#39;Soprano&#39;</span><span class="p">,</span> <span class="s">u&#39;Alto&#39;</span><span class="p">,</span> <span class="s">u&#39;Tenor&#39;</span><span class="p">,</span> <span class="s">u&#39;Bass&#39;</span><span class="p">]</span>
+        <span class="n">the_score</span> <span class="o">=</span> <span class="n">music21</span><span class="o">.</span><span class="n">converter</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+        <span class="n">actual_title</span> <span class="o">=</span> <span class="n">_find_piece_title</span><span class="p">(</span><span class="n">the_score</span><span class="p">)</span>
+        <span class="n">actual_parts</span> <span class="o">=</span> <span class="n">_find_part_names</span><span class="p">(</span><span class="n">the_score</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">expected_title</span><span class="p">,</span> <span class="n">actual_title</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertSequenceEqual</span><span class="p">(</span><span class="n">expected_parts</span><span class="p">,</span> <span class="n">actual_parts</span><span class="p">)</span>
+
+
+<span class="c">#-------------------------------------------------------------------------------------------------#</span>
+<span class="c"># Definitions                                                                                     #</span>
+<span class="c">#-------------------------------------------------------------------------------------------------#</span></div></div>
+<span class="n">INDEXED_PIECE_SUITE_A</span> <span class="o">=</span> <span class="n">TestLoader</span><span class="p">()</span><span class="o">.</span><span class="n">loadTestsFromTestCase</span><span class="p">(</span><span class="n">TestIndexedPieceA</span><span class="p">)</span>
+<span class="n">INDEXED_PIECE_SUITE_B</span> <span class="o">=</span> <span class="n">TestLoader</span><span class="p">()</span><span class="o">.</span><span class="n">loadTestsFromTestCase</span><span class="p">(</span><span class="n">TestIndexedPieceB</span><span class="p">)</span>
+<span class="n">INDEXED_PIECE_PARTS_TITLES</span> <span class="o">=</span> <span class="n">TestLoader</span><span class="p">()</span><span class="o">.</span><span class="n">loadTestsFromTestCase</span><span class="p">(</span><span class="n">TestPartsAndTitles</span><span class="p">)</span>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../index.html">vis X documentation</a> &raquo;</li>
+          <li><a href="../../index.html" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013, Christopher Antila.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2b2.
+    </div>
+  </body>
+</html>

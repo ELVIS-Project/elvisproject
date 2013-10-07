@@ -1,0 +1,339 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>vis.test_corpus.int_indexer_short &mdash; vis X documentation</title>
+    
+    <link rel="stylesheet" href="../../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     'X',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <link rel="top" title="vis X documentation" href="../../../index.html" />
+    <link rel="up" title="Module code" href="../../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../index.html">vis X documentation</a> &raquo;</li>
+          <li><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for vis.test_corpus.int_indexer_short</h1><div class="highlight"><pre>
+<span class="c">#!/usr/bin/env python</span>
+<span class="c"># -*- coding: utf-8 -*-</span>
+<span class="c">#--------------------------------------------------------------------------------------------------</span>
+<span class="c"># Name:         int_indexer_short.py</span>
+<span class="c"># Purpose:      Creates a set of Score objects with which to test vis.</span>
+<span class="c">#</span>
+<span class="c"># Copyright (C) 2012, 2013 Christopher Antila</span>
+<span class="c">#</span>
+<span class="c"># This program is free software: you can redistribute it and/or modify</span>
+<span class="c"># it under the terms of the GNU Affero General Public License as</span>
+<span class="c"># published by the Free Software Foundation, either version 3 of the</span>
+<span class="c"># License, or (at your option) any later version.</span>
+<span class="c">#</span>
+<span class="c"># This program is distributed in the hope that it will be useful,</span>
+<span class="c"># but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span class="c"># MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
+<span class="c"># GNU Affero General Public License for more details.</span>
+<span class="c">#</span>
+<span class="c"># You should have received a copy of the GNU Affero General Public License</span>
+<span class="c"># along with this program.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
+<span class="c">#--------------------------------------------------------------------------------------------------</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Initialize the test environments for the IntervalIndexer tests.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span> <span class="nn">music21.stream</span> <span class="kn">import</span> <span class="n">Part</span><span class="p">,</span> <span class="n">Score</span>
+<span class="kn">from</span> <span class="nn">music21.note</span> <span class="kn">import</span> <span class="n">Note</span><span class="p">,</span> <span class="n">Rest</span>
+<span class="kn">from</span> <span class="nn">music21.meter</span> <span class="kn">import</span> <span class="n">TimeSignature</span>
+<span class="c"># NOTE: These tests assume the quarterLength interval between checks is 0.5</span>
+<span class="c"># pylint: disable=C0111</span>
+
+
+<span class="k">def</span> <span class="nf">_setup_parts</span><span class="p">():</span>
+    <span class="n">top</span> <span class="o">=</span> <span class="n">Part</span><span class="p">()</span>
+    <span class="n">top</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">TimeSignature</span><span class="p">(</span><span class="s">&#39;4/4&#39;</span><span class="p">))</span>
+    <span class="n">bottom</span> <span class="o">=</span> <span class="n">Part</span><span class="p">()</span>
+    <span class="n">bottom</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">TimeSignature</span><span class="p">(</span><span class="s">&#39;4/4&#39;</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">top</span><span class="p">,</span> <span class="n">bottom</span>
+
+
+<div class="viewcode-block" id="test_1"><a class="viewcode-back" href="../../../vis.test_corpus.html#vis.test_corpus.int_indexer_short.test_1">[docs]</a><span class="k">def</span> <span class="nf">test_1</span><span class="p">():</span>
+    <span class="n">top</span><span class="p">,</span> <span class="n">bot</span> <span class="o">=</span> <span class="n">_setup_parts</span><span class="p">()</span>
+    <span class="n">top</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Note</span><span class="p">(</span><span class="s">&#39;G4&#39;</span><span class="p">,</span> <span class="n">quarterLength</span><span class="o">=</span><span class="mf">0.5</span><span class="p">))</span>
+    <span class="n">bot</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Note</span><span class="p">(</span><span class="s">&#39;G3&#39;</span><span class="p">,</span> <span class="n">quarterLength</span><span class="o">=</span><span class="mf">0.5</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">Score</span><span class="p">([</span><span class="n">top</span><span class="p">,</span> <span class="n">bot</span><span class="p">])</span>
+
+</div>
+<div class="viewcode-block" id="test_2"><a class="viewcode-back" href="../../../vis.test_corpus.html#vis.test_corpus.int_indexer_short.test_2">[docs]</a><span class="k">def</span> <span class="nf">test_2</span><span class="p">():</span>
+    <span class="n">top</span><span class="p">,</span> <span class="n">bot</span> <span class="o">=</span> <span class="n">_setup_parts</span><span class="p">()</span>
+    <span class="n">top</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Note</span><span class="p">(</span><span class="s">&#39;G4&#39;</span><span class="p">,</span> <span class="n">quarterLength</span><span class="o">=</span><span class="mf">0.25</span><span class="p">))</span>
+    <span class="n">top</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Rest</span><span class="p">(</span><span class="n">quarterLength</span><span class="o">=</span><span class="mf">0.25</span><span class="p">))</span>
+    <span class="n">bot</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Note</span><span class="p">(</span><span class="s">&#39;G3&#39;</span><span class="p">,</span> <span class="n">quarterLength</span><span class="o">=</span><span class="mf">0.25</span><span class="p">))</span>
+    <span class="n">bot</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Rest</span><span class="p">(</span><span class="n">quarterLength</span><span class="o">=</span><span class="mf">0.25</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">Score</span><span class="p">([</span><span class="n">top</span><span class="p">,</span> <span class="n">bot</span><span class="p">])</span>
+
+</div>
+<div class="viewcode-block" id="test_3"><a class="viewcode-back" href="../../../vis.test_corpus.html#vis.test_corpus.int_indexer_short.test_3">[docs]</a><span class="k">def</span> <span class="nf">test_3</span><span class="p">():</span>
+    <span class="n">top</span><span class="p">,</span> <span class="n">bot</span> <span class="o">=</span> <span class="n">_setup_parts</span><span class="p">()</span>
+    <span class="n">top</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Note</span><span class="p">(</span><span class="s">&#39;G4&#39;</span><span class="p">,</span> <span class="n">quarterLength</span><span class="o">=</span><span class="mf">0.5</span><span class="p">))</span>
+    <span class="n">bot</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Note</span><span class="p">(</span><span class="s">&#39;G3&#39;</span><span class="p">,</span> <span class="n">quarterLength</span><span class="o">=</span><span class="mf">0.25</span><span class="p">))</span>
+    <span class="n">bot</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Rest</span><span class="p">(</span><span class="n">quarterLength</span><span class="o">=</span><span class="mf">0.25</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">Score</span><span class="p">([</span><span class="n">top</span><span class="p">,</span> <span class="n">bot</span><span class="p">])</span>
+
+</div>
+<div class="viewcode-block" id="test_4"><a class="viewcode-back" href="../../../vis.test_corpus.html#vis.test_corpus.int_indexer_short.test_4">[docs]</a><span class="k">def</span> <span class="nf">test_4</span><span class="p">():</span>
+    <span class="n">top</span><span class="p">,</span> <span class="n">bot</span> <span class="o">=</span> <span class="n">_setup_parts</span><span class="p">()</span>
+    <span class="n">top</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Note</span><span class="p">(</span><span class="s">&#39;G4&#39;</span><span class="p">,</span> <span class="n">quarterLength</span><span class="o">=</span><span class="mf">0.25</span><span class="p">))</span>
+    <span class="n">top</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Rest</span><span class="p">(</span><span class="n">quarterLength</span><span class="o">=</span><span class="mf">0.25</span><span class="p">))</span>
+    <span class="n">bot</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Note</span><span class="p">(</span><span class="s">&#39;G3&#39;</span><span class="p">,</span> <span class="n">quarterLength</span><span class="o">=</span><span class="mf">0.5</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">Score</span><span class="p">([</span><span class="n">top</span><span class="p">,</span> <span class="n">bot</span><span class="p">])</span>
+
+</div>
+<div class="viewcode-block" id="test_5"><a class="viewcode-back" href="../../../vis.test_corpus.html#vis.test_corpus.int_indexer_short.test_5">[docs]</a><span class="k">def</span> <span class="nf">test_5</span><span class="p">():</span>
+    <span class="n">top</span><span class="p">,</span> <span class="n">bot</span> <span class="o">=</span> <span class="n">_setup_parts</span><span class="p">()</span>
+    <span class="n">top</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Note</span><span class="p">(</span><span class="s">&#39;G4&#39;</span><span class="p">,</span> <span class="n">quarterLength</span><span class="o">=</span><span class="mf">0.5</span><span class="p">))</span>
+    <span class="n">top</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Note</span><span class="p">(</span><span class="s">&#39;F4&#39;</span><span class="p">,</span> <span class="n">quarterLength</span><span class="o">=</span><span class="mf">0.5</span><span class="p">))</span>
+    <span class="n">bot</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Note</span><span class="p">(</span><span class="s">&#39;G3&#39;</span><span class="p">,</span> <span class="n">quarterLength</span><span class="o">=</span><span class="mf">0.5</span><span class="p">))</span>
+    <span class="n">bot</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Note</span><span class="p">(</span><span class="s">&#39;A3&#39;</span><span class="p">,</span> <span class="n">quarterLength</span><span class="o">=</span><span class="mf">0.5</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">Score</span><span class="p">([</span><span class="n">top</span><span class="p">,</span> <span class="n">bot</span><span class="p">])</span>
+
+</div>
+<div class="viewcode-block" id="test_6"><a class="viewcode-back" href="../../../vis.test_corpus.html#vis.test_corpus.int_indexer_short.test_6">[docs]</a><span class="k">def</span> <span class="nf">test_6</span><span class="p">():</span>
+    <span class="n">top</span><span class="p">,</span> <span class="n">bot</span> <span class="o">=</span> <span class="n">_setup_parts</span><span class="p">()</span>
+    <span class="n">top</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Note</span><span class="p">(</span><span class="s">&#39;G4&#39;</span><span class="p">,</span> <span class="n">quarterLength</span><span class="o">=</span><span class="mf">1.0</span><span class="p">))</span>
+    <span class="n">bot</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Note</span><span class="p">(</span><span class="s">&#39;G3&#39;</span><span class="p">,</span> <span class="n">quarterLength</span><span class="o">=</span><span class="mf">0.5</span><span class="p">))</span>
+    <span class="n">bot</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Note</span><span class="p">(</span><span class="s">&#39;A3&#39;</span><span class="p">,</span> <span class="n">quarterLength</span><span class="o">=</span><span class="mf">0.5</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">Score</span><span class="p">([</span><span class="n">top</span><span class="p">,</span> <span class="n">bot</span><span class="p">])</span>
+
+</div>
+<div class="viewcode-block" id="test_7"><a class="viewcode-back" href="../../../vis.test_corpus.html#vis.test_corpus.int_indexer_short.test_7">[docs]</a><span class="k">def</span> <span class="nf">test_7</span><span class="p">():</span>
+    <span class="n">top</span><span class="p">,</span> <span class="n">bot</span> <span class="o">=</span> <span class="n">_setup_parts</span><span class="p">()</span>
+    <span class="n">top</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Note</span><span class="p">(</span><span class="s">&#39;A4&#39;</span><span class="p">,</span> <span class="n">quarterLength</span><span class="o">=</span><span class="mf">0.5</span><span class="p">))</span>
+    <span class="n">top</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Note</span><span class="p">(</span><span class="s">&#39;G4&#39;</span><span class="p">,</span> <span class="n">quarterLength</span><span class="o">=</span><span class="mf">1.0</span><span class="p">))</span>
+    <span class="n">top</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Note</span><span class="p">(</span><span class="s">&#39;F4&#39;</span><span class="p">,</span> <span class="n">quarterLength</span><span class="o">=</span><span class="mf">0.5</span><span class="p">))</span>
+    <span class="n">bot</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Note</span><span class="p">(</span><span class="s">&#39;B3&#39;</span><span class="p">,</span> <span class="n">quarterLength</span><span class="o">=</span><span class="mf">0.5</span><span class="p">))</span>
+    <span class="n">bot</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Note</span><span class="p">(</span><span class="s">&#39;G3&#39;</span><span class="p">,</span> <span class="n">quarterLength</span><span class="o">=</span><span class="mf">0.5</span><span class="p">))</span>
+    <span class="n">bot</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Note</span><span class="p">(</span><span class="s">&#39;A3&#39;</span><span class="p">,</span> <span class="n">quarterLength</span><span class="o">=</span><span class="mf">0.5</span><span class="p">))</span>
+    <span class="n">bot</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Note</span><span class="p">(</span><span class="s">&#39;B3&#39;</span><span class="p">,</span> <span class="n">quarterLength</span><span class="o">=</span><span class="mf">0.5</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">Score</span><span class="p">([</span><span class="n">top</span><span class="p">,</span> <span class="n">bot</span><span class="p">])</span>
+
+</div>
+<div class="viewcode-block" id="test_8"><a class="viewcode-back" href="../../../vis.test_corpus.html#vis.test_corpus.int_indexer_short.test_8">[docs]</a><span class="k">def</span> <span class="nf">test_8</span><span class="p">():</span>
+    <span class="n">top</span><span class="p">,</span> <span class="n">bot</span> <span class="o">=</span> <span class="n">_setup_parts</span><span class="p">()</span>
+    <span class="n">top</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Note</span><span class="p">(</span><span class="s">&#39;G4&#39;</span><span class="p">,</span> <span class="n">quarterLength</span><span class="o">=</span><span class="mf">1.0</span><span class="p">))</span>
+    <span class="n">bot</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Note</span><span class="p">(</span><span class="s">&#39;G3&#39;</span><span class="p">,</span> <span class="n">quarterLength</span><span class="o">=</span><span class="mf">0.25</span><span class="p">))</span>
+    <span class="n">bot</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Rest</span><span class="p">(</span><span class="n">quarterLength</span><span class="o">=</span><span class="mf">0.25</span><span class="p">))</span>
+    <span class="n">bot</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Note</span><span class="p">(</span><span class="s">&#39;A3&#39;</span><span class="p">,</span> <span class="n">quarterLength</span><span class="o">=</span><span class="mf">0.5</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">Score</span><span class="p">([</span><span class="n">top</span><span class="p">,</span> <span class="n">bot</span><span class="p">])</span>
+
+</div>
+<div class="viewcode-block" id="test_9"><a class="viewcode-back" href="../../../vis.test_corpus.html#vis.test_corpus.int_indexer_short.test_9">[docs]</a><span class="k">def</span> <span class="nf">test_9</span><span class="p">():</span>
+    <span class="n">top</span><span class="p">,</span> <span class="n">bot</span> <span class="o">=</span> <span class="n">_setup_parts</span><span class="p">()</span>
+    <span class="n">top</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Note</span><span class="p">(</span><span class="s">&#39;G4&#39;</span><span class="p">,</span> <span class="n">quarterLength</span><span class="o">=</span><span class="mf">1.0</span><span class="p">))</span>
+    <span class="n">top</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Note</span><span class="p">(</span><span class="s">&#39;G4&#39;</span><span class="p">,</span> <span class="n">quarterLength</span><span class="o">=</span><span class="mf">0.5</span><span class="p">))</span>
+    <span class="n">bot</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Note</span><span class="p">(</span><span class="s">&#39;G3&#39;</span><span class="p">,</span> <span class="n">quarterLength</span><span class="o">=</span><span class="mf">0.25</span><span class="p">))</span>
+    <span class="n">bot</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Rest</span><span class="p">(</span><span class="n">quarterLength</span><span class="o">=</span><span class="mf">0.25</span><span class="p">))</span>
+    <span class="n">bot</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Note</span><span class="p">(</span><span class="s">&#39;A3&#39;</span><span class="p">,</span> <span class="n">quarterLength</span><span class="o">=</span><span class="mf">0.5</span><span class="p">))</span>
+    <span class="n">bot</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Note</span><span class="p">(</span><span class="s">&#39;B3&#39;</span><span class="p">,</span> <span class="n">quarterLength</span><span class="o">=</span><span class="mf">0.5</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">Score</span><span class="p">([</span><span class="n">top</span><span class="p">,</span> <span class="n">bot</span><span class="p">])</span>
+
+</div>
+<div class="viewcode-block" id="test_10"><a class="viewcode-back" href="../../../vis.test_corpus.html#vis.test_corpus.int_indexer_short.test_10">[docs]</a><span class="k">def</span> <span class="nf">test_10</span><span class="p">():</span>
+    <span class="n">top</span><span class="p">,</span> <span class="n">bot</span> <span class="o">=</span> <span class="n">_setup_parts</span><span class="p">()</span>
+    <span class="n">top</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Note</span><span class="p">(</span><span class="s">&#39;G4&#39;</span><span class="p">,</span> <span class="n">quarterLength</span><span class="o">=</span><span class="mf">1.0</span><span class="p">))</span>
+    <span class="n">bot</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Note</span><span class="p">(</span><span class="s">&#39;G3&#39;</span><span class="p">,</span> <span class="n">quarterLength</span><span class="o">=</span><span class="mf">0.25</span><span class="p">))</span>
+    <span class="n">bot</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Note</span><span class="p">(</span><span class="s">&#39;A3&#39;</span><span class="p">,</span> <span class="n">quarterLength</span><span class="o">=</span><span class="mf">0.75</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">Score</span><span class="p">([</span><span class="n">top</span><span class="p">,</span> <span class="n">bot</span><span class="p">])</span>
+
+</div>
+<div class="viewcode-block" id="test_11"><a class="viewcode-back" href="../../../vis.test_corpus.html#vis.test_corpus.int_indexer_short.test_11">[docs]</a><span class="k">def</span> <span class="nf">test_11</span><span class="p">():</span>
+    <span class="n">top</span><span class="p">,</span> <span class="n">bot</span> <span class="o">=</span> <span class="n">_setup_parts</span><span class="p">()</span>
+    <span class="n">top</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Note</span><span class="p">(</span><span class="s">&#39;G4&#39;</span><span class="p">,</span> <span class="n">quarterLength</span><span class="o">=</span><span class="mf">1.0</span><span class="p">))</span>
+    <span class="n">bot</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Note</span><span class="p">(</span><span class="s">&#39;G3&#39;</span><span class="p">,</span> <span class="n">quarterLength</span><span class="o">=</span><span class="mf">0.5</span><span class="p">))</span>
+    <span class="n">bot</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Note</span><span class="p">(</span><span class="s">&#39;G3&#39;</span><span class="p">,</span> <span class="n">quarterLength</span><span class="o">=</span><span class="mf">0.5</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">Score</span><span class="p">([</span><span class="n">top</span><span class="p">,</span> <span class="n">bot</span><span class="p">])</span>
+
+</div>
+<div class="viewcode-block" id="test_12"><a class="viewcode-back" href="../../../vis.test_corpus.html#vis.test_corpus.int_indexer_short.test_12">[docs]</a><span class="k">def</span> <span class="nf">test_12</span><span class="p">():</span>
+    <span class="n">top</span><span class="p">,</span> <span class="n">bot</span> <span class="o">=</span> <span class="n">_setup_parts</span><span class="p">()</span>
+    <span class="n">top</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Note</span><span class="p">(</span><span class="s">&#39;G4&#39;</span><span class="p">,</span> <span class="n">quarterLength</span><span class="o">=</span><span class="mf">1.0</span><span class="p">))</span>
+    <span class="n">bot</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Note</span><span class="p">(</span><span class="s">&#39;G3&#39;</span><span class="p">,</span> <span class="n">quarterLength</span><span class="o">=</span><span class="mf">0.25</span><span class="p">))</span>
+    <span class="n">bot</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Rest</span><span class="p">(</span><span class="n">quarterLength</span><span class="o">=</span><span class="mf">0.25</span><span class="p">))</span>
+    <span class="n">bot</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Note</span><span class="p">(</span><span class="s">&#39;G3&#39;</span><span class="p">,</span> <span class="n">quarterLength</span><span class="o">=</span><span class="mf">0.5</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">Score</span><span class="p">([</span><span class="n">top</span><span class="p">,</span> <span class="n">bot</span><span class="p">])</span>
+
+</div>
+<div class="viewcode-block" id="test_13"><a class="viewcode-back" href="../../../vis.test_corpus.html#vis.test_corpus.int_indexer_short.test_13">[docs]</a><span class="k">def</span> <span class="nf">test_13</span><span class="p">():</span>
+    <span class="n">top</span><span class="p">,</span> <span class="n">bot</span> <span class="o">=</span> <span class="n">_setup_parts</span><span class="p">()</span>
+    <span class="n">top</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Note</span><span class="p">(</span><span class="s">&#39;G4&#39;</span><span class="p">,</span> <span class="n">quarterLength</span><span class="o">=</span><span class="mf">1.0</span><span class="p">))</span>
+    <span class="n">bot</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Note</span><span class="p">(</span><span class="s">&#39;G3&#39;</span><span class="p">,</span> <span class="n">quarterLength</span><span class="o">=</span><span class="mf">0.125</span><span class="p">))</span>
+    <span class="n">bot</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Rest</span><span class="p">(</span><span class="n">quarterLength</span><span class="o">=</span><span class="mf">0.125</span><span class="p">))</span>
+    <span class="n">bot</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Note</span><span class="p">(</span><span class="s">&#39;A3&#39;</span><span class="p">,</span> <span class="n">quarterLength</span><span class="o">=</span><span class="mf">0.125</span><span class="p">))</span>
+    <span class="n">bot</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Rest</span><span class="p">(</span><span class="n">quarterLength</span><span class="o">=</span><span class="mf">0.125</span><span class="p">))</span>
+    <span class="n">bot</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Note</span><span class="p">(</span><span class="s">&#39;G3&#39;</span><span class="p">,</span> <span class="n">quarterLength</span><span class="o">=</span><span class="mf">0.5</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">Score</span><span class="p">([</span><span class="n">top</span><span class="p">,</span> <span class="n">bot</span><span class="p">])</span>
+
+</div>
+<div class="viewcode-block" id="test_14"><a class="viewcode-back" href="../../../vis.test_corpus.html#vis.test_corpus.int_indexer_short.test_14">[docs]</a><span class="k">def</span> <span class="nf">test_14</span><span class="p">():</span>
+    <span class="n">top</span><span class="p">,</span> <span class="n">bot</span> <span class="o">=</span> <span class="n">_setup_parts</span><span class="p">()</span>
+    <span class="n">top</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Note</span><span class="p">(</span><span class="s">&#39;G4&#39;</span><span class="p">,</span> <span class="n">quarterLength</span><span class="o">=</span><span class="mf">0.0625</span><span class="p">))</span>
+    <span class="n">top</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Note</span><span class="p">(</span><span class="s">&#39;G4&#39;</span><span class="p">,</span> <span class="n">quarterLength</span><span class="o">=</span><span class="mf">0.0625</span><span class="p">))</span>  <span class="c"># 0.0625</span>
+    <span class="n">top</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Note</span><span class="p">(</span><span class="s">&#39;G4&#39;</span><span class="p">,</span> <span class="n">quarterLength</span><span class="o">=</span><span class="mf">0.0625</span><span class="p">))</span>  <span class="c"># 0.125</span>
+    <span class="n">top</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Note</span><span class="p">(</span><span class="s">&#39;G4&#39;</span><span class="p">,</span> <span class="n">quarterLength</span><span class="o">=</span><span class="mf">0.0625</span><span class="p">))</span>  <span class="c"># 0.1875</span>
+    <span class="n">top</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Note</span><span class="p">(</span><span class="s">&#39;G4&#39;</span><span class="p">,</span> <span class="n">quarterLength</span><span class="o">=</span><span class="mf">0.0625</span><span class="p">))</span>  <span class="c"># 0.25</span>
+    <span class="n">top</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Note</span><span class="p">(</span><span class="s">&#39;G4&#39;</span><span class="p">,</span> <span class="n">quarterLength</span><span class="o">=</span><span class="mf">0.0625</span><span class="p">))</span>  <span class="c"># 0.3125</span>
+    <span class="n">top</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Note</span><span class="p">(</span><span class="s">&#39;G4&#39;</span><span class="p">,</span> <span class="n">quarterLength</span><span class="o">=</span><span class="mf">0.0625</span><span class="p">))</span>  <span class="c"># 0.375</span>
+    <span class="n">top</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Note</span><span class="p">(</span><span class="s">&#39;G4&#39;</span><span class="p">,</span> <span class="n">quarterLength</span><span class="o">=</span><span class="mf">0.0625</span><span class="p">))</span>  <span class="c"># 0.4375</span>
+    <span class="n">top</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Note</span><span class="p">(</span><span class="s">&#39;G4&#39;</span><span class="p">,</span> <span class="n">quarterLength</span><span class="o">=</span><span class="mf">0.5</span><span class="p">))</span>  <span class="c"># 0.5</span>
+    <span class="n">bot</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Note</span><span class="p">(</span><span class="s">&#39;G3&#39;</span><span class="p">,</span> <span class="n">quarterLength</span><span class="o">=</span><span class="mf">0.125</span><span class="p">))</span>
+    <span class="n">bot</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Rest</span><span class="p">(</span><span class="n">quarterLength</span><span class="o">=</span><span class="mf">0.125</span><span class="p">))</span>  <span class="c"># 0.125</span>
+    <span class="n">bot</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Note</span><span class="p">(</span><span class="s">&#39;A3&#39;</span><span class="p">,</span> <span class="n">quarterLength</span><span class="o">=</span><span class="mf">0.125</span><span class="p">))</span>  <span class="c"># 0.25</span>
+    <span class="n">bot</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Rest</span><span class="p">(</span><span class="n">quarterLength</span><span class="o">=</span><span class="mf">0.0625</span><span class="p">))</span>  <span class="c"># 0.375</span>
+    <span class="n">bot</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Rest</span><span class="p">(</span><span class="n">quarterLength</span><span class="o">=</span><span class="mf">0.0625</span><span class="p">))</span>  <span class="c"># 0.4375</span>
+    <span class="n">bot</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Note</span><span class="p">(</span><span class="s">&#39;G3&#39;</span><span class="p">,</span> <span class="n">quarterLength</span><span class="o">=</span><span class="mf">0.5</span><span class="p">))</span>  <span class="c"># 0.5</span>
+    <span class="k">return</span> <span class="n">Score</span><span class="p">([</span><span class="n">top</span><span class="p">,</span> <span class="n">bot</span><span class="p">])</span>
+
+</div>
+<div class="viewcode-block" id="test_15"><a class="viewcode-back" href="../../../vis.test_corpus.html#vis.test_corpus.int_indexer_short.test_15">[docs]</a><span class="k">def</span> <span class="nf">test_15</span><span class="p">():</span>
+    <span class="n">top</span><span class="p">,</span> <span class="n">bot</span> <span class="o">=</span> <span class="n">_setup_parts</span><span class="p">()</span>
+    <span class="n">top</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Note</span><span class="p">(</span><span class="s">&#39;G4&#39;</span><span class="p">,</span> <span class="n">quarterLength</span><span class="o">=</span><span class="mf">0.5</span><span class="p">))</span>
+    <span class="n">top</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Note</span><span class="p">(</span><span class="s">&#39;G4&#39;</span><span class="p">,</span> <span class="n">quarterLength</span><span class="o">=</span><span class="mf">0.25</span><span class="p">))</span>  <span class="c"># 0.5</span>
+    <span class="n">top</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Rest</span><span class="p">(</span><span class="n">quarterLength</span><span class="o">=</span><span class="mf">0.25</span><span class="p">))</span>  <span class="c"># 0.75</span>
+    <span class="n">top</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Note</span><span class="p">(</span><span class="s">&#39;G4&#39;</span><span class="p">,</span> <span class="n">quarterLength</span><span class="o">=</span><span class="mf">0.5</span><span class="p">))</span>  <span class="c"># 1.0</span>
+    <span class="n">top</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Note</span><span class="p">(</span><span class="s">&#39;G4&#39;</span><span class="p">,</span> <span class="n">quarterLength</span><span class="o">=</span><span class="mf">0.5</span><span class="p">))</span>  <span class="c"># 1.5</span>
+    <span class="n">bot</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Note</span><span class="p">(</span><span class="s">&#39;G3&#39;</span><span class="p">,</span> <span class="n">quarterLength</span><span class="o">=</span><span class="mf">0.5</span><span class="p">))</span>
+    <span class="n">bot</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Note</span><span class="p">(</span><span class="s">&#39;G3&#39;</span><span class="p">,</span> <span class="n">quarterLength</span><span class="o">=</span><span class="mf">0.25</span><span class="p">))</span>  <span class="c"># 0.5</span>
+    <span class="n">bot</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Rest</span><span class="p">(</span><span class="n">quarterLength</span><span class="o">=</span><span class="mf">0.25</span><span class="p">))</span>  <span class="c"># 0.75</span>
+    <span class="n">bot</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Rest</span><span class="p">(</span><span class="n">quarterLength</span><span class="o">=</span><span class="mf">0.5</span><span class="p">))</span>  <span class="c"># 1.0</span>
+    <span class="n">bot</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Note</span><span class="p">(</span><span class="s">&#39;G3&#39;</span><span class="p">,</span> <span class="n">quarterLength</span><span class="o">=</span><span class="mf">0.5</span><span class="p">))</span>  <span class="c"># 1.5</span>
+    <span class="k">return</span> <span class="n">Score</span><span class="p">([</span><span class="n">top</span><span class="p">,</span> <span class="n">bot</span><span class="p">])</span>
+
+</div>
+<div class="viewcode-block" id="test_16"><a class="viewcode-back" href="../../../vis.test_corpus.html#vis.test_corpus.int_indexer_short.test_16">[docs]</a><span class="k">def</span> <span class="nf">test_16</span><span class="p">():</span>
+    <span class="n">top</span><span class="p">,</span> <span class="n">bot</span> <span class="o">=</span> <span class="n">_setup_parts</span><span class="p">()</span>
+    <span class="n">top</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Note</span><span class="p">(</span><span class="s">&#39;G4&#39;</span><span class="p">,</span> <span class="n">quarterLength</span><span class="o">=</span><span class="mf">0.5</span><span class="p">))</span>
+    <span class="n">top</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Note</span><span class="p">(</span><span class="s">&#39;A4&#39;</span><span class="p">,</span> <span class="n">quarterLength</span><span class="o">=</span><span class="mf">0.75</span><span class="p">))</span>  <span class="c"># 0.5</span>
+    <span class="n">top</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Note</span><span class="p">(</span><span class="s">&#39;G4&#39;</span><span class="p">,</span> <span class="n">quarterLength</span><span class="o">=</span><span class="mf">0.25</span><span class="p">))</span>  <span class="c"># 1.25</span>
+    <span class="n">top</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Note</span><span class="p">(</span><span class="s">&#39;B4&#39;</span><span class="p">,</span> <span class="n">quarterLength</span><span class="o">=</span><span class="mf">0.5</span><span class="p">))</span>  <span class="c"># 1.5</span>
+    <span class="n">bot</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Note</span><span class="p">(</span><span class="s">&#39;G3&#39;</span><span class="p">,</span> <span class="n">quarterLength</span><span class="o">=</span><span class="mf">0.5</span><span class="p">))</span>
+    <span class="n">bot</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Rest</span><span class="p">(</span><span class="n">quarterLength</span><span class="o">=</span><span class="mf">0.25</span><span class="p">))</span>  <span class="c"># 0.5</span>
+    <span class="n">bot</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Note</span><span class="p">(</span><span class="s">&#39;F3&#39;</span><span class="p">,</span> <span class="n">quarterLength</span><span class="o">=</span><span class="mf">0.75</span><span class="p">))</span>  <span class="c"># 0.75</span>
+    <span class="n">bot</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Note</span><span class="p">(</span><span class="s">&#39;E3&#39;</span><span class="p">,</span> <span class="n">quarterLength</span><span class="o">=</span><span class="mf">0.5</span><span class="p">))</span>  <span class="c"># 1.5</span>
+    <span class="k">return</span> <span class="n">Score</span><span class="p">([</span><span class="n">top</span><span class="p">,</span> <span class="n">bot</span><span class="p">])</span>
+
+</div>
+<div class="viewcode-block" id="test_17"><a class="viewcode-back" href="../../../vis.test_corpus.html#vis.test_corpus.int_indexer_short.test_17">[docs]</a><span class="k">def</span> <span class="nf">test_17</span><span class="p">():</span>
+    <span class="n">top</span><span class="p">,</span> <span class="n">bot</span> <span class="o">=</span> <span class="n">_setup_parts</span><span class="p">()</span>
+    <span class="n">top</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Note</span><span class="p">(</span><span class="s">&#39;G4&#39;</span><span class="p">,</span> <span class="n">quarterLength</span><span class="o">=</span><span class="mf">0.5</span><span class="p">))</span>
+    <span class="n">top</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Note</span><span class="p">(</span><span class="s">&#39;A4&#39;</span><span class="p">,</span> <span class="n">quarterLength</span><span class="o">=</span><span class="mf">0.75</span><span class="p">))</span>  <span class="c"># 0.5</span>
+    <span class="n">top</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Note</span><span class="p">(</span><span class="s">&#39;F4&#39;</span><span class="p">,</span> <span class="n">quarterLength</span><span class="o">=</span><span class="mf">0.75</span><span class="p">))</span>  <span class="c"># 1.25</span>
+    <span class="n">top</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Note</span><span class="p">(</span><span class="s">&#39;E4&#39;</span><span class="p">,</span> <span class="n">quarterLength</span><span class="o">=</span><span class="mf">0.5</span><span class="p">))</span>  <span class="c"># 2.0</span>
+    <span class="n">bot</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Note</span><span class="p">(</span><span class="s">&#39;G3&#39;</span><span class="p">,</span> <span class="n">quarterLength</span><span class="o">=</span><span class="mf">0.5</span><span class="p">))</span>
+    <span class="n">bot</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Note</span><span class="p">(</span><span class="s">&#39;A3&#39;</span><span class="p">,</span> <span class="n">quarterLength</span><span class="o">=</span><span class="mf">0.25</span><span class="p">))</span>  <span class="c"># 0.5</span>
+    <span class="n">bot</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Note</span><span class="p">(</span><span class="s">&#39;F3&#39;</span><span class="p">,</span> <span class="n">quarterLength</span><span class="o">=</span><span class="mf">0.375</span><span class="p">))</span>  <span class="c"># 0.75</span>
+    <span class="n">bot</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Rest</span><span class="p">(</span><span class="n">quarterLength</span><span class="o">=</span><span class="mf">0.25</span><span class="p">))</span>  <span class="c"># 1.125</span>
+    <span class="n">bot</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Note</span><span class="p">(</span><span class="s">&#39;G3&#39;</span><span class="p">,</span> <span class="n">quarterLength</span><span class="o">=</span><span class="mf">0.625</span><span class="p">))</span>  <span class="c"># 1.375</span>
+    <span class="n">bot</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Note</span><span class="p">(</span><span class="s">&#39;G3&#39;</span><span class="p">,</span> <span class="n">quarterLength</span><span class="o">=</span><span class="mf">0.5</span><span class="p">))</span>  <span class="c"># 2.0</span>
+    <span class="k">return</span> <span class="n">Score</span><span class="p">([</span><span class="n">top</span><span class="p">,</span> <span class="n">bot</span><span class="p">])</span>
+
+</div>
+<div class="viewcode-block" id="test_18"><a class="viewcode-back" href="../../../vis.test_corpus.html#vis.test_corpus.int_indexer_short.test_18">[docs]</a><span class="k">def</span> <span class="nf">test_18</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    NB: This test is designed specifically to ensure that the _event_finder()</span>
+<span class="sd">    doesn&#39;t stop processing when it doesn&#39;t find an element of the expected types</span>
+<span class="sd">    at an offset. You should ask it to look for Rest objects only.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">top</span><span class="p">,</span> <span class="n">bot</span> <span class="o">=</span> <span class="n">_setup_parts</span><span class="p">()</span>
+    <span class="n">top</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Note</span><span class="p">(</span><span class="s">&#39;G4&#39;</span><span class="p">,</span> <span class="n">quarterLength</span><span class="o">=</span><span class="mf">0.5</span><span class="p">))</span>
+    <span class="n">top</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Rest</span><span class="p">(</span><span class="n">quarterLength</span><span class="o">=</span><span class="mf">0.5</span><span class="p">))</span>
+    <span class="n">bot</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">TimeSignature</span><span class="p">(</span><span class="s">&#39;4/4&#39;</span><span class="p">))</span>
+    <span class="n">bot</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Note</span><span class="p">(</span><span class="s">&#39;G3&#39;</span><span class="p">,</span> <span class="n">quarterLength</span><span class="o">=</span><span class="mf">0.5</span><span class="p">))</span>
+    <span class="n">bot</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Rest</span><span class="p">(</span><span class="n">quarterLength</span><span class="o">=</span><span class="mf">0.5</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">Score</span><span class="p">([</span><span class="n">top</span><span class="p">,</span> <span class="n">bot</span><span class="p">])</span>
+
+</div>
+<div class="viewcode-block" id="test_19"><a class="viewcode-back" href="../../../vis.test_corpus.html#vis.test_corpus.int_indexer_short.test_19">[docs]</a><span class="k">def</span> <span class="nf">test_19</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    NB: This test is designed specifically to ensure that the _event_finder()</span>
+<span class="sd">    finds Rest objects when the happen at the same time as Note objects, when</span>
+<span class="sd">    only Rest objects are requested to be found.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">top</span><span class="p">,</span> <span class="n">bot</span> <span class="o">=</span> <span class="n">_setup_parts</span><span class="p">()</span>
+    <span class="n">top</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Note</span><span class="p">(</span><span class="s">&#39;G4&#39;</span><span class="p">,</span> <span class="n">quarterLength</span><span class="o">=</span><span class="mf">0.5</span><span class="p">))</span>
+    <span class="n">top</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Note</span><span class="p">(</span><span class="s">&#39;G5&#39;</span><span class="p">,</span> <span class="n">quarterLength</span><span class="o">=</span><span class="mf">0.5</span><span class="p">))</span>
+    <span class="n">bot</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Note</span><span class="p">(</span><span class="s">&#39;G3&#39;</span><span class="p">,</span> <span class="n">quarterLength</span><span class="o">=</span><span class="mf">0.5</span><span class="p">))</span>
+    <span class="n">bot</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Rest</span><span class="p">(</span><span class="n">quarterLength</span><span class="o">=</span><span class="mf">0.5</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">Score</span><span class="p">([</span><span class="n">top</span><span class="p">,</span> <span class="n">bot</span><span class="p">])</span></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../index.html">vis X documentation</a> &raquo;</li>
+          <li><a href="../../index.html" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013, Christopher Antila.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2b2.
+    </div>
+  </body>
+</html>

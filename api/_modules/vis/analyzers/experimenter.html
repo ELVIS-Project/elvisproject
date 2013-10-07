@@ -1,0 +1,205 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>vis.analyzers.experimenter &mdash; vis X documentation</title>
+    
+    <link rel="stylesheet" href="../../../_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     'X',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <link rel="top" title="vis X documentation" href="../../../index.html" />
+    <link rel="up" title="Module code" href="../../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../index.html">vis X documentation</a> &raquo;</li>
+          <li><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for vis.analyzers.experimenter</h1><div class="highlight"><pre>
+<span class="c">#!/usr/bin/env python</span>
+<span class="c"># -*- coding: utf-8 -*-</span>
+<span class="c">#--------------------------------------------------------------------------------------------------</span>
+<span class="c"># Program Name:           vis</span>
+<span class="c"># Program Description:    Helps analyze music with computers.</span>
+<span class="c">#</span>
+<span class="c"># Filename:               controllers/experimenter.py</span>
+<span class="c"># Purpose:                Help with transforming time-attached analytic information to other types.</span>
+<span class="c">#</span>
+<span class="c"># Copyright (C) 2013 Christopher Antila</span>
+<span class="c">#</span>
+<span class="c"># This program is free software: you can redistribute it and/or modify</span>
+<span class="c"># it under the terms of the GNU Affero General Public License as</span>
+<span class="c"># published by the Free Software Foundation, either version 3 of the</span>
+<span class="c"># License, or (at your option) any later version.</span>
+<span class="c">#</span>
+<span class="c"># This program is distributed in the hope that it will be useful,</span>
+<span class="c"># but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span class="c"># MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
+<span class="c"># GNU Affero General Public License for more details.</span>
+<span class="c">#</span>
+<span class="c"># You should have received a copy of the GNU Affero General Public License</span>
+<span class="c"># along with this program.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
+<span class="c">#--------------------------------------------------------------------------------------------------</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">This module outlines the Experimenter base class, which helps with transforming time-attached</span>
+<span class="sd">analytic information to other types.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+
+<span class="c"># noinspection PyUnusedLocal</span>
+<div class="viewcode-block" id="Experimenter"><a class="viewcode-back" href="../../../vis.analyzers.html#vis.analyzers.experimenter.Experimenter">[docs]</a><span class="k">class</span> <span class="nc">Experimenter</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Run an experiment on an IndexedPiece.</span>
+
+<span class="sd">    Use the &quot;Experimenter.required_indices&quot; attribute to know which Indexer subclasses should be</span>
+<span class="sd">    provided to this Experimenter&#39;s constructor. If the list is None or [], use the</span>
+<span class="sd">    &quot;Experimenter.required_experiments&quot; attribute to know which Experimenter should be provided</span>
+<span class="sd">    to the constructor.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c"># just the standard instance variables</span>
+    <span class="n">possible_settings</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">default_settings</span> <span class="o">=</span> <span class="bp">None</span>
+    <span class="c"># self._index</span>
+
+    <span class="c"># pylint: disable=W0613</span>
+<div class="viewcode-block" id="Experimenter.__init__"><a class="viewcode-back" href="../../../vis.analyzers.html#vis.analyzers.experimenter.Experimenter.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">settings</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Create a new Experimenter.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ==========</span>
+<span class="sd">        :param index: lists or nested lists of pandas.Series or pandas.DataFrame objects.</span>
+<span class="sd">            A list (or list of lists) of Series. The minimum and maximum numbers, and whether to use</span>
+<span class="sd">            embedded lists, depends on the Experimenter subclass.</span>
+
+<span class="sd">        :param settings: dict</span>
+<span class="sd">            A dict of all the settings required by this Experimenter. All required settings should</span>
+<span class="sd">            be listed in subclasses. Default is {}.</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        ======</span>
+<span class="sd">        :raises: RuntimeError, if required settings are not present in the &quot;settings&quot; argument.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c"># Call our superclass constructor, then set instance variables</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">Experimenter</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_index</span> <span class="o">=</span> <span class="n">index</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s">u&#39;_settings&#39;</span><span class="p">):</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_settings</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_settings</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_settings</span> <span class="o">=</span> <span class="p">{}</span>
+</div>
+<div class="viewcode-block" id="Experimenter.run"><a class="viewcode-back" href="../../../vis.analyzers.html#vis.analyzers.experimenter.Experimenter.run">[docs]</a>    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Run an experiment on a piece.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        =======</span>
+<span class="sd">        :returns: The result of the experiment. Data is stored uniquely depending on the Experiment.</span>
+<span class="sd">        :rtype: pandas.Series or pandas.DataFrame</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">pass</span>
+</div>
+    <span class="k">def</span> <span class="nf">_do_multiprocessing</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">func</span><span class="p">,</span> <span class="n">func_args</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Submit each of the argument lists in func_args to the function in func. In the future, this</span>
+<span class="sd">        method may use multiprocessing.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ==========</span>
+<span class="sd">        :param func: The function to call. The function should return a pandas.Series or DataFrame</span>
+<span class="sd">        :type func: module-level function</span>
+
+<span class="sd">        :param func_args: A nested list of the arguments to be passed to &quot;func&quot;. Each outer list</span>
+<span class="sd">            element will be a single call to &quot;func&quot;.</span>
+<span class="sd">        :type func_args: iterable of iterables of objects</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        =======</span>
+<span class="sd">        :returns: A list of whatever was returned by the &quot;func&quot; function.</span>
+<span class="sd">        :rtype: list of pandas.Series or of pandas.DataFrame</span>
+
+<span class="sd">        Side Effects</span>
+<span class="sd">        ============</span>
+<span class="sd">        Blocks until all calculations have completed.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">post</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">arg_list</span> <span class="ow">in</span> <span class="n">func_args</span><span class="p">:</span>
+            <span class="n">post</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">func</span><span class="p">(</span><span class="o">*</span><span class="n">arg_list</span><span class="p">))</span>  <span class="c"># pylint: disable=W0142</span>
+        <span class="k">return</span> <span class="n">post</span></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../index.html">vis X documentation</a> &raquo;</li>
+          <li><a href="../../index.html" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013, Christopher Antila.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2b2.
+    </div>
+  </body>
+</html>

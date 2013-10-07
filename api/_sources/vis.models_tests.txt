@@ -1,0 +1,27 @@
+models_tests Package
+====================
+
+:mod:`models_tests` Package
+---------------------------
+
+.. automodule:: vis.models_tests
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+:mod:`test_aggregated_pieces` Module
+------------------------------------
+
+.. automodule:: vis.models_tests.test_aggregated_pieces
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+:mod:`test_indexed_piece` Module
+--------------------------------
+
+.. automodule:: vis.models_tests.test_indexed_piece
+    :members:
+    :undoc-members:
+    :show-inheritance:
+

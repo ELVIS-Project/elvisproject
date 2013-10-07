@@ -1,0 +1,338 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>vis.models_tests.test_aggregated_pieces &mdash; vis X documentation</title>
+    
+    <link rel="stylesheet" href="../../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     'X',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <link rel="top" title="vis X documentation" href="../../../index.html" />
+    <link rel="up" title="Module code" href="../../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../index.html">vis X documentation</a> &raquo;</li>
+          <li><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for vis.models_tests.test_aggregated_pieces</h1><div class="highlight"><pre>
+<span class="c">#!/usr/bin/env python</span>
+<span class="c"># -*- coding: utf-8 -*-</span>
+<span class="c">#--------------------------------------------------------------------------------------------------</span>
+<span class="c"># Program Name:           vis</span>
+<span class="c"># Program Description:    Helps analyze music with computers.</span>
+<span class="c">#</span>
+<span class="c"># Filename:               models_tests/test_aggregated_pieces.py</span>
+<span class="c"># Purpose:                Tests for models/aggregated_pieces.py.</span>
+<span class="c">#</span>
+<span class="c"># Copyright (C) 2013 Christopher Antila</span>
+<span class="c">#</span>
+<span class="c"># This program is free software: you can redistribute it and/or modify</span>
+<span class="c"># it under the terms of the GNU Affero General Public License as</span>
+<span class="c"># published by the Free Software Foundation, either version 3 of the</span>
+<span class="c"># License, or (at your option) any later version.</span>
+<span class="c">#</span>
+<span class="c"># This program is distributed in the hope that it will be useful,</span>
+<span class="c"># but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span class="c"># MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
+<span class="c"># GNU Affero General Public License for more details.</span>
+<span class="c">#</span>
+<span class="c"># You should have received a copy of the GNU Affero General Public License</span>
+<span class="c"># along with this program.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
+<span class="c">#--------------------------------------------------------------------------------------------------</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Tests for :py:class:`~vis.models.aggregated_pieces.AggregatedPieces`.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span> <span class="nn">unittest</span> <span class="kn">import</span> <span class="n">TestCase</span><span class="p">,</span> <span class="n">TestLoader</span>
+<span class="kn">from</span> <span class="nn">mock</span> <span class="kn">import</span> <span class="n">MagicMock</span><span class="p">,</span> <span class="n">Mock</span>
+<span class="kn">import</span> <span class="nn">pandas</span>
+<span class="kn">from</span> <span class="nn">vis.analyzers.indexer</span> <span class="kn">import</span> <span class="n">Indexer</span>
+<span class="kn">from</span> <span class="nn">vis.analyzers.experimenter</span> <span class="kn">import</span> <span class="n">Experimenter</span>
+<span class="kn">from</span> <span class="nn">vis.models.aggregated_pieces</span> <span class="kn">import</span> <span class="n">AggregatedPieces</span>
+<span class="kn">from</span> <span class="nn">vis.models.indexed_piece</span> <span class="kn">import</span> <span class="n">IndexedPiece</span>
+
+
+<span class="c"># pylint: disable=C0111</span>
+<span class="c"># pylint: disable=R0904</span>
+<div class="viewcode-block" id="TestAggregatedPieces"><a class="viewcode-back" href="../../../vis.models_tests.html#vis.models_tests.test_aggregated_pieces.TestAggregatedPieces">[docs]</a><span class="k">class</span> <span class="nc">TestAggregatedPieces</span><span class="p">(</span><span class="n">TestCase</span><span class="p">):</span>
+<div class="viewcode-block" id="TestAggregatedPieces.setUp"><a class="viewcode-back" href="../../../vis.models_tests.html#vis.models_tests.test_aggregated_pieces.TestAggregatedPieces.setUp">[docs]</a>    <span class="k">def</span> <span class="nf">setUp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pathnames</span> <span class="o">=</span> <span class="p">[</span><span class="s">u&#39;test_path_1&#39;</span><span class="p">,</span> <span class="s">u&#39;test_path_2&#39;</span><span class="p">,</span> <span class="s">u&#39;test_path_3&#39;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ind_pieces</span> <span class="o">=</span> <span class="p">[</span><span class="n">MagicMock</span><span class="p">(</span><span class="n">spec</span><span class="o">=</span><span class="n">IndexedPiece</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pathnames</span><span class="p">))]</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">ind_p</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ind_pieces</span><span class="p">):</span>
+            <span class="n">ind_p</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">return_value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pathnames</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">agg_p</span> <span class="o">=</span> <span class="n">AggregatedPieces</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ind_pieces</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="TestAggregatedPieces.test_metadata_1"><a class="viewcode-back" href="../../../vis.models_tests.html#vis.models_tests.test_aggregated_pieces.TestAggregatedPieces.test_metadata_1">[docs]</a>    <span class="k">def</span> <span class="nf">test_metadata_1</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c"># access the field automatically set</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertSequenceEqual</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pathnames</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">agg_p</span><span class="o">.</span><span class="n">metadata</span><span class="p">(</span><span class="s">u&#39;pathnames&#39;</span><span class="p">))</span>
+</div>
+<div class="viewcode-block" id="TestAggregatedPieces.test_metadata_2"><a class="viewcode-back" href="../../../vis.models_tests.html#vis.models_tests.test_aggregated_pieces.TestAggregatedPieces.test_metadata_2">[docs]</a>    <span class="k">def</span> <span class="nf">test_metadata_2</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c"># raises TypeError if the field is not a basestring</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertRaises</span><span class="p">(</span><span class="ne">TypeError</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">agg_p</span><span class="o">.</span><span class="n">metadata</span><span class="p">,</span> <span class="mi">12</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="TestAggregatedPieces.test_metadata_3"><a class="viewcode-back" href="../../../vis.models_tests.html#vis.models_tests.test_aggregated_pieces.TestAggregatedPieces.test_metadata_3">[docs]</a>    <span class="k">def</span> <span class="nf">test_metadata_3</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c"># returns None for non-existant field</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">agg_p</span><span class="o">.</span><span class="n">metadata</span><span class="p">(</span><span class="s">u&#39;pizza value&#39;</span><span class="p">))</span>
+</div>
+<div class="viewcode-block" id="TestAggregatedPieces.test_metadata_4"><a class="viewcode-back" href="../../../vis.models_tests.html#vis.models_tests.test_aggregated_pieces.TestAggregatedPieces.test_metadata_4">[docs]</a>    <span class="k">def</span> <span class="nf">test_metadata_4</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c"># calls _fetch_metadata() a not-yet-initialized field</span>
+        <span class="c"># pylint: disable=W0212</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">agg_p</span><span class="o">.</span><span class="n">_fetch_metadata</span> <span class="o">=</span> <span class="n">MagicMock</span><span class="p">(</span><span class="n">return_value</span><span class="o">=</span><span class="p">[</span><span class="s">u&#39;Composer list!&#39;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">([</span><span class="s">u&#39;Composer list!&#39;</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">agg_p</span><span class="o">.</span><span class="n">metadata</span><span class="p">(</span><span class="s">u&#39;composers&#39;</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">agg_p</span><span class="o">.</span><span class="n">_fetch_metadata</span><span class="o">.</span><span class="n">assert_called_once_with</span><span class="p">(</span><span class="s">u&#39;composers&#39;</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="TestAggregatedPieces.test_fetch_metadata_1"><a class="viewcode-back" href="../../../vis.models_tests.html#vis.models_tests.test_aggregated_pieces.TestAggregatedPieces.test_fetch_metadata_1">[docs]</a>    <span class="k">def</span> <span class="nf">test_fetch_metadata_1</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c"># composers field</span>
+        <span class="c"># pylint: disable=W0212</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ind_pieces</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">metadata</span> <span class="o">=</span> <span class="n">MagicMock</span><span class="p">(</span><span class="n">return_value</span> <span class="o">=</span> <span class="s">u&#39;Bok&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ind_pieces</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">metadata</span> <span class="o">=</span> <span class="n">MagicMock</span><span class="p">(</span><span class="n">return_value</span> <span class="o">=</span> <span class="s">u&#39;Baytowvinn&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ind_pieces</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">metadata</span> <span class="o">=</span> <span class="n">MagicMock</span><span class="p">(</span><span class="n">return_value</span> <span class="o">=</span> <span class="s">u&#39;The Boys&#39;</span><span class="p">)</span>
+        <span class="n">expected</span> <span class="o">=</span> <span class="p">[</span><span class="s">u&#39;Bok&#39;</span><span class="p">,</span> <span class="s">u&#39;Baytowvinn&#39;</span><span class="p">,</span> <span class="s">u&#39;The Boys&#39;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">expected</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">agg_p</span><span class="o">.</span><span class="n">_fetch_metadata</span><span class="p">(</span><span class="s">u&#39;composers&#39;</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">expected</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">agg_p</span><span class="o">.</span><span class="n">_metadata</span><span class="o">.</span><span class="n">composers</span><span class="p">)</span>  <span class="c"># pylint: disable=E1101</span>
+        <span class="k">for</span> <span class="n">piece</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">ind_pieces</span><span class="p">:</span>
+            <span class="n">piece</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">assert_called_once_with</span><span class="p">(</span><span class="s">u&#39;composer&#39;</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="TestAggregatedPieces.test_fetch_metadata_2a"><a class="viewcode-back" href="../../../vis.models_tests.html#vis.models_tests.test_aggregated_pieces.TestAggregatedPieces.test_fetch_metadata_2a">[docs]</a>    <span class="k">def</span> <span class="nf">test_fetch_metadata_2a</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c"># dates field</span>
+        <span class="c"># pylint: disable=W0212</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ind_pieces</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">metadata</span> <span class="o">=</span> <span class="n">MagicMock</span><span class="p">(</span><span class="n">return_value</span> <span class="o">=</span> <span class="s">u&#39;1993&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ind_pieces</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">metadata</span> <span class="o">=</span> <span class="n">MagicMock</span><span class="p">(</span><span class="n">return_value</span> <span class="o">=</span> <span class="s">u&#39;1302&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ind_pieces</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">metadata</span> <span class="o">=</span> <span class="n">MagicMock</span><span class="p">(</span><span class="n">return_value</span> <span class="o">=</span> <span class="s">u&#39;1987&#39;</span><span class="p">)</span>
+        <span class="n">expected</span> <span class="o">=</span> <span class="p">[</span><span class="s">u&#39;1993&#39;</span><span class="p">,</span> <span class="s">u&#39;1302&#39;</span><span class="p">,</span> <span class="s">u&#39;1987&#39;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertSequenceEqual</span><span class="p">(</span><span class="n">expected</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">agg_p</span><span class="o">.</span><span class="n">_fetch_metadata</span><span class="p">(</span><span class="s">u&#39;dates&#39;</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertSequenceEqual</span><span class="p">(</span><span class="n">expected</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">agg_p</span><span class="o">.</span><span class="n">_metadata</span><span class="o">.</span><span class="n">dates</span><span class="p">)</span>  <span class="c"># pylint: disable=E1101</span>
+        <span class="k">for</span> <span class="n">piece</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">ind_pieces</span><span class="p">:</span>
+            <span class="n">piece</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">assert_called_once_with</span><span class="p">(</span><span class="s">u&#39;date&#39;</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="TestAggregatedPieces.test_fetch_metadata_2b"><a class="viewcode-back" href="../../../vis.models_tests.html#vis.models_tests.test_aggregated_pieces.TestAggregatedPieces.test_fetch_metadata_2b">[docs]</a>    <span class="k">def</span> <span class="nf">test_fetch_metadata_2b</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c"># dates field with ranges</span>
+        <span class="c"># pylint: disable=W0212</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ind_pieces</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">metadata</span> <span class="o">=</span> <span class="n">MagicMock</span><span class="p">(</span><span class="n">return_value</span> <span class="o">=</span> <span class="s">u&#39;1993 to 1993/08/08&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ind_pieces</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">metadata</span> <span class="o">=</span> <span class="n">MagicMock</span><span class="p">(</span><span class="n">return_value</span> <span class="o">=</span> <span class="s">u&#39;1302 to 1405&#39;</span><span class="p">)</span>
+        <span class="c"># he predicted his own death date in a unit test</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ind_pieces</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">metadata</span> <span class="o">=</span> <span class="n">MagicMock</span><span class="p">(</span><span class="n">return_value</span> <span class="o">=</span> <span class="s">u&#39;1987/09/09 to 2045/05/12&#39;</span><span class="p">)</span>
+        <span class="n">expected</span> <span class="o">=</span> <span class="p">[</span><span class="s">u&#39;1993 to 1993/08/08&#39;</span><span class="p">,</span> <span class="s">u&#39;1302 to 1405&#39;</span><span class="p">,</span> <span class="s">u&#39;1987/09/09 to 2045/05/12&#39;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertSequenceEqual</span><span class="p">(</span><span class="n">expected</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">agg_p</span><span class="o">.</span><span class="n">_fetch_metadata</span><span class="p">(</span><span class="s">u&#39;dates&#39;</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertSequenceEqual</span><span class="p">(</span><span class="n">expected</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">agg_p</span><span class="o">.</span><span class="n">_metadata</span><span class="o">.</span><span class="n">dates</span><span class="p">)</span>  <span class="c"># pylint: disable=E1101</span>
+        <span class="k">for</span> <span class="n">piece</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">ind_pieces</span><span class="p">:</span>
+            <span class="n">piece</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">assert_called_once_with</span><span class="p">(</span><span class="s">u&#39;date&#39;</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="TestAggregatedPieces.test_fetch_metadata_3"><a class="viewcode-back" href="../../../vis.models_tests.html#vis.models_tests.test_aggregated_pieces.TestAggregatedPieces.test_fetch_metadata_3">[docs]</a>    <span class="k">def</span> <span class="nf">test_fetch_metadata_3</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c"># date range field</span>
+        <span class="c"># pylint: disable=W0212</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ind_pieces</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">metadata</span> <span class="o">=</span> <span class="n">MagicMock</span><span class="p">(</span><span class="n">return_value</span> <span class="o">=</span> <span class="s">u&#39;1993&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ind_pieces</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">metadata</span> <span class="o">=</span> <span class="n">MagicMock</span><span class="p">(</span><span class="n">return_value</span> <span class="o">=</span> <span class="s">u&#39;1302&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ind_pieces</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">metadata</span> <span class="o">=</span> <span class="n">MagicMock</span><span class="p">(</span><span class="n">return_value</span> <span class="o">=</span> <span class="s">u&#39;1987&#39;</span><span class="p">)</span>
+        <span class="n">expected</span> <span class="o">=</span> <span class="p">(</span><span class="s">u&#39;1302&#39;</span><span class="p">,</span> <span class="s">u&#39;1993&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertSequenceEqual</span><span class="p">(</span><span class="n">expected</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">agg_p</span><span class="o">.</span><span class="n">_fetch_metadata</span><span class="p">(</span><span class="s">u&#39;date_range&#39;</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertSequenceEqual</span><span class="p">(</span><span class="n">expected</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">agg_p</span><span class="o">.</span><span class="n">_metadata</span><span class="o">.</span><span class="n">date_range</span><span class="p">)</span>  <span class="c"># pylint: disable=E1101</span>
+        <span class="k">for</span> <span class="n">piece</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">ind_pieces</span><span class="p">:</span>
+            <span class="n">piece</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">assert_called_once_with</span><span class="p">(</span><span class="s">u&#39;date&#39;</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="TestAggregatedPieces.test_fetch_metadata_4"><a class="viewcode-back" href="../../../vis.models_tests.html#vis.models_tests.test_aggregated_pieces.TestAggregatedPieces.test_fetch_metadata_4">[docs]</a>    <span class="k">def</span> <span class="nf">test_fetch_metadata_4</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c"># titles field</span>
+        <span class="c"># pylint: disable=W0212</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ind_pieces</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">metadata</span> <span class="o">=</span> <span class="n">MagicMock</span><span class="p">(</span><span class="n">return_value</span> <span class="o">=</span> <span class="s">u&#39;Boris Godunov&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ind_pieces</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">metadata</span> <span class="o">=</span> <span class="n">MagicMock</span><span class="p">(</span><span class="n">return_value</span> <span class="o">=</span> <span class="s">u&#39;Peter Grimes&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ind_pieces</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">metadata</span> <span class="o">=</span> <span class="n">MagicMock</span><span class="p">(</span><span class="n">return_value</span> <span class="o">=</span> <span class="s">u&#39;Lights and Music&#39;</span><span class="p">)</span>
+        <span class="n">expected</span> <span class="o">=</span> <span class="p">[</span><span class="s">u&#39;Boris Godunov&#39;</span><span class="p">,</span> <span class="s">u&#39;Peter Grimes&#39;</span><span class="p">,</span> <span class="s">u&#39;Lights and Music&#39;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">expected</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">agg_p</span><span class="o">.</span><span class="n">_fetch_metadata</span><span class="p">(</span><span class="s">u&#39;titles&#39;</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">expected</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">agg_p</span><span class="o">.</span><span class="n">_metadata</span><span class="o">.</span><span class="n">titles</span><span class="p">)</span>  <span class="c"># pylint: disable=E1101</span>
+        <span class="k">for</span> <span class="n">piece</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">ind_pieces</span><span class="p">:</span>
+            <span class="n">piece</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">assert_called_once_with</span><span class="p">(</span><span class="s">u&#39;title&#39;</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="TestAggregatedPieces.test_fetch_metadata_5"><a class="viewcode-back" href="../../../vis.models_tests.html#vis.models_tests.test_aggregated_pieces.TestAggregatedPieces.test_fetch_metadata_5">[docs]</a>    <span class="k">def</span> <span class="nf">test_fetch_metadata_5</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c"># locales field</span>
+        <span class="c"># pylint: disable=W0212</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ind_pieces</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">metadata</span> <span class="o">=</span> <span class="n">MagicMock</span><span class="p">(</span><span class="n">return_value</span> <span class="o">=</span> <span class="s">u&#39;Cheronnow&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ind_pieces</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">metadata</span> <span class="o">=</span> <span class="n">MagicMock</span><span class="p">(</span><span class="n">return_value</span> <span class="o">=</span> <span class="s">u&#39;Munchreeawl&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ind_pieces</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">metadata</span> <span class="o">=</span> <span class="n">MagicMock</span><span class="p">(</span><span class="n">return_value</span> <span class="o">=</span> <span class="s">u&#39;Cowgree&#39;</span><span class="p">)</span>
+        <span class="n">expected</span> <span class="o">=</span> <span class="p">[</span><span class="s">u&#39;Cheronnow&#39;</span><span class="p">,</span> <span class="s">u&#39;Munchreeawl&#39;</span><span class="p">,</span> <span class="s">u&#39;Cowgree&#39;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">expected</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">agg_p</span><span class="o">.</span><span class="n">_fetch_metadata</span><span class="p">(</span><span class="s">u&#39;locales&#39;</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">expected</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">agg_p</span><span class="o">.</span><span class="n">_metadata</span><span class="o">.</span><span class="n">locales</span><span class="p">)</span>  <span class="c"># pylint: disable=E1101</span>
+        <span class="k">for</span> <span class="n">piece</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">ind_pieces</span><span class="p">:</span>
+            <span class="n">piece</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">assert_called_once_with</span><span class="p">(</span><span class="s">u&#39;locale_of_composition&#39;</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="TestAggregatedPieces.test_get_data_1"><a class="viewcode-back" href="../../../vis.models_tests.html#vis.models_tests.test_aggregated_pieces.TestAggregatedPieces.test_get_data_1">[docs]</a>    <span class="k">def</span> <span class="nf">test_get_data_1</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c"># try getting data for a non-Indexer, non-Experimenter class</span>
+        <span class="n">non_analyzer</span> <span class="o">=</span> <span class="n">Mock</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertRaises</span><span class="p">(</span><span class="ne">TypeError</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">agg_p</span><span class="o">.</span><span class="n">get_data</span><span class="p">,</span> <span class="n">non_analyzer</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="TestAggregatedPieces.test_get_data_2"><a class="viewcode-back" href="../../../vis.models_tests.html#vis.models_tests.test_aggregated_pieces.TestAggregatedPieces.test_get_data_2">[docs]</a>    <span class="k">def</span> <span class="nf">test_get_data_2</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c"># try get_data() on an AggregatedPieces with no pieces (no aggregated analyzers)</span>
+        <span class="n">mock_indexer_cls</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="s">&#39;MockIndexer&#39;</span><span class="p">,</span> <span class="p">(</span><span class="n">Indexer</span><span class="p">,),</span> <span class="p">{})</span>
+        <span class="n">expected</span> <span class="o">=</span> <span class="p">[</span><span class="n">pandas</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()]</span>
+        <span class="n">aps</span> <span class="o">=</span> <span class="n">AggregatedPieces</span><span class="p">()</span>
+        <span class="n">actual</span> <span class="o">=</span> <span class="n">aps</span><span class="o">.</span><span class="n">get_data</span><span class="p">([],</span> <span class="p">[</span><span class="n">mock_indexer_cls</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">expected</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">actual</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertSequenceEqual</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">expected</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">index</span><span class="p">),</span> <span class="nb">list</span><span class="p">(</span><span class="n">actual</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">index</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertSequenceEqual</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">expected</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">columns</span><span class="p">),</span> <span class="nb">list</span><span class="p">(</span><span class="n">actual</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">columns</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertSequenceEqual</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">expected</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="nb">list</span><span class="p">(</span><span class="n">actual</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+</div>
+<div class="viewcode-block" id="TestAggregatedPieces.test_get_data_3"><a class="viewcode-back" href="../../../vis.models_tests.html#vis.models_tests.test_aggregated_pieces.TestAggregatedPieces.test_get_data_3">[docs]</a>    <span class="k">def</span> <span class="nf">test_get_data_3</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c"># try get_data() on an AggregatedPieces with no pieces (with aggregated analyzers)</span>
+        <span class="n">mock_indexer_cls</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="s">&#39;MockIndexer&#39;</span><span class="p">,</span> <span class="p">(</span><span class="n">Indexer</span><span class="p">,),</span> <span class="p">{})</span>
+        <span class="n">mock_experimenter_cls</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="s">&#39;MockExperimenter&#39;</span><span class="p">,</span> <span class="p">(</span><span class="n">Experimenter</span><span class="p">,),</span> <span class="p">{})</span>
+        <span class="n">expected</span> <span class="o">=</span> <span class="n">pandas</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
+        <span class="n">aps</span> <span class="o">=</span> <span class="n">AggregatedPieces</span><span class="p">()</span>
+        <span class="n">actual</span> <span class="o">=</span> <span class="n">aps</span><span class="o">.</span><span class="n">get_data</span><span class="p">([</span><span class="n">mock_experimenter_cls</span><span class="p">],</span> <span class="p">[</span><span class="n">mock_indexer_cls</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertSequenceEqual</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">expected</span><span class="o">.</span><span class="n">index</span><span class="p">),</span> <span class="nb">list</span><span class="p">(</span><span class="n">actual</span><span class="o">.</span><span class="n">index</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertSequenceEqual</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">expected</span><span class="o">.</span><span class="n">columns</span><span class="p">),</span> <span class="nb">list</span><span class="p">(</span><span class="n">actual</span><span class="o">.</span><span class="n">columns</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertSequenceEqual</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">expected</span><span class="p">),</span> <span class="nb">list</span><span class="p">(</span><span class="n">actual</span><span class="p">))</span>
+</div>
+<div class="viewcode-block" id="TestAggregatedPieces.test_get_data_4"><a class="viewcode-back" href="../../../vis.models_tests.html#vis.models_tests.test_aggregated_pieces.TestAggregatedPieces.test_get_data_4">[docs]</a>    <span class="k">def</span> <span class="nf">test_get_data_4</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c"># chained independent indexers, no aggregated results</span>
+        <span class="k">for</span> <span class="n">piece</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">ind_pieces</span><span class="p">:</span>
+            <span class="n">piece</span><span class="o">.</span><span class="n">get_data</span><span class="o">.</span><span class="n">return_value</span> <span class="o">=</span> <span class="n">pandas</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="s">&#39;c4&#39;</span><span class="p">,</span> <span class="s">&#39;d4&#39;</span><span class="p">,</span> <span class="s">&#39;e4&#39;</span><span class="p">],</span> <span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">])</span>
+        <span class="n">an_indexer</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="s">&#39;AMockIndexer&#39;</span><span class="p">,</span> <span class="p">(</span><span class="n">Indexer</span><span class="p">,),</span> <span class="p">{})</span>
+        <span class="n">other_indexer</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="s">&#39;OtherMockIndexer&#39;</span><span class="p">,</span> <span class="p">(</span><span class="n">Indexer</span><span class="p">,),</span> <span class="p">{})</span>
+        <span class="n">expected</span> <span class="o">=</span> <span class="p">[</span><span class="n">pandas</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="s">&#39;c4&#39;</span><span class="p">,</span> <span class="s">&#39;d4&#39;</span><span class="p">,</span> <span class="s">&#39;e4&#39;</span><span class="p">],</span> <span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">])</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">3</span><span class="p">)]</span>
+        <span class="n">actual</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">agg_p</span><span class="o">.</span><span class="n">get_data</span><span class="p">([],</span> <span class="p">[</span><span class="n">an_indexer</span><span class="p">,</span> <span class="n">other_indexer</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">expected</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">actual</span><span class="p">))</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">expected</span><span class="p">)):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertSequenceEqual</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">expected</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">index</span><span class="p">),</span> <span class="nb">list</span><span class="p">(</span><span class="n">actual</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">index</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertSequenceEqual</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">expected</span><span class="p">[</span><span class="n">i</span><span class="p">]),</span> <span class="nb">list</span><span class="p">(</span><span class="n">actual</span><span class="p">[</span><span class="n">i</span><span class="p">]))</span>
+        <span class="k">for</span> <span class="n">piece</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">ind_pieces</span><span class="p">:</span>
+            <span class="n">piece</span><span class="o">.</span><span class="n">get_data</span><span class="o">.</span><span class="n">assert_called_once_with</span><span class="p">([</span><span class="n">an_indexer</span><span class="p">,</span> <span class="n">other_indexer</span><span class="p">],</span> <span class="bp">None</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="TestAggregatedPieces.test_get_data_5"><a class="viewcode-back" href="../../../vis.models_tests.html#vis.models_tests.test_aggregated_pieces.TestAggregatedPieces.test_get_data_5">[docs]</a>    <span class="k">def</span> <span class="nf">test_get_data_5</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c"># chained independent indexers, one aggregated experimenter</span>
+        <span class="k">for</span> <span class="n">piece</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">ind_pieces</span><span class="p">:</span>
+            <span class="n">piece</span><span class="o">.</span><span class="n">get_data</span><span class="o">.</span><span class="n">return_value</span> <span class="o">=</span> <span class="n">pandas</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="s">&#39;c4&#39;</span><span class="p">,</span> <span class="s">&#39;d4&#39;</span><span class="p">,</span> <span class="s">&#39;e4&#39;</span><span class="p">],</span> <span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">])</span>
+        <span class="n">an_indexer</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="s">&#39;AMockIndexer&#39;</span><span class="p">,</span> <span class="p">(</span><span class="n">Indexer</span><span class="p">,),</span> <span class="p">{})</span>
+        <span class="n">other_indexer</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="s">&#39;OtherMockIndexer&#39;</span><span class="p">,</span> <span class="p">(</span><span class="n">Indexer</span><span class="p">,),</span> <span class="p">{})</span>
+        <span class="n">an_experimenter</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="s">&#39;AMockExperimenter&#39;</span><span class="p">,</span> <span class="p">(</span><span class="n">Experimenter</span><span class="p">,),</span> <span class="p">{})</span>
+        <span class="n">an_experimenter</span><span class="o">.</span><span class="n">run</span> <span class="o">=</span> <span class="n">MagicMock</span><span class="p">(</span><span class="n">return_value</span> <span class="o">=</span> <span class="n">pandas</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="mi">0</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="mi">2</span><span class="p">:</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">]}))</span>
+        <span class="n">expected</span> <span class="o">=</span> <span class="n">pandas</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="mi">0</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="mi">2</span><span class="p">:</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">]})</span>
+        <span class="n">actual</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">agg_p</span><span class="o">.</span><span class="n">get_data</span><span class="p">([</span><span class="n">an_experimenter</span><span class="p">],</span> <span class="p">[</span><span class="n">an_indexer</span><span class="p">,</span> <span class="n">other_indexer</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertSequenceEqual</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">expected</span><span class="o">.</span><span class="n">index</span><span class="p">),</span> <span class="nb">list</span><span class="p">(</span><span class="n">actual</span><span class="o">.</span><span class="n">index</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertSequenceEqual</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">expected</span><span class="o">.</span><span class="n">columns</span><span class="p">),</span> <span class="nb">list</span><span class="p">(</span><span class="n">actual</span><span class="o">.</span><span class="n">columns</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertSequenceEqual</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">expected</span><span class="p">),</span> <span class="nb">list</span><span class="p">(</span><span class="n">actual</span><span class="p">))</span>
+        <span class="k">for</span> <span class="n">piece</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">ind_pieces</span><span class="p">:</span>
+            <span class="n">piece</span><span class="o">.</span><span class="n">get_data</span><span class="o">.</span><span class="n">assert_called_once_with</span><span class="p">([</span><span class="n">an_indexer</span><span class="p">,</span> <span class="n">other_indexer</span><span class="p">],</span> <span class="bp">None</span><span class="p">)</span>
+        <span class="n">an_experimenter</span><span class="o">.</span><span class="n">run</span><span class="o">.</span><span class="n">assert_called_once_with</span><span class="p">()</span>
+</div>
+<div class="viewcode-block" id="TestAggregatedPieces.test_get_data_6"><a class="viewcode-back" href="../../../vis.models_tests.html#vis.models_tests.test_aggregated_pieces.TestAggregatedPieces.test_get_data_6">[docs]</a>    <span class="k">def</span> <span class="nf">test_get_data_6</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c"># chained independent indexers, chained aggregated experimenters</span>
+        <span class="k">for</span> <span class="n">piece</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">ind_pieces</span><span class="p">:</span>
+            <span class="n">piece</span><span class="o">.</span><span class="n">get_data</span><span class="o">.</span><span class="n">return_value</span> <span class="o">=</span> <span class="n">pandas</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="s">&#39;c4&#39;</span><span class="p">,</span> <span class="s">&#39;d4&#39;</span><span class="p">,</span> <span class="s">&#39;e4&#39;</span><span class="p">],</span> <span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">])</span>
+        <span class="n">an_indexer</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="s">&#39;AMockIndexer&#39;</span><span class="p">,</span> <span class="p">(</span><span class="n">Indexer</span><span class="p">,),</span> <span class="p">{})</span>
+        <span class="n">other_indexer</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="s">&#39;OtherMockIndexer&#39;</span><span class="p">,</span> <span class="p">(</span><span class="n">Indexer</span><span class="p">,),</span> <span class="p">{})</span>
+        <span class="n">an_experimenter</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="s">&#39;AMockExperimenter&#39;</span><span class="p">,</span> <span class="p">(</span><span class="n">Experimenter</span><span class="p">,),</span> <span class="p">{})</span>
+        <span class="n">an_experimenter</span><span class="o">.</span><span class="n">run</span> <span class="o">=</span> <span class="n">MagicMock</span><span class="p">()</span>
+        <span class="n">other_experimenter</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="s">&#39;OtherMockExperimenter&#39;</span><span class="p">,</span> <span class="p">(</span><span class="n">Experimenter</span><span class="p">,),</span> <span class="p">{})</span>
+        <span class="n">other_experimenter</span><span class="o">.</span><span class="n">run</span> <span class="o">=</span> <span class="n">MagicMock</span><span class="p">(</span><span class="n">return_value</span> <span class="o">=</span> <span class="n">pandas</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="mi">0</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="mi">2</span><span class="p">:</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">]}))</span>
+        <span class="n">expected</span> <span class="o">=</span> <span class="n">pandas</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="mi">0</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="mi">2</span><span class="p">:</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">]})</span>
+        <span class="n">actual</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">agg_p</span><span class="o">.</span><span class="n">get_data</span><span class="p">([</span><span class="n">an_experimenter</span><span class="p">,</span> <span class="n">other_experimenter</span><span class="p">],</span>
+                                     <span class="p">[</span><span class="n">an_indexer</span><span class="p">,</span> <span class="n">other_indexer</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertSequenceEqual</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">expected</span><span class="o">.</span><span class="n">index</span><span class="p">),</span> <span class="nb">list</span><span class="p">(</span><span class="n">actual</span><span class="o">.</span><span class="n">index</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertSequenceEqual</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">expected</span><span class="o">.</span><span class="n">columns</span><span class="p">),</span> <span class="nb">list</span><span class="p">(</span><span class="n">actual</span><span class="o">.</span><span class="n">columns</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertSequenceEqual</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">expected</span><span class="p">),</span> <span class="nb">list</span><span class="p">(</span><span class="n">actual</span><span class="p">))</span>
+        <span class="k">for</span> <span class="n">piece</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">ind_pieces</span><span class="p">:</span>
+            <span class="n">piece</span><span class="o">.</span><span class="n">get_data</span><span class="o">.</span><span class="n">assert_called_once_with</span><span class="p">([</span><span class="n">an_indexer</span><span class="p">,</span> <span class="n">other_indexer</span><span class="p">],</span> <span class="bp">None</span><span class="p">)</span>
+        <span class="n">an_experimenter</span><span class="o">.</span><span class="n">run</span><span class="o">.</span><span class="n">assert_called_once_with</span><span class="p">()</span>
+        <span class="n">other_experimenter</span><span class="o">.</span><span class="n">run</span><span class="o">.</span><span class="n">assert_called_once_with</span><span class="p">()</span>
+</div>
+<div class="viewcode-block" id="TestAggregatedPieces.test_get_data_7"><a class="viewcode-back" href="../../../vis.models_tests.html#vis.models_tests.test_aggregated_pieces.TestAggregatedPieces.test_get_data_7">[docs]</a>    <span class="k">def</span> <span class="nf">test_get_data_7</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c"># one independent indexer, no aggregated results... checking settings get sent</span>
+        <span class="k">for</span> <span class="n">piece</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">ind_pieces</span><span class="p">:</span>
+            <span class="n">piece</span><span class="o">.</span><span class="n">get_data</span><span class="o">.</span><span class="n">return_value</span> <span class="o">=</span> <span class="n">pandas</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="s">&#39;c4&#39;</span><span class="p">,</span> <span class="s">&#39;d4&#39;</span><span class="p">,</span> <span class="s">&#39;e4&#39;</span><span class="p">],</span> <span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">])</span>
+        <span class="n">an_indexer</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="s">&#39;AMockIndexer&#39;</span><span class="p">,</span> <span class="p">(</span><span class="n">Indexer</span><span class="p">,),</span> <span class="p">{})</span>
+        <span class="n">expected</span> <span class="o">=</span> <span class="p">[</span><span class="n">pandas</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="s">&#39;c4&#39;</span><span class="p">,</span> <span class="s">&#39;d4&#39;</span><span class="p">,</span> <span class="s">&#39;e4&#39;</span><span class="p">],</span> <span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">])</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">3</span><span class="p">)]</span>
+        <span class="n">actual</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">agg_p</span><span class="o">.</span><span class="n">get_data</span><span class="p">([],</span> <span class="p">[</span><span class="n">an_indexer</span><span class="p">],</span> <span class="p">{</span><span class="s">u&#39;awesome&#39;</span><span class="p">:</span> <span class="bp">True</span><span class="p">})</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">expected</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">actual</span><span class="p">))</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">expected</span><span class="p">)):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertSequenceEqual</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">expected</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">index</span><span class="p">),</span> <span class="nb">list</span><span class="p">(</span><span class="n">actual</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">index</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertSequenceEqual</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">expected</span><span class="p">[</span><span class="n">i</span><span class="p">]),</span> <span class="nb">list</span><span class="p">(</span><span class="n">actual</span><span class="p">[</span><span class="n">i</span><span class="p">]))</span>
+        <span class="k">for</span> <span class="n">piece</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">ind_pieces</span><span class="p">:</span>
+            <span class="n">piece</span><span class="o">.</span><span class="n">get_data</span><span class="o">.</span><span class="n">assert_called_once_with</span><span class="p">([</span><span class="n">an_indexer</span><span class="p">],</span> <span class="p">{</span><span class="s">u&#39;awesome&#39;</span><span class="p">:</span> <span class="bp">True</span><span class="p">})</span>
+</div>
+<div class="viewcode-block" id="TestAggregatedPieces.test_get_data_8"><a class="viewcode-back" href="../../../vis.models_tests.html#vis.models_tests.test_aggregated_pieces.TestAggregatedPieces.test_get_data_8">[docs]</a>    <span class="k">def</span> <span class="nf">test_get_data_8</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c"># if a class in &quot;aggregated_experiments&quot; isn&#39;t an experimenter</span>
+        <span class="k">for</span> <span class="n">piece</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">ind_pieces</span><span class="p">:</span>
+            <span class="n">piece</span><span class="o">.</span><span class="n">get_data</span><span class="o">.</span><span class="n">return_value</span> <span class="o">=</span> <span class="n">pandas</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="s">&#39;c4&#39;</span><span class="p">,</span> <span class="s">&#39;d4&#39;</span><span class="p">,</span> <span class="s">&#39;e4&#39;</span><span class="p">],</span> <span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">])</span>
+        <span class="n">an_indexer</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="s">&#39;AMockIndexer&#39;</span><span class="p">,</span> <span class="p">(</span><span class="n">Indexer</span><span class="p">,),</span> <span class="p">{})</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertRaises</span><span class="p">(</span><span class="ne">TypeError</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">agg_p</span><span class="o">.</span><span class="n">get_data</span><span class="p">,</span> <span class="p">[</span><span class="n">TestAggregatedPieces</span><span class="p">],</span> <span class="p">[</span><span class="n">an_indexer</span><span class="p">],</span>
+                          <span class="p">{</span><span class="s">u&#39;awesome&#39;</span><span class="p">:</span> <span class="bp">True</span><span class="p">})</span>
+
+
+<span class="c">#-------------------------------------------------------------------------------------------------#</span>
+<span class="c"># Definitions                                                                                      #</span>
+<span class="c">#-------------------------------------------------------------------------------------------------#</span></div></div>
+<span class="n">AGGREGATED_PIECES_SUITE</span> <span class="o">=</span> <span class="n">TestLoader</span><span class="p">()</span><span class="o">.</span><span class="n">loadTestsFromTestCase</span><span class="p">(</span><span class="n">TestAggregatedPieces</span><span class="p">)</span>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../index.html">vis X documentation</a> &raquo;</li>
+          <li><a href="../../index.html" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013, Christopher Antila.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2b2.
+    </div>
+  </body>
+</html>

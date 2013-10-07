@@ -1,0 +1,193 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>vis.analyzers.indexers.noterest &mdash; vis X documentation</title>
+    
+    <link rel="stylesheet" href="../../../../_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../../',
+        VERSION:     'X',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+    <link rel="top" title="vis X documentation" href="../../../../index.html" />
+    <link rel="up" title="Module code" href="../../../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../../index.html">vis X documentation</a> &raquo;</li>
+          <li><a href="../../../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for vis.analyzers.indexers.noterest</h1><div class="highlight"><pre>
+<span class="c">#!/usr/bin/env python</span>
+<span class="c"># -*- coding: utf-8 -*-</span>
+<span class="c">#--------------------------------------------------------------------------------------------------</span>
+<span class="c"># Program Name:           vis</span>
+<span class="c"># Program Description:    Helps analyze music with computers.</span>
+<span class="c">#</span>
+<span class="c"># Filename:               controllers/indexers/noterest.py</span>
+<span class="c"># Purpose:                Index note and rest objects.</span>
+<span class="c">#</span>
+<span class="c"># Copyright (C) 2013 Christopher Antila</span>
+<span class="c">#</span>
+<span class="c"># This program is free software: you can redistribute it and/or modify</span>
+<span class="c"># it under the terms of the GNU Affero General Public License as</span>
+<span class="c"># published by the Free Software Foundation, either version 3 of the</span>
+<span class="c"># License, or (at your option) any later version.</span>
+<span class="c">#</span>
+<span class="c"># This program is distributed in the hope that it will be useful,</span>
+<span class="c"># but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span class="c"># MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
+<span class="c"># GNU Affero General Public License for more details.</span>
+<span class="c">#</span>
+<span class="c"># You should have received a copy of the GNU Affero General Public License</span>
+<span class="c"># along with this program.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
+<span class="c">#--------------------------------------------------------------------------------------------------</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Index note and rest objects.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span> <span class="nn">music21</span> <span class="kn">import</span> <span class="n">stream</span><span class="p">,</span> <span class="n">note</span>
+<span class="kn">from</span> <span class="nn">vis.analyzers</span> <span class="kn">import</span> <span class="n">indexer</span>
+
+<div class="viewcode-block" id="indexer_func"><a class="viewcode-back" href="../../../../vis.analyzers.indexers.html#vis.analyzers.indexers.noterest.indexer_func">[docs]</a><span class="k">def</span> <span class="nf">indexer_func</span><span class="p">(</span><span class="n">obj</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The indexer function for :class:`NoteRestIndexer`. Convert objects from the :mod:`music21.note`</span>
+<span class="sd">    module into a :obj:`unicode`.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ==========</span>
+<span class="sd">    :param obj: A list with the object to convert.</span>
+<span class="sd">    :type obj: :obj:`list` of :class:`music21.note.Note` or :class:`music21.note.Rest`</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    =======</span>
+<span class="sd">    :returns: If the first object in the list is a :class:`music21.note.Rest`, the string</span>
+<span class="sd">        :obj:`u&#39;Rest&#39;`; otherwise the :attr:`nameWithOctave` attribute, which is the pitch class</span>
+<span class="sd">        and octave of the :class:`music21.note.Note`.</span>
+<span class="sd">    :rtype: :obj:`unicode`</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="s">u&#39;Rest&#39;</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">note</span><span class="o">.</span><span class="n">Rest</span><span class="p">)</span> <span class="k">else</span> <span class="nb">unicode</span><span class="p">(</span><span class="n">obj</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">nameWithOctave</span><span class="p">)</span>
+
+</div>
+<div class="viewcode-block" id="NoteRestIndexer"><a class="viewcode-back" href="../../../../vis.analyzers.indexers.html#vis.analyzers.indexers.noterest.NoteRestIndexer">[docs]</a><span class="k">class</span> <span class="nc">NoteRestIndexer</span><span class="p">(</span><span class="n">indexer</span><span class="o">.</span><span class="n">Indexer</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Index :class:`music21.note.Note` and :class:`Rest` objects found in a</span>
+<span class="sd">    :class:`music21.stream.Part`.</span>
+
+<span class="sd">    Rest objects are indexed as :obj:`u&#39;Rest&#39;`, and Note objects as the unicode-format version of</span>
+<span class="sd">    their :attr:`pitchWithOctave` attribute.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">required_score_type</span> <span class="o">=</span> <span class="n">stream</span><span class="o">.</span><span class="n">Part</span>
+    <span class="s">&quot;The :class:`NoteRestIndexer` uses :class:`Part` objects directly.&quot;</span>
+
+<div class="viewcode-block" id="NoteRestIndexer.__init__"><a class="viewcode-back" href="../../../../vis.analyzers.indexers.html#vis.analyzers.indexers.noterest.NoteRestIndexer.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">score</span><span class="p">,</span> <span class="n">settings</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Create a new :class:`NoteRestIndexer`.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ==========</span>
+<span class="sd">        :param score: A list of all the Parts to index.</span>
+<span class="sd">        :type score: :obj:`list` of :class:`music21.stream.Part`</span>
+
+<span class="sd">        :param settings: This indexer uses no settings, so this is ignored.</span>
+<span class="sd">        :type settings: :obj:`dict` or :obj:`None`</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        ======</span>
+<span class="sd">        :raises: :exc:`RuntimeError` if :obj:`score` is not a list of the right type.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">NoteRestIndexer</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="n">score</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span>
+
+        <span class="c"># If self._score is a Stream (subclass), change to a list of types you want to process</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_types</span> <span class="o">=</span> <span class="p">[</span><span class="n">note</span><span class="o">.</span><span class="n">Note</span><span class="p">,</span> <span class="n">note</span><span class="o">.</span><span class="n">Rest</span><span class="p">]</span>
+
+        <span class="c"># You probably do not want to change this</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_indexer_func</span> <span class="o">=</span> <span class="n">indexer_func</span>
+</div>
+<div class="viewcode-block" id="NoteRestIndexer.run"><a class="viewcode-back" href="../../../../vis.analyzers.indexers.html#vis.analyzers.indexers.noterest.NoteRestIndexer.run">[docs]</a>    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Make a new index of the piece.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        =======</span>
+<span class="sd">        :returns: A list of the new indices. The index of each Series corresponds to the index of</span>
+<span class="sd">            the Part used to generate it, in the order specified to the constructor. Each element</span>
+<span class="sd">            in the Series is a unicode.</span>
+<span class="sd">        :rtype: :obj:`list` of :obj:`pandas.Series`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">combinations</span> <span class="o">=</span> <span class="p">[[</span><span class="n">x</span><span class="p">]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_score</span><span class="p">))]</span>  <span class="c"># calculate each voice separately</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_do_multiprocessing</span><span class="p">(</span><span class="n">combinations</span><span class="p">)</span></div></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../../index.html">vis X documentation</a> &raquo;</li>
+          <li><a href="../../../index.html" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013, Christopher Antila.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2b2.
+    </div>
+  </body>
+</html>

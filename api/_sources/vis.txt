@@ -1,0 +1,19 @@
+vis Package
+===========
+
+:mod:`vis` Package
+------------------
+
+.. automodule:: vis.__init__
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+Subpackages
+-----------
+
+.. toctree::
+
+    vis.analyzers
+    vis.controllers
+    vis.models
