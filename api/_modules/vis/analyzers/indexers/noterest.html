@@ -23,6 +23,7 @@
     <script type="text/javascript" src="../../../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+    <link rel="author" title="About these documents" href="../../../../about.html" />
     <link rel="top" title="vis X documentation" href="../../../../index.html" />
     <link rel="up" title="Module code" href="../../../index.html" /> 
   </head>
@@ -97,7 +98,7 @@
 
 <div class="viewcode-block" id="indexer_func"><a class="viewcode-back" href="../../../../vis.analyzers.indexers.html#vis.analyzers.indexers.noterest.indexer_func">[docs]</a><span class="k">def</span> <span class="nf">indexer_func</span><span class="p">(</span><span class="n">obj</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    The indexer function for :class:`NoteRestIndexer`. Convert objects from the :mod:`music21.note`</span>
+<span class="sd">    Used internally by :class:`NoteRestIndexer`. Convert objects from the :mod:`music21.note` \</span>
 <span class="sd">    module into a :obj:`unicode`.</span>
 
 <span class="sd">    Parameters</span>
@@ -127,20 +128,13 @@
     <span class="n">required_score_type</span> <span class="o">=</span> <span class="n">stream</span><span class="o">.</span><span class="n">Part</span>
     <span class="s">&quot;The :class:`NoteRestIndexer` uses :class:`Part` objects directly.&quot;</span>
 
-<div class="viewcode-block" id="NoteRestIndexer.__init__"><a class="viewcode-back" href="../../../../vis.analyzers.indexers.html#vis.analyzers.indexers.noterest.NoteRestIndexer.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">score</span><span class="p">,</span> <span class="n">settings</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">score</span><span class="p">,</span> <span class="n">settings</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Create a new :class:`NoteRestIndexer`.</span>
-
-<span class="sd">        Parameters</span>
-<span class="sd">        ==========</span>
 <span class="sd">        :param score: A list of all the Parts to index.</span>
 <span class="sd">        :type score: :obj:`list` of :class:`music21.stream.Part`</span>
-
 <span class="sd">        :param settings: This indexer uses no settings, so this is ignored.</span>
 <span class="sd">        :type settings: :obj:`dict` or :obj:`None`</span>
 
-<span class="sd">        Raises</span>
-<span class="sd">        ======</span>
 <span class="sd">        :raises: :exc:`RuntimeError` if :obj:`score` is not a list of the right type.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">NoteRestIndexer</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="n">score</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span>
@@ -150,7 +144,7 @@
 
         <span class="c"># You probably do not want to change this</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_indexer_func</span> <span class="o">=</span> <span class="n">indexer_func</span>
-</div>
+
 <div class="viewcode-block" id="NoteRestIndexer.run"><a class="viewcode-back" href="../../../../vis.analyzers.indexers.html#vis.analyzers.indexers.noterest.NoteRestIndexer.run">[docs]</a>    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Make a new index of the piece.</span>

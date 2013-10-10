@@ -23,6 +23,7 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="author" title="About these documents" href="about.html" />
     <link rel="top" title="vis X documentation" href="index.html" />
     <link rel="up" title="analyzers Package" href="vis.analyzers.html" />
     <link rel="next" title="indexers Package" href="vis.analyzers.indexers.html" />
@@ -116,8 +117,8 @@ and going to the end of a piece.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>index</strong> (<tt class="xref py py-class docutils literal"><span class="pre">pandas.DataFrame</span></tt> or <a class="reference external" href="http://docs.python.org/library/functions.html#list" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">list</span></tt></a> of <tt class="xref py py-class docutils literal"><span class="pre">pandas.DataFrame</span></tt> or of             <tt class="xref py py-class docutils literal"><span class="pre">pandas.Series</span></tt>) &#8211; The data to aggregate. You should ensure the row index of each pandas object             can be sensibly combined. The data should be numbers.</li>
-<li><strong>settings</strong> (<a class="reference external" href="http://docs.python.org/library/stdtypes.html#dict" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">dict</span></tt></a> or <a class="reference external" href="http://docs.python.org/library/constants.html#None" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">None</span></tt></a>) &#8211; This indexer uses no settings, so this is ignored.</li>
+<li><strong>index</strong> (<tt class="xref py py-class docutils literal"><span class="pre">pandas.DataFrame</span></tt> or <a class="reference external" href="http://docs.python.org/2.7/library/functions.html#list" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">list</span></tt></a> of <tt class="xref py py-class docutils literal"><span class="pre">pandas.DataFrame</span></tt> or of             <tt class="xref py py-class docutils literal"><span class="pre">pandas.Series</span></tt>) &#8211; The data to aggregate. You should ensure the row index of each pandas object             can be sensibly combined. The data should be numbers.</li>
+<li><strong>settings</strong> (<a class="reference external" href="http://docs.python.org/2.7/library/stdtypes.html#dict" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">dict</span></tt></a> or <a class="reference external" href="http://docs.python.org/2.7/library/constants.html#None" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">None</span></tt></a>) &#8211; This indexer uses no settings, so this is ignored.</li>
 </ul>
 </td>
 </tr>
@@ -159,8 +160,8 @@ and going to the end of a piece.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>index</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#list" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">list</span></tt></a> or <a class="reference external" href="http://docs.python.org/library/stdtypes.html#dict" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">dict</span></tt></a> of <tt class="xref py py-class docutils literal"><span class="pre">pandas.Series</span></tt>) &#8211; A list of <tt class="xref py py-class docutils literal"><span class="pre">Series</span></tt>, where each one is the result of an indexer for             one of the parts in this score.</li>
-<li><strong>settings</strong> (<a class="reference external" href="http://docs.python.org/library/stdtypes.html#dict" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">dict</span></tt></a> or <a class="reference external" href="http://docs.python.org/library/constants.html#None" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">None</span></tt></a>) &#8211; This indexer uses no settings, so this is ignored.</li>
+<li><strong>index</strong> (<a class="reference external" href="http://docs.python.org/2.7/library/functions.html#list" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">list</span></tt></a> or <a class="reference external" href="http://docs.python.org/2.7/library/stdtypes.html#dict" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">dict</span></tt></a> of <tt class="xref py py-class docutils literal"><span class="pre">pandas.Series</span></tt>) &#8211; A list of <tt class="xref py py-class docutils literal"><span class="pre">Series</span></tt>, where each one is the result of an indexer for             one of the parts in this score.</li>
+<li><strong>settings</strong> (<a class="reference external" href="http://docs.python.org/2.7/library/stdtypes.html#dict" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">dict</span></tt></a> or <a class="reference external" href="http://docs.python.org/2.7/library/constants.html#None" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">None</span></tt></a>) &#8211; This indexer uses no settings, so this is ignored.</li>
 </ul>
 </td>
 </tr>
@@ -202,7 +203,7 @@ and going to the end of a piece.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>obj</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#tuple" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">tuple</span></tt></a> of (anything, <tt class="xref py py-class docutils literal"><span class="pre">pandas.Series</span></tt>)) &#8211; An identifier plus the results of an indexer.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>obj</strong> (<a class="reference external" href="http://docs.python.org/2.7/library/functions.html#tuple" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">tuple</span></tt></a> of (anything, <tt class="xref py py-class docutils literal"><span class="pre">pandas.Series</span></tt>)) &#8211; An identifier plus the results of an indexer.</td>
 </tr>
 </tbody>
 </table>
@@ -212,7 +213,7 @@ and going to the end of a piece.</p>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">An identifier plus the result of this indexation. In the series, the index is the         names of objects found in the inputted series, and the value is the number of occurrences.         The first element is the first element given here, used for identification purposes.</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="http://docs.python.org/library/functions.html#tuple" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">tuple</span></tt></a> of (anything, <tt class="xref py py-class docutils literal"><span class="pre">pandas.Series</span></tt>)</td>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="http://docs.python.org/2.7/library/functions.html#tuple" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">tuple</span></tt></a> of (anything, <tt class="xref py py-class docutils literal"><span class="pre">pandas.Series</span></tt>)</td>
 </tr>
 </tbody>
 </table>
@@ -234,7 +235,7 @@ and going to the end of a piece.</p>
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
 <li><strong>index</strong> (<em>list, nested lists, or dict of pandas.Series or pandas.DataFrame, or simply
 the pandas object itself.</em>) &#8211; The indices or experimental results to use for this experiment.</li>
-<li><strong>settings</strong> (<a class="reference external" href="http://docs.python.org/library/stdtypes.html#dict" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">dict</span></tt></a> or <a class="reference external" href="http://docs.python.org/library/constants.html#None" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">None</span></tt></a>) &#8211; A dict of all the settings required by this Experimenter. All required
+<li><strong>settings</strong> (<a class="reference external" href="http://docs.python.org/2.7/library/stdtypes.html#dict" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">dict</span></tt></a> or <a class="reference external" href="http://docs.python.org/2.7/library/constants.html#None" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">None</span></tt></a>) &#8211; A dict of all the settings required by this Experimenter. All required
 settings should be listed in subclasses. Default is None.</li>
 </ul>
 </td>

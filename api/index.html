@@ -23,8 +23,9 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="author" title="About these documents" href="about.html" />
     <link rel="top" title="vis X documentation" href="#" />
-    <link rel="next" title="vis" href="modules.html" /> 
+    <link rel="next" title="Design Principles" href="about.html" /> 
   </head>
   <body>
     <div class="related">
@@ -37,7 +38,7 @@
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
-          <a href="modules.html" title="vis"
+          <a href="about.html" title="Design Principles"
              accesskey="N">next</a> |</li>
         <li><a href="#">vis X documentation</a> &raquo;</li> 
       </ul>
@@ -48,7 +49,9 @@
   <ul>
 <li><a class="reference internal" href="#">Documentation for the <tt class="docutils literal"><span class="pre">vis</span></tt> Music Analysis Framework</a><ul>
 <li><a class="reference internal" href="#about-this-documentation">About This Documentation</a></li>
-<li><a class="reference internal" href="#about-the-vis-framework">About the <tt class="docutils literal"><span class="pre">vis</span></tt> Framework</a></li>
+<li><a class="reference internal" href="#use-the-vis-framework">Use the <tt class="docutils literal"><span class="pre">vis</span></tt> Framework</a><ul>
+</ul>
+</li>
 <li><a class="reference internal" href="#api-specification">API Specification</a><ul>
 </ul>
 </li>
@@ -58,8 +61,8 @@
 </ul>
 
   <h4>Next topic</h4>
-  <p class="topless"><a href="modules.html"
-                        title="next chapter">vis</a></p>
+  <p class="topless"><a href="about.html"
+                        title="next chapter">Design Principles</a></p>
   <h3>This Page</h3>
   <ul class="this-page-menu">
     <li><a href="_sources/index.txt"
@@ -99,12 +102,30 @@
 <li>How to Use This Documentation. This will include instructions on how to know which parts of the indexers/experimenters documentation is important to read when all you want to do is find the output formats.</li>
 </ul>
 </div>
-<div class="section" id="about-the-vis-framework">
-<h2>About the <tt class="docutils literal"><span class="pre">vis</span></tt> Framework<a class="headerlink" href="#about-the-vis-framework" title="Permalink to this headline">¶</a></h2>
-<ul class="simple">
-<li>Design Principles</li>
-<li>How to Design a Workflow</li>
+<div class="section" id="use-the-vis-framework">
+<h2>Use the <tt class="docutils literal"><span class="pre">vis</span></tt> Framework<a class="headerlink" href="#use-the-vis-framework" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="about.html">Design Principles</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="about.html#write-an-analyzer">Write an Analyzer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="about.html#use-a-model">Use a Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="about.html#how-to-start">How to Start</a></li>
 </ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="about.html#install-and-test-the-framework">Install and Test the Framework</a></li>
+<li class="toctree-l1"><a class="reference internal" href="about.html#known-issues-and-limitations">Known Issues and Limitations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="about.html#tutorial-make-a-new-workflow">Tutorial: Make a new Workflow</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="about.html#develop-a-question">Develop a Question</a></li>
+<li class="toctree-l2"><a class="reference internal" href="about.html#what-does-the-ngramindexer-require">What Does the NGramIndexer Require?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="about.html#how-shall-i-aggregate-results">How Shall I Aggregate Results?</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="about.html#tutorial-use-the-workflowmanager">Tutorial: Use the WorkflowManager</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="about.html#port-a-query-into-the-workflowmanager">Port a Query into the WorkflowManager</a></li>
+</ul>
+</li>
+</ul>
+</div>
 </div>
 <div class="section" id="api-specification">
 <h2>API Specification<a class="headerlink" href="#api-specification" title="Permalink to this headline">¶</a></h2>
@@ -118,17 +139,13 @@
 <li class="toctree-l3"><a class="reference internal" href="vis.analyzers.html#subpackages">Subpackages</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="vis.controllers.html">controllers Package</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="vis.controllers.html#id1"><tt class="docutils literal"><span class="pre">controllers</span></tt> Package</a></li>
-<li class="toctree-l3"><a class="reference internal" href="vis.controllers.html#workflow-module"><tt class="docutils literal"><span class="pre">workflow</span></tt> Module</a></li>
-</ul>
-</li>
 <li class="toctree-l2"><a class="reference internal" href="vis.models.html">models Package</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="vis.models.html#id1"><tt class="docutils literal"><span class="pre">models</span></tt> Package</a></li>
 <li class="toctree-l3"><a class="reference internal" href="vis.models.html#module-vis.models.aggregated_pieces"><tt class="docutils literal"><span class="pre">aggregated_pieces</span></tt> Module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="vis.models.html#module-vis.models.indexed_piece"><tt class="docutils literal"><span class="pre">indexed_piece</span></tt> Module</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="modules.html#module-vis.workflow"><tt class="docutils literal"><span class="pre">workflow</span></tt> Module</a></li>
 </ul>
 </li>
 </ul>
@@ -160,7 +177,7 @@
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
-          <a href="modules.html" title="vis"
+          <a href="about.html" title="Design Principles"
              >next</a> |</li>
         <li><a href="#">vis X documentation</a> &raquo;</li> 
       </ul>

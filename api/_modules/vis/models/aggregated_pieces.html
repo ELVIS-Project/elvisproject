@@ -23,6 +23,7 @@
     <script type="text/javascript" src="../../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <link rel="author" title="About these documents" href="../../../about.html" />
     <link rel="top" title="vis X documentation" href="../../../index.html" />
     <link rel="up" title="Module code" href="../../index.html" /> 
   </head>
@@ -89,7 +90,7 @@
 <span class="c"># along with this program.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
 <span class="c">#--------------------------------------------------------------------------------------------------</span>
 <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">The model representing data from multiple :class:`vis.models.indexed_piece.IndexedPiece`s.</span>
+<span class="sd">The model representing data from multiple :class:`~vis.models.indexed_piece.IndexedPiece` instances.</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
 <span class="kn">import</span> <span class="nn">pandas</span>
@@ -98,12 +99,14 @@
 
 <div class="viewcode-block" id="AggregatedPieces"><a class="viewcode-back" href="../../../vis.models.html#vis.models.aggregated_pieces.AggregatedPieces">[docs]</a><span class="k">class</span> <span class="nc">AggregatedPieces</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Hold data from multiple :class:`vis.models.indexed_piece.IndexedPiece`s.</span>
+<span class="sd">    Hold data from multiple :class:`~vis.models.indexed_piece.IndexedPiece` instances.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="c"># pylint: disable=R0903</span>
 <div class="viewcode-block" id="AggregatedPieces.Metadata"><a class="viewcode-back" href="../../../vis.models.html#vis.models.aggregated_pieces.AggregatedPieces.Metadata">[docs]</a>    <span class="k">class</span> <span class="nc">Metadata</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Used internally by :class:`AggregatedPieces` ... at least for now.</span>
+
 <span class="sd">        Hold aggregated metadata about the IndexedPieces in an AggregatedPiece. Every list has no</span>
 <span class="sd">        duplicate entries.</span>
 
@@ -116,30 +119,26 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">__slots__</span> <span class="o">=</span> <span class="p">(</span><span class="s">u&#39;composers&#39;</span><span class="p">,</span> <span class="s">u&#39;dates&#39;</span><span class="p">,</span> <span class="s">u&#39;date_range&#39;</span><span class="p">,</span> <span class="s">u&#39;titles&#39;</span><span class="p">,</span> <span class="s">u&#39;locales&#39;</span><span class="p">,</span> <span class="s">u&#39;pathnames&#39;</span><span class="p">)</span>
 </div>
-<div class="viewcode-block" id="AggregatedPieces.__init__"><a class="viewcode-back" href="../../../vis.models.html#vis.models.aggregated_pieces.AggregatedPieces.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pieces</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pieces</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Instantiate an AggregatedPieces.</span>
-
-<span class="sd">        Parameters</span>
-<span class="sd">        ==========</span>
 <span class="sd">        :param pieces: The IndexedPieces to collect.</span>
-<span class="sd">        :type pieces: list of IndexedPiece</span>
+<span class="sd">        :type pieces: list of :class:`~vis.models.indexed_piece.IndexedPiece`</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">AggregatedPieces</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_pieces</span> <span class="o">=</span> <span class="n">pieces</span> <span class="k">if</span> <span class="n">pieces</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span> <span class="k">else</span> <span class="p">[]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_metadata</span> <span class="o">=</span> <span class="n">AggregatedPieces</span><span class="o">.</span><span class="n">Metadata</span><span class="p">()</span>  <span class="c"># about the IndexedPieces</span>
         <span class="c"># set our &quot;pathnames&quot; metadata</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_metadata</span><span class="o">.</span><span class="n">pathnames</span> <span class="o">=</span> <span class="p">[</span><span class="n">p</span><span class="o">.</span><span class="n">metadata</span><span class="p">(</span><span class="s">u&#39;pathname&#39;</span><span class="p">)</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pieces</span><span class="p">]</span>
-</div>
-<div class="viewcode-block" id="AggregatedPieces.__repr__"><a class="viewcode-back" href="../../../vis.models.html#vis.models.aggregated_pieces.AggregatedPieces.__repr__">[docs]</a>    <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">pass</span>
-</div>
-<div class="viewcode-block" id="AggregatedPieces.__str__"><a class="viewcode-back" href="../../../vis.models.html#vis.models.aggregated_pieces.AggregatedPieces.__str__">[docs]</a>    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">pass</span>
-</div>
-<div class="viewcode-block" id="AggregatedPieces.__unicode__"><a class="viewcode-back" href="../../../vis.models.html#vis.models.aggregated_pieces.AggregatedPieces.__unicode__">[docs]</a>    <span class="k">def</span> <span class="nf">__unicode__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">__unicode__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">pass</span>
-</div>
+
     <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">_make_date_range</span><span class="p">(</span><span class="n">dates</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -222,25 +221,27 @@
 
 <div class="viewcode-block" id="AggregatedPieces.metadata"><a class="viewcode-back" href="../../../vis.models.html#vis.models.aggregated_pieces.AggregatedPieces.metadata">[docs]</a>    <span class="k">def</span> <span class="nf">metadata</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">field</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Get a metadata about the IndexedPieces stored in this AggregatedPieces.</span>
+<span class="sd">        Get a metadatum about the IndexedPieces stored in this AggregatedPieces.</span>
 
 <span class="sd">        If only some of the stored IndexedPieces have had their metadata initialized, this method</span>
-<span class="sd">        returns incompelete metadata. Missing data will be represented as None in the list, but it</span>
-<span class="sd">        will not appear in date_range unless there are no dates. If you need full metadata, we</span>
-<span class="sd">        recommend running an Indexer on all the IndexedPiece objects.</span>
+<span class="sd">        returns incompelete metadata. Missing data will be represented as :obj:`None` in the list,</span>
+<span class="sd">        but it will not appear in ``date_range`` unless there are no dates. If you need full</span>
+<span class="sd">        metadata, we recommend running an Indexer that requires a :class:`Score` object on all the</span>
+<span class="sd">        IndexedPieces (like :class:`vis.analyzers.indexers.noterest.NoteRestIndexer`).</span>
 
 <span class="sd">        Valid fields are:</span>
-<span class="sd">        - composers: list of all the composers in the IndexedPieces</span>
-<span class="sd">        - dates: list of all the dates in the IndexedPieces</span>
-<span class="sd">        - date_range: 2-tuple with the earliest and latest dates in the IndexedPieces</span>
-<span class="sd">        - titles: list of all the titles in the IndexedPieces</span>
-<span class="sd">        - locales: list of all the locales in the IndexedPieces</span>
-<span class="sd">        - pathnames: list of all the pathnames in the IndexedPieces</span>
+
+<span class="sd">        * ``u&#39;composers``: list of all the composers in the IndexedPieces</span>
+<span class="sd">        * ``u&#39;dates``: list of all the dates in the IndexedPieces</span>
+<span class="sd">        * ``u&#39;date_range``: 2-tuple with the earliest and latest dates in the IndexedPieces</span>
+<span class="sd">        * ``u&#39;titles``: list of all the titles in the IndexedPieces</span>
+<span class="sd">        * ``u&#39;locales``: list of all the locales in the IndexedPieces</span>
+<span class="sd">        * ``u&#39;pathnames``: list of all the pathnames in the IndexedPieces</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ==========</span>
-<span class="sd">        :param field: The name of the field to be accessed or modified</span>
-<span class="sd">        :type field: str or unicode</span>
+<span class="sd">        :param field: The name of the field to be accessed or modified.</span>
+<span class="sd">        :type field: :obj:`basestring`</span>
 
 <span class="sd">        Returns</span>
 <span class="sd">        =======</span>
@@ -250,7 +251,7 @@
 
 <span class="sd">        Raises</span>
 <span class="sd">        ======</span>
-<span class="sd">        :raises: TypeError if ``field`` is not a basestring.</span>
+<span class="sd">        :raises: :exc:`TypeError` if ``field`` is not a basestring.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">field</span><span class="p">,</span> <span class="nb">basestring</span><span class="p">):</span>
             <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s">u&quot;parameter &#39;field&#39; must be of type &#39;basestring&#39;&quot;</span><span class="p">)</span>
@@ -269,17 +270,20 @@
 <span class="sd">        The same settings dict will be given to all experiments and indexers.</span>
 
 <span class="sd">        If you want the results from all IndexedPieces separately, provide an empty list as the</span>
-<span class="sd">        &quot;aggregated_experiments&quot; argument.</span>
+<span class="sd">        ``aggregated_experiments`` argument.</span>
 
-<span class="sd">        The first analyzer in &quot;independent_analyzers&quot; should use a Score.</span>
+<span class="sd">        The first analyzer in ``independent_analyzers`` should use a :class:`music21.stream.Score`.</span>
 
-<span class="sd">        Examples</span>
-<span class="sd">        ========</span>
-<span class="sd">        pieces.get_data([A, B], [C, D]) will run analyzer C then D on each piece individually, then</span>
-<span class="sd">        provide a list of those results to Experimenter A, and pass its output to Experimenter B.</span>
+<span class="sd">        **Examples:**</span>
 
-<span class="sd">        pieces.get_data([A, B], [C, D]) will run analyzer C then D on each piece individually, then</span>
-<span class="sd">        return a list of those results.</span>
+<span class="sd">        Run analyzer C then D on each piece individually, then provide a list of those results to</span>
+<span class="sd">        Experimenter A, and pass its output to Experimenter B.</span>
+
+<span class="sd">        &gt;&gt;&gt; pieces.get_data([A, B], [C, D])</span>
+
+<span class="sd">        Run analyzer C then D on each piece individually, then return a list of those results.</span>
+
+<span class="sd">        &gt;&gt;&gt; pieces.get_data([A, B], [C, D])</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ==========</span>
@@ -295,17 +299,18 @@
 <span class="sd">        :type settings: dict</span>
 
 <span class="sd">        :param data: Input data for the first analyzer to run. This is for internal use only.</span>
-<span class="sd">        :type data: list of pandas.Series or pandas.DataFrame</span>
+<span class="sd">        :type data: list of :class:`pandas.Series` or :class:`pandas.DataFrame`</span>
 
 <span class="sd">        Returns</span>
 <span class="sd">        =======</span>
 <span class="sd">        :return: Either one DataFrame with all experimental results or a list of DataFrames, each</span>
 <span class="sd">            with the experimental results for one piece.</span>
-<span class="sd">        :rtype: pandas.DataFrame or list of pandas.DataFrame or pandas.Series</span>
+<span class="sd">        :rtype: :class:`pandas.DataFrame` or list of :class:`pandas.Series` or \</span>
+<span class="sd">            :class:`pandas.DataFrame`</span>
 
 <span class="sd">        Raises</span>
 <span class="sd">        ======</span>
-<span class="sd">        :raises: TypeError, if the &quot;analyzer_cls&quot; is invalid or cannot be found.</span>
+<span class="sd">        :raises: :exc:`TypeError` if the ``analyzer_cls`` is invalid or cannot be found.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="p">[]</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pieces</span><span class="p">:</span>
             <span class="k">return</span> <span class="p">[</span><span class="n">pandas</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()]</span> <span class="k">if</span> <span class="p">[]</span> <span class="o">==</span> <span class="n">aggregated_experiments</span> <span class="k">else</span> <span class="n">pandas</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
@@ -313,7 +318,7 @@
             <span class="k">if</span> <span class="ow">not</span> <span class="nb">issubclass</span><span class="p">(</span><span class="n">each_cls</span><span class="p">,</span> <span class="n">experimenter</span><span class="o">.</span><span class="n">Experimenter</span><span class="p">):</span>
                 <span class="n">msg</span> <span class="o">=</span> <span class="s">u&#39;AggregatedPieces requires Experimenters (received {})&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">each_cls</span><span class="p">)</span>
                 <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">independent_analyzers</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">independent_analyzers</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">independent_analyzers</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_data</span><span class="p">(</span><span class="n">aggregated_experiments</span><span class="p">,</span>
                                  <span class="bp">None</span><span class="p">,</span>
                                  <span class="n">settings</span><span class="p">,</span>

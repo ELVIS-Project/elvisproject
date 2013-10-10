@@ -23,6 +23,7 @@
     <script type="text/javascript" src="../../../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+    <link rel="author" title="About these documents" href="../../../../about.html" />
     <link rel="top" title="vis X documentation" href="../../../../index.html" />
     <link rel="up" title="Module code" href="../../../index.html" /> 
   </head>
@@ -90,7 +91,8 @@
 <span class="c">#--------------------------------------------------------------------------------------------------</span>
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">Indexers that modify the &quot;offset&quot; values (floats stored as the &quot;index&quot; of a :class:`pandas.Series`),</span>
-<span class="sd">and potentially the number of events, without modifying the events themselves.</span>
+<span class="sd">potentially adding repetitions of or removing pre-existing events, without modifying the events</span>
+<span class="sd">themselves.</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
 <span class="kn">import</span> <span class="nn">pandas</span>
@@ -100,6 +102,116 @@
 <div class="viewcode-block" id="FilterByOffsetIndexer"><a class="viewcode-back" href="../../../../vis.analyzers.indexers.html#vis.analyzers.indexers.offset.FilterByOffsetIndexer">[docs]</a><span class="k">class</span> <span class="nc">FilterByOffsetIndexer</span><span class="p">(</span><span class="n">indexer</span><span class="o">.</span><span class="n">Indexer</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Indexer that regularizes the &quot;offset&quot; values of observations from other indexers.</span>
+
+<span class="sd">    The Indexer regularizes observations from offsets spaced any, possibly irregular,</span>
+<span class="sd">    quarterLength durations apart, so they are instead observed at regular intervals. This has</span>
+<span class="sd">    two effects:</span>
+
+<span class="sd">    * events that do not begin at an observed offset will only be included in the output if no</span>
+<span class="sd">      other event occurs before the next observed offset</span>
+<span class="sd">    * events that last for many observed offsets will be repeated for those offsets</span>
+
+<span class="sd">    Since elements&#39; durations are not recorded, the last observation in a Series will always be</span>
+<span class="sd">    included in the results. If it does not start on an observed offset, it will be included as</span>
+<span class="sd">    the next observed offset---again, whether or not this is true in the actual music. However,</span>
+<span class="sd">    the last observation will only ever be counted once, even if a part ends before others in</span>
+<span class="sd">    a piece with many parts. See the doctests for examples.</span>
+
+<span class="sd">    **Examples**. For all, the ``quarterLength`` is ``1.0``.</span>
+
+<span class="sd">    When events in the input already appear at intervals of ``quarterLength``, input and output \</span>
+<span class="sd">    are identical.</span>
+
+<span class="sd">    +--------+-------+-------+-------+</span>
+<span class="sd">    | offset | 0.0   | 1.0   | 2.0   |</span>
+<span class="sd">    +========+=======+=======+=======+</span>
+<span class="sd">    | input  | ``a`` | ``b`` | ``c`` |</span>
+<span class="sd">    +--------+-------+-------+-------+</span>
+<span class="sd">    | output | ``a`` | ``b`` | ``c`` |</span>
+<span class="sd">    +--------+-------+-------+-------+</span>
+
+<span class="sd">    When events in the input appear at intervals of ``quarterLength``, but there are additional</span>
+<span class="sd">    elements between the observed offsets, those additional elements are removed.</span>
+
+<span class="sd">    +--------+-------+-------+-------+-------+</span>
+<span class="sd">    | offset | 0.0   | 0.5   | 1.0   | 2.0   |</span>
+<span class="sd">    +========+=======+=======+=======+=======+</span>
+<span class="sd">    | input  | ``a`` | ``A`` | ``b`` | ``c`` |</span>
+<span class="sd">    +--------+-------+-------+-------+-------+</span>
+<span class="sd">    | output | ``a``         | ``b`` | ``c`` |</span>
+<span class="sd">    +--------+---------------+-------+-------+</span>
+
+<span class="sd">    +--------+-------+-------+-------+-------+-------+</span>
+<span class="sd">    | offset | 0.0   | 0.25  | 0.5   | 1.0   | 2.0   |</span>
+<span class="sd">    +========+=======+=======+=======+=======+=======+</span>
+<span class="sd">    | input  | ``a`` | ``z`` | ``A`` | ``b`` | ``c`` |</span>
+<span class="sd">    +--------+-------+-------+-------+-------+-------+</span>
+<span class="sd">    | output | ``a``                 | ``b`` | ``c`` |</span>
+<span class="sd">    +--------+-----------------------+-------+-------+</span>
+
+<span class="sd">    When events in the input appear at intervals of ``quarterLength``, but not at every observed \</span>
+<span class="sd">    offset, the event from the previous offset is repeated.</span>
+
+<span class="sd">    +--------+-------+-------+-------+</span>
+<span class="sd">    | offset | 0.0   | 1.0   | 2.0   |</span>
+<span class="sd">    +========+=======+=======+=======+</span>
+<span class="sd">    | input  | ``a``         | ``c`` |</span>
+<span class="sd">    +--------+-------+-------+-------+</span>
+<span class="sd">    | output | ``a`` | ``a`` | ``c`` |</span>
+<span class="sd">    +--------+-------+-------+-------+</span>
+
+<span class="sd">    When events in the input appear at offsets other than those observed by the specified \</span>
+<span class="sd">    ``quarterLength``, the &quot;most recent&quot; event will appear.</span>
+
+<span class="sd">    +--------+-------+-------+-------+-------+-------+</span>
+<span class="sd">    | offset | 0.0   | 0.25  | 0.5   | 1.0   | 2.0   |</span>
+<span class="sd">    +========+=======+=======+=======+=======+=======+</span>
+<span class="sd">    | input  | ``a`` | ``z`` | ``A``         | ``c`` |</span>
+<span class="sd">    +--------+-------+-------+-------+-------+-------+</span>
+<span class="sd">    | output | ``a``                 | ``A`` | ``c`` |</span>
+<span class="sd">    +--------+-----------------------+-------+-------+</span>
+
+<span class="sd">    When the final event does not appear at an observed offset, it will be included in the output \</span>
+<span class="sd">    at the next offset that would be observed, even if this offset does not appear in the \</span>
+<span class="sd">    score file to which the results correspond.</span>
+
+<span class="sd">    +--------+-------+-------+-------+-------+</span>
+<span class="sd">    | offset | 0.0   | 1.0   | 1.5   | 2.0   |</span>
+<span class="sd">    +========+=======+=======+=======+=======+</span>
+<span class="sd">    | input  | ``a`` | ``b`` | ``d``         |</span>
+<span class="sd">    +--------+-------+-------+-------+-------+</span>
+<span class="sd">    | output | ``a`` | ``b``         | ``d`` |</span>
+<span class="sd">    +--------+-------+---------------+-------+</span>
+
+<span class="sd">    The behaviour in this last example can create a potentially misleading result for some \</span>
+<span class="sd">    analytic situations that consider metre. It avoids another potentially misleading situation  \</span>
+<span class="sd">    where the final chord of a piece would appear to be dissonant because of a suspension. We chose</span>
+<span class="sd">    to lose metric and rythmic precision, which would be more profitably analyzed with indexers \</span>
+<span class="sd">    built for that purpose. Consider this illustration, where the numbers correspond to scale \</span>
+<span class="sd">    degrees.</span>
+
+<span class="sd">    +--------+-------+-------+-------+-------+</span>
+<span class="sd">    | offset | 410.0 | 411.0 | 411.5 | 412.0 |</span>
+<span class="sd">    +========+=======+=======+=======+=======+</span>
+<span class="sd">    | in-S   | 2     | 1                     |</span>
+<span class="sd">    +--------+-------+-------+---------------+</span>
+<span class="sd">    | in-A   | 7---  | 6     | 1             |</span>
+<span class="sd">    +--------+-------+-------+---------------+</span>
+<span class="sd">    | in-T   | 4     | 3                     |</span>
+<span class="sd">    +--------+-------+-----------------------+</span>
+<span class="sd">    | in-B   | 5     | 1                     |</span>
+<span class="sd">    +--------+-------+---------------+-------+</span>
+<span class="sd">    | out-S  | 2     | 1             | 1     |</span>
+<span class="sd">    +--------+-------+---------------+-------+</span>
+<span class="sd">    | out-A  | 7---  | 7             | 1     |</span>
+<span class="sd">    +--------+-------+---------------+-------+</span>
+<span class="sd">    | out-T  | 4     | 3             | 3     |</span>
+<span class="sd">    +--------+-------+---------------+-------+</span>
+<span class="sd">    | out-B  | 5     | 1             | 1     |</span>
+<span class="sd">    +--------+-------+---------------+-------+</span>
+
+<span class="sd">    If we left out the note event appear in the ``in-A`` part at offset ``411.5``, the piece would</span>
+<span class="sd">    appear to end with a dissonant sonority!</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">required_score_type</span> <span class="o">=</span> <span class="n">pandas</span><span class="o">.</span><span class="n">Series</span>
@@ -115,42 +227,18 @@
 <span class="sd">    :type u&#39;quarterLength&#39;: :obj:`float`</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="FilterByOffsetIndexer.__init__"><a class="viewcode-back" href="../../../../vis.analyzers.indexers.html#vis.analyzers.indexers.offset.FilterByOffsetIndexer.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">score</span><span class="p">,</span> <span class="n">settings</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">score</span><span class="p">,</span> <span class="n">settings</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Create a new :class:`FilterByOffsetIndexer`.</span>
-
-<span class="sd">        The Indexer regularizes observations from offsets spaced any, possibly irregular,</span>
-<span class="sd">        quarterLength durations apart, so they are instead observed at regular intervals. This has</span>
-<span class="sd">        two effects:</span>
-<span class="sd">        * events that do not begin at an observed offset will only be included in the output if no</span>
-<span class="sd">          other event occurs before the next observed offset</span>
-<span class="sd">        * events that last for many observed offsets will be repeated for those offsets</span>
-
-<span class="sd">        Since elements&#39; durations are not recorded, the last observation in a Series will always be</span>
-<span class="sd">        included in the results. If it does not start on an observed offset, it will be included as</span>
-<span class="sd">        the next observed offset---again, whether or not this is true in the actual music. However,</span>
-<span class="sd">        the last observation will only ever be counted once, even if a part ends before others in</span>
-<span class="sd">        a piece with many parts. See the doctests for examples.</span>
-
-<span class="sd">        Examples</span>
-<span class="sd">        ========</span>
-<span class="sd">        TODO: totally gotta write these!</span>
-
-<span class="sd">        Parameters</span>
-<span class="sd">        ==========</span>
 <span class="sd">        :param score: A list of Series you wish to filter by offset values, stored in the Index.</span>
 <span class="sd">        :type score: :obj:`list` of :obj:`pandas.Series`</span>
-
 <span class="sd">        :param settings: There is one required setting. See :const:`possible_settings`.</span>
 <span class="sd">        :type settings: :obj:`dict`</span>
 
-<span class="sd">        Raises</span>
-<span class="sd">        ======</span>
 <span class="sd">        :raises: :exc:`RuntimeError` if :obj:`score` is the wrong type.</span>
 <span class="sd">        :raises: :exc:`RuntimeError` if :obj:`score` is not a list of the same types.</span>
 <span class="sd">        :raises: :exc:`RuntimeError` if the required setting is not present in :obj:`settings`.</span>
 <span class="sd">        :raises: :exc:`RuntimeError` if the :obj:`u&#39;quarterLength&#39;` setting has a value less</span>
-<span class="sd">            than 0.001.</span>
+<span class="sd">            than ``0.001``.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">FilterByOffsetIndexer</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="n">score</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span>
 
@@ -169,7 +257,7 @@
 
         <span class="c"># This Indexer uses pandas magic, not an _indexer_func().</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_indexer_func</span> <span class="o">=</span> <span class="bp">None</span>
-</div>
+
 <div class="viewcode-block" id="FilterByOffsetIndexer.run"><a class="viewcode-back" href="../../../../vis.analyzers.indexers.html#vis.analyzers.indexers.offset.FilterByOffsetIndexer.run">[docs]</a>    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Regularize the observed offsets for the inputted Series.</span>

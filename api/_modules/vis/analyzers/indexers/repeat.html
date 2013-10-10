@@ -23,6 +23,7 @@
     <script type="text/javascript" src="../../../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+    <link rel="author" title="About these documents" href="../../../../about.html" />
     <link rel="top" title="vis X documentation" href="../../../../index.html" />
     <link rel="up" title="Module code" href="../../../index.html" /> 
   </head>
@@ -89,7 +90,7 @@
 <span class="c"># along with this program.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
 <span class="c">#--------------------------------------------------------------------------------------------------</span>
 <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">Indexers that somehow consider repetition.</span>
+<span class="sd">Indexers that consider repetition in any way.</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
 <span class="kn">import</span> <span class="nn">numpy</span>
@@ -99,26 +100,20 @@
 
 <div class="viewcode-block" id="FilterByRepeatIndexer"><a class="viewcode-back" href="../../../../vis.analyzers.indexers.html#vis.analyzers.indexers.repeat.FilterByRepeatIndexer">[docs]</a><span class="k">class</span> <span class="nc">FilterByRepeatIndexer</span><span class="p">(</span><span class="n">indexer</span><span class="o">.</span><span class="n">Indexer</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Filter consecutive identical events, leaving only the event at the first offset.</span>
+<span class="sd">    If the same event occurs many times in a row, remove all occurrences but the one with the \</span>
+<span class="sd">    lowest ``offset`` value (i.e., the &quot;first&quot; event).</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">required_score_type</span> <span class="o">=</span> <span class="n">pandas</span><span class="o">.</span><span class="n">Series</span>
     <span class="s">&quot;The :class:`FilterByRepeatIndexer` requires :class:`pandas.Series` as input.&quot;</span>
 
-<div class="viewcode-block" id="FilterByRepeatIndexer.__init__"><a class="viewcode-back" href="../../../../vis.analyzers.indexers.html#vis.analyzers.indexers.repeat.FilterByRepeatIndexer.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">score</span><span class="p">,</span> <span class="n">settings</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">score</span><span class="p">,</span> <span class="n">settings</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Create a new :class:`FilterByRepeatIndexer`.</span>
-
-<span class="sd">        Parameters</span>
-<span class="sd">        ==========</span>
 <span class="sd">        :param score: The indices from which to remove consecutive identical events.</span>
 <span class="sd">        :type score: :obj:`list` of :obj:`pandas.Series`</span>
-
 <span class="sd">        :param settings: This indexer uses no settings, so this is ignored.</span>
 <span class="sd">        :type settings: :obj:`dict` or :obj:`None`</span>
 
-<span class="sd">        Raises</span>
-<span class="sd">        ======</span>
 <span class="sd">        :raises: :exc:`RuntimeError` if :obj:`score` is the wrong type.</span>
 <span class="sd">        :raises: :exc:`RuntimeError` if :obj:`score` is not a list of the same types.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -129,7 +124,7 @@
 
         <span class="c"># This Indexer uses pandas magic, not an _indexer_func().</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_indexer_func</span> <span class="o">=</span> <span class="bp">None</span>
-</div>
+
 <div class="viewcode-block" id="FilterByRepeatIndexer.run"><a class="viewcode-back" href="../../../../vis.analyzers.indexers.html#vis.analyzers.indexers.repeat.FilterByRepeatIndexer.run">[docs]</a>    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Make a new index of the piece, removing any event that is identical to the preceding.</span>

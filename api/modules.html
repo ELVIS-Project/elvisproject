@@ -23,9 +23,10 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="author" title="About these documents" href="about.html" />
     <link rel="top" title="vis X documentation" href="index.html" />
     <link rel="next" title="analyzers Package" href="vis.analyzers.html" />
-    <link rel="prev" title="Documentation for the vis Music Analysis Framework" href="index.html" /> 
+    <link rel="prev" title="Design Principles" href="about.html" /> 
   </head>
   <body>
     <div class="related">
@@ -41,16 +42,24 @@
           <a href="vis.analyzers.html" title="analyzers Package"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="index.html" title="Documentation for the vis Music Analysis Framework"
+          <a href="about.html" title="Design Principles"
              accesskey="P">previous</a> |</li>
         <li><a href="index.html">vis X documentation</a> &raquo;</li> 
       </ul>
     </div>
       <div class="sphinxsidebar">
         <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">vis</a><ul>
+<li><a class="reference internal" href="#module-vis.workflow"><tt class="docutils literal"><span class="pre">workflow</span></tt> Module</a></li>
+</ul>
+</li>
+</ul>
+
   <h4>Previous topic</h4>
-  <p class="topless"><a href="index.html"
-                        title="previous chapter">Documentation for the <tt class="docutils literal"><span class="pre">vis</span></tt> Music Analysis Framework</a></p>
+  <p class="topless"><a href="about.html"
+                        title="previous chapter">Design Principles</a></p>
   <h4>Next topic</h4>
   <p class="topless"><a href="vis.analyzers.html"
                         title="next chapter">analyzers Package</a></p>
@@ -110,11 +119,6 @@
 </li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="vis.controllers.html">controllers Package</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="vis.controllers.html#id1"><tt class="docutils literal"><span class="pre">controllers</span></tt> Package</a></li>
-<li class="toctree-l2"><a class="reference internal" href="vis.controllers.html#workflow-module"><tt class="docutils literal"><span class="pre">workflow</span></tt> Module</a></li>
-</ul>
-</li>
 <li class="toctree-l1"><a class="reference internal" href="vis.models.html">models Package</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="vis.models.html#id1"><tt class="docutils literal"><span class="pre">models</span></tt> Package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="vis.models.html#module-vis.models.aggregated_pieces"><tt class="docutils literal"><span class="pre">aggregated_pieces</span></tt> Module</a></li>
@@ -122,6 +126,322 @@
 </ul>
 </li>
 </ul>
+</div>
+<div class="section" id="module-vis.workflow">
+<span id="workflow-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">workflow</span></tt> Module<a class="headerlink" href="#module-vis.workflow" title="Permalink to this headline">¶</a></h2>
+<p>Workflow controller, to automate commonly-performed tasks.</p>
+<dl class="class">
+<dt id="vis.workflow.WorkflowManager">
+<em class="property">class </em><tt class="descclassname">vis.workflow.</tt><tt class="descname">WorkflowManager</tt><big>(</big><em>vals</em><big>)</big><a class="reference internal" href="_modules/vis/workflow.html#WorkflowManager"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#vis.workflow.WorkflowManager" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></p>
+<p>The <a class="reference internal" href="#vis.workflow.WorkflowManager" title="vis.workflow.WorkflowManager"><tt class="xref py py-class docutils literal"><span class="pre">WorkflowManager</span></tt></a> automates several commonly-performed music analysis patterns.</p>
+<p>There are four basic tasks the <a class="reference internal" href="#vis.workflow.WorkflowManager" title="vis.workflow.WorkflowManager"><tt class="xref py py-class docutils literal"><span class="pre">WorkflowManager</span></tt></a> performs, each with its own method:</p>
+<ul class="simple">
+<li><a class="reference internal" href="#vis.workflow.WorkflowManager.load" title="vis.workflow.WorkflowManager.load"><tt class="xref py py-meth docutils literal"><span class="pre">load()</span></tt></a>, to import data from external formats (MusicXML, Stata, pickled, etc.).</li>
+<li><a class="reference internal" href="#vis.workflow.WorkflowManager.run" title="vis.workflow.WorkflowManager.run"><tt class="xref py py-meth docutils literal"><span class="pre">run()</span></tt></a>, which performs one of a small set of pre-defined analysis activities.</li>
+<li><a class="reference internal" href="#vis.workflow.WorkflowManager.output" title="vis.workflow.WorkflowManager.output"><tt class="xref py py-meth docutils literal"><span class="pre">output()</span></tt></a>, which outputs visualization data to disk.</li>
+<li><a class="reference internal" href="#vis.workflow.WorkflowManager.export" title="vis.workflow.WorkflowManager.export"><tt class="xref py py-meth docutils literal"><span class="pre">export()</span></tt></a>, which outputs &#8220;non-visual&#8221; data to disk (Stata, CSV, pickled, etc.)</li>
+</ul>
+<p>We also provide the following methods for setting and getting properties of the individual
+<a class="reference internal" href="vis.models.html#vis.models.indexed_piece.IndexedPiece" title="vis.models.indexed_piece.IndexedPiece"><tt class="xref py py-class docutils literal"><span class="pre">IndexedPiece</span></tt></a> objects:</p>
+<ul class="simple">
+<li><a class="reference internal" href="#vis.workflow.WorkflowManager.metadata" title="vis.workflow.WorkflowManager.metadata"><tt class="xref py py-meth docutils literal"><span class="pre">metadata()</span></tt></a>, to adjust or view the metadata of a piece.</li>
+<li><a class="reference internal" href="#vis.workflow.WorkflowManager.settings" title="vis.workflow.WorkflowManager.settings"><tt class="xref py py-meth docutils literal"><span class="pre">settings()</span></tt></a>, to adjust or view the settings of a piece.</li>
+</ul>
+<p>It&#8217;s often easier to use the <a class="reference internal" href="#vis.workflow.WorkflowManager" title="vis.workflow.WorkflowManager"><tt class="xref py py-class docutils literal"><span class="pre">WorkflowManager</span></tt></a>, by providing a list of pathnames         corresponding to the files you want to analyze. However, if you will later need access to         the <a class="reference internal" href="vis.models.html#vis.models.indexed_piece.IndexedPiece" title="vis.models.indexed_piece.IndexedPiece"><tt class="xref py py-class docutils literal"><span class="pre">IndexedPiece</span></tt></a> objects directly themselves, you         should provide them to the <a class="reference internal" href="#vis.workflow.WorkflowManager" title="vis.workflow.WorkflowManager"><tt class="xref py py-class docutils literal"><span class="pre">WorkflowManager</span></tt></a> as in the second example below.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>vals</strong> (<a class="reference external" href="http://docs.python.org/2.7/library/functions.html#list" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">list</span></tt></a> of <a class="reference external" href="http://docs.python.org/2.7/library/functions.html#basestring" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">basestring</span></tt></a> or of             <a class="reference internal" href="vis.models.html#vis.models.indexed_piece.IndexedPiece" title="vis.models.indexed_piece.IndexedPiece"><tt class="xref py py-obj docutils literal"><span class="pre">IndexedPiece</span></tt></a>) &#8211; A list of pathnames or IndexedPieces. If an item in the list is not             either an IndexedPiece or basestring, it is silently ignored.</td>
+</tr>
+</tbody>
+</table>
+<p>We manage the <a class="reference internal" href="vis.models.html#vis.models.indexed_piece.IndexedPiece" title="vis.models.indexed_piece.IndexedPiece"><tt class="xref py py-class docutils literal"><span class="pre">IndexedPiece</span></tt></a> objects:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">paths</span> <span class="o">=</span> <span class="p">[</span><span class="s">u&#39;test_corpus/bwv77.mxl&#39;</span><span class="p">,</span> <span class="s">u&#39;test_corpus/Kyrie.krn&#39;</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">path_work</span> <span class="o">=</span> <span class="n">WorkflowManager</span><span class="p">(</span><span class="n">paths</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>You manage the <a class="reference internal" href="vis.models.html#vis.models.indexed_piece.IndexedPiece" title="vis.models.indexed_piece.IndexedPiece"><tt class="xref py py-class docutils literal"><span class="pre">IndexedPiece</span></tt></a> objects:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">ips</span> <span class="o">=</span> <span class="p">[</span><span class="n">IndexedPiece</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">paths</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ip_work</span> <span class="o">=</span> <span class="n">WorkflowManager</span><span class="p">(</span><span class="n">ips</span><span class="p">)</span>
+</pre></div>
+</div>
+<dl class="method">
+<dt id="vis.workflow.WorkflowManager.export">
+<tt class="descname">export</tt><big>(</big><em>form</em>, <em>pathname=None</em><big>)</big><a class="reference internal" href="_modules/vis/workflow.html#WorkflowManager.export"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#vis.workflow.WorkflowManager.export" title="Permalink to this definition">¶</a></dt>
+<dd><p>Save data from the most recent result of <a class="reference internal" href="#vis.workflow.WorkflowManager.run" title="vis.workflow.WorkflowManager.run"><tt class="xref py py-meth docutils literal"><span class="pre">run()</span></tt></a> to a file.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>form</strong> (<a class="reference external" href="http://docs.python.org/2.7/library/functions.html#basestring" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">basestring</span></tt></a>) &#8211; The output format you want.</li>
+<li><strong>pathname</strong> (<a class="reference external" href="http://docs.python.org/2.7/library/functions.html#basestring" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">basestring</span></tt></a>) &#8211; The pathname for output. If not specified, we will choose.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The pathname of the outputted file.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="http://docs.python.org/2.7/library/functions.html#unicode" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">unicode</span></tt></a></td>
+</tr>
+</tbody>
+</table>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><tt class="xref py py-exc docutils literal"><span class="pre">RuntimeError</span></tt> for unrecognized instructions.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><tt class="xref py py-exc docutils literal"><span class="pre">RuntimeError</span></tt> if <a class="reference internal" href="#vis.workflow.WorkflowManager.run" title="vis.workflow.WorkflowManager.run"><tt class="xref py py-meth docutils literal"><span class="pre">run()</span></tt></a> has never been called.</td>
+</tr>
+</tbody>
+</table>
+<p>Formats:</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Only <tt class="docutils literal"><span class="pre">CSV</span></tt>,``Excel``, and <tt class="docutils literal"><span class="pre">Stata</span></tt> work at the moment.</p>
+</div>
+<ul class="simple">
+<li><tt class="xref py py-obj docutils literal"><span class="pre">u'CSV'</span></tt>: output a Series or DataFrame to a CSV file.</li>
+<li><tt class="xref py py-obj docutils literal"><span class="pre">u'HDF5'</span></tt>: output a Series or DataFrame to an HDF5 file.</li>
+<li><tt class="xref py py-obj docutils literal"><span class="pre">u'pickle'</span></tt>: save everything to a pickle file so we can re-load the current state             later (NOTE: this does not work yet)</li>
+<li><tt class="xref py py-obj docutils literal"><span class="pre">u'Stata'</span></tt>: output a Stata file for importing to R.</li>
+<li><tt class="xref py py-obj docutils literal"><span class="pre">u'Excel'</span></tt>: output an Excel file for Peter Schubert.</li>
+</ul>
+</dd></dl>
+
+<dl class="method">
+<dt id="vis.workflow.WorkflowManager.load">
+<tt class="descname">load</tt><big>(</big><em>instruction</em>, <em>pathname=None</em><big>)</big><a class="reference internal" href="_modules/vis/workflow.html#WorkflowManager.load"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#vis.workflow.WorkflowManager.load" title="Permalink to this definition">¶</a></dt>
+<dd><p>Import analysis data from long-term storage on a filesystem. This should primarily be         used for the <tt class="xref py py-obj docutils literal"><span class="pre">u'pieces'</span></tt> instruction, to control when the initial music21 import         happens.</p>
+<p><strong>Instructions:</strong></p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">only <tt class="xref py py-obj docutils literal"><span class="pre">u'pieces'</span></tt> is implemented at this time.</p>
+</div>
+<ul class="simple">
+<li><tt class="xref py py-obj docutils literal"><span class="pre">u'pieces'</span></tt>, to import all pieces, collect metadata, and run <tt class="xref py py-class docutils literal"><span class="pre">NoteRestIndexer</span></tt></li>
+<li><tt class="xref py py-obj docutils literal"><span class="pre">u'hdf5'</span></tt> to load data from a previous <a class="reference internal" href="#vis.workflow.WorkflowManager.export" title="vis.workflow.WorkflowManager.export"><tt class="xref py py-meth docutils literal"><span class="pre">export()</span></tt></a>.</li>
+<li><tt class="xref py py-obj docutils literal"><span class="pre">u'stata'</span></tt> to load data from a previous <a class="reference internal" href="#vis.workflow.WorkflowManager.export" title="vis.workflow.WorkflowManager.export"><tt class="xref py py-meth docutils literal"><span class="pre">export()</span></tt></a>.</li>
+<li><tt class="xref py py-obj docutils literal"><span class="pre">u'pickle'</span></tt> to load data from a previous <a class="reference internal" href="#vis.workflow.WorkflowManager.export" title="vis.workflow.WorkflowManager.export"><tt class="xref py py-meth docutils literal"><span class="pre">export()</span></tt></a>.</li>
+</ul>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>instruction</strong> (<a class="reference external" href="http://docs.python.org/2.7/library/functions.html#basestring" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">basestring</span></tt></a>) &#8211; The type of data to load.</li>
+<li><strong>pathname</strong> (<a class="reference external" href="http://docs.python.org/2.7/library/functions.html#basestring" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">basestring</span></tt></a>) &#8211; The pathname of the data to import; not required for the u&#8217;pieces&#8217;             instruction.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="vis.workflow.WorkflowManager.metadata">
+<tt class="descname">metadata</tt><big>(</big><em>index</em>, <em>field</em>, <em>value=None</em><big>)</big><a class="reference internal" href="_modules/vis/workflow.html#WorkflowManager.metadata"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#vis.workflow.WorkflowManager.metadata" title="Permalink to this definition">¶</a></dt>
+<dd><p>Use this method to get or set a particular metadatum. The valid field names are listed in
+IndexedPiece.:meth:<cite>~vis.models.indexed_piece.IndexedPiece.metadata</cite>.</p>
+<p>A metadatum is a salient musical characteristic of a particular piece, and does not change
+across analyses.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>index</strong> (<a class="reference external" href="http://docs.python.org/2.7/library/functions.html#int" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">int</span></tt></a>) &#8211; The index of the piece to access. The range of valid indices is <tt class="docutils literal"><span class="pre">0</span></tt> through
+one fewer than the return value of calling <a class="reference external" href="http://docs.python.org/2.7/library/functions.html#len" title="(in Python v2.7)"><tt class="xref py py-func docutils literal"><span class="pre">len()</span></tt></a> on this WorkflowManager.</li>
+<li><strong>field</strong> (<a class="reference external" href="http://docs.python.org/2.7/library/functions.html#basestring" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">basestring</span></tt></a>) &#8211; The name of the field to be accessed or modified.</li>
+<li><strong>value</strong> (<a class="reference external" href="http://docs.python.org/2.7/library/functions.html#object" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">object</span></tt></a> or <a class="reference external" href="http://docs.python.org/2.7/library/constants.html#None" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">None</span></tt></a>) &#8211; If not <tt class="docutils literal"><span class="pre">None</span></tt>, the new value to be assigned to <tt class="docutils literal"><span class="pre">field</span></tt>.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The value of the requested field or <tt class="docutils literal"><span class="pre">None</span></tt>, if assigning, or if accessing a
+non-existant field or a field that has not yet been initialized.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first"><a class="reference external" href="http://docs.python.org/2.7/library/functions.html#object" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">object</span></tt></a> or <a class="reference external" href="http://docs.python.org/2.7/library/constants.html#None" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">None</span></tt></a></p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><p class="first"><tt class="xref py py-exc docutils literal"><span class="pre">TypeError</span></tt> if <tt class="docutils literal"><span class="pre">field</span></tt> is not a <tt class="docutils literal"><span class="pre">basestring</span></tt>.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><p class="first"><tt class="xref py py-exc docutils literal"><span class="pre">AttributeError</span></tt> if accessing an invalid <tt class="docutils literal"><span class="pre">field</span></tt> (see valid fields below).</p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><p class="first last"><tt class="xref py py-exc docutils literal"><span class="pre">IndexError</span></tt> if <tt class="docutils literal"><span class="pre">index</span></tt> is invalid for this <tt class="docutils literal"><span class="pre">WorkflowManager</span></tt>.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="vis.workflow.WorkflowManager.output">
+<tt class="descname">output</tt><big>(</big><em>instruction</em>, <em>pathname=u'test_output/output_result'</em><big>)</big><a class="reference internal" href="_modules/vis/workflow.html#WorkflowManager.output"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#vis.workflow.WorkflowManager.output" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a visualization from the most recent result of <a class="reference internal" href="#vis.workflow.WorkflowManager.run" title="vis.workflow.WorkflowManager.run"><tt class="xref py py-meth docutils literal"><span class="pre">run()</span></tt></a> and save it to a file.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>instruction</strong> (<a class="reference external" href="http://docs.python.org/2.7/library/functions.html#basestring" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">basestring</span></tt></a>) &#8211; The type of visualization to output.</li>
+<li><strong>pathname</strong> (<a class="reference external" href="http://docs.python.org/2.7/library/functions.html#basestring" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">basestring</span></tt></a>) &#8211; The pathname for the output. If not specified, we will choose. Do not
+provide a filename extension&#8212;this is automatic.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The pathname of the outputted visualization.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="http://docs.python.org/2.7/library/functions.html#unicode" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">unicode</span></tt></a></td>
+</tr>
+</tbody>
+</table>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><tt class="xref py py-exc docutils literal"><span class="pre">NotImplementedError</span></tt> if you use the <tt class="docutils literal"><span class="pre">u'LilyPond'</span></tt> instruction.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><tt class="xref py py-exc docutils literal"><span class="pre">RuntimeError</span></tt> for unrecognized instructions.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><tt class="xref py py-exc docutils literal"><span class="pre">RuntimeError</span></tt> if <a class="reference internal" href="#vis.workflow.WorkflowManager.run" title="vis.workflow.WorkflowManager.run"><tt class="xref py py-meth docutils literal"><span class="pre">run()</span></tt></a> has never been called.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Instructions:</strong></p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Only the <tt class="docutils literal"><span class="pre">u'R</span> <span class="pre">histogram'</span></tt> instruction works at the moment.</p>
+</div>
+<ul class="simple">
+<li><tt class="xref py py-obj docutils literal"><span class="pre">u'LilyPond'</span></tt>: not yet sure what this will be like...</li>
+<li><tt class="xref py py-obj docutils literal"><span class="pre">u'R</span> <span class="pre">histogram'</span></tt>: a histogram with ggplot2 in R.</li>
+</ul>
+</dd></dl>
+
+<dl class="method">
+<dt id="vis.workflow.WorkflowManager.run">
+<tt class="descname">run</tt><big>(</big><em>instruction</em><big>)</big><a class="reference internal" href="_modules/vis/workflow.html#WorkflowManager.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#vis.workflow.WorkflowManager.run" title="Permalink to this definition">¶</a></dt>
+<dd><p>Run a commonly-requested experiment workflow.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>instruction</strong> (<tt class="docutils literal"><span class="pre">basestring</span></tt>) &#8211; The experiment workflow to run.</td>
+</tr>
+</tbody>
+</table>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The result of the experiment workflow.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><tt class="xref py py-class docutils literal"><span class="pre">pandas.Series</span></tt> or <tt class="xref py py-class docutils literal"><span class="pre">pandas.DataFrame</span></tt></td>
+</tr>
+</tbody>
+</table>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><tt class="xref py py-exc docutils literal"><span class="pre">RuntimeError</span></tt> if the <tt class="xref py py-obj docutils literal"><span class="pre">instruction</span></tt> does not make sense.</td>
+</tr>
+</tbody>
+</table>
+<p>Instructions:</p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">u'intervals'</span></tt>: finds the frequency of vertical intervals in all             2-part voice combinations.</li>
+<li><tt class="docutils literal"><span class="pre">u'interval</span> <span class="pre">n-grams'</span></tt>: finds the frequency of any-part vertical interval n-grams in             voice pairs specified in the settings. Remember to provide the <tt class="docutils literal"><span class="pre">u'n'</span></tt> setting.</li>
+</ul>
+<p>Modifiers:</p>
+<ul class="simple">
+<li><tt class="xref py py-obj docutils literal"><span class="pre">u'</span> <span class="pre">for</span> <span class="pre">SuperCollider'</span></tt>: append this to <tt class="xref py py-obj docutils literal"><span class="pre">u'all-combinations</span> <span class="pre">intervals'</span></tt> to             prepare a <tt class="xref py py-class docutils literal"><span class="pre">DataFrame</span></tt> with the information required for Mike Winters&#8217;             sonification program. You should then call <a class="reference internal" href="#vis.workflow.WorkflowManager.export" title="vis.workflow.WorkflowManager.export"><tt class="xref py py-meth docutils literal"><span class="pre">export()</span></tt></a> with the <tt class="xref py py-obj docutils literal"><span class="pre">u'CSV'</span></tt>             instruction.</li>
+</ul>
+</dd></dl>
+
+<dl class="method">
+<dt id="vis.workflow.WorkflowManager.settings">
+<tt class="descname">settings</tt><big>(</big><em>index</em>, <em>field</em>, <em>value=None</em><big>)</big><a class="reference internal" href="_modules/vis/workflow.html#WorkflowManager.settings"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#vis.workflow.WorkflowManager.settings" title="Permalink to this definition">¶</a></dt>
+<dd><p>Use this method to get or set a particular setting. The valid values are listed below.</p>
+<p>A setting is related to this particular analysis, and is not a salient musical feature of
+the work itself.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>index</strong> (:<tt class="docutils literal"><span class="pre">int</span></tt> or <tt class="docutils literal"><span class="pre">None</span></tt>) &#8211; The index of the piece to access. The range of valid indices is <tt class="docutils literal"><span class="pre">0</span></tt> through
+one fewer than the return value of calling <a class="reference external" href="http://docs.python.org/2.7/library/functions.html#len" title="(in Python v2.7)"><tt class="xref py py-func docutils literal"><span class="pre">len()</span></tt></a> on this WorkflowManager. If
+<tt class="docutils literal"><span class="pre">value</span></tt> is not <tt class="docutils literal"><span class="pre">None</span></tt> and <tt class="docutils literal"><span class="pre">index</span></tt> is <tt class="docutils literal"><span class="pre">None</span></tt>, you can set a field for all pieces.</li>
+<li><strong>field</strong> (<tt class="docutils literal"><span class="pre">basestring</span></tt>) &#8211; The name of the field to be accessed or modified.</li>
+<li><strong>value</strong> (<tt class="docutils literal"><span class="pre">object</span></tt> or <tt class="docutils literal"><span class="pre">None</span></tt>) &#8211; If not <tt class="docutils literal"><span class="pre">None</span></tt>, the new value to be assigned to <tt class="docutils literal"><span class="pre">field</span></tt>.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The value of the requested field or <tt class="docutils literal"><span class="pre">None</span></tt>, if assigning, or if accessing a
+non-existant field or a field that has not yet been initialized.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first"><a class="reference external" href="http://docs.python.org/2.7/library/functions.html#object" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">object</span></tt></a> or <a class="reference external" href="http://docs.python.org/2.7/library/constants.html#None" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">None</span></tt></a></p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><p class="first"><tt class="xref py py-exc docutils literal"><span class="pre">AttributeError</span></tt> if accessing an invalid <tt class="docutils literal"><span class="pre">field</span></tt> (see valid fields below).</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><p class="first"><tt class="xref py py-exc docutils literal"><span class="pre">IndexError</span></tt> if <tt class="docutils literal"><span class="pre">index</span></tt> is invalid for this <tt class="docutils literal"><span class="pre">WorkflowManager</span></tt>.</p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><p class="first last"><tt class="xref py py-exc docutils literal"><span class="pre">ValueError</span></tt> if <tt class="docutils literal"><span class="pre">index</span></tt> and <tt class="docutils literal"><span class="pre">value</span></tt> are both <tt class="docutils literal"><span class="pre">None</span></tt>.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Piece-Specific Setting Fields:</strong>
+These settings can be set independently for each piece.</p>
+<ul>
+<li><dl class="first docutils">
+<dt><tt class="docutils literal"><span class="pre">offset</span> <span class="pre">interval</span></tt>: If you want to run the             <a class="reference internal" href="vis.analyzers.indexers.html#vis.analyzers.indexers.offset.FilterByOffsetIndexer" title="vis.analyzers.indexers.offset.FilterByOffsetIndexer"><tt class="xref py py-class docutils literal"><span class="pre">FilterByOffsetIndexer</span></tt></a>, specify a value for this</dt>
+<dd><p class="first last">setting that will become the quarterLength duration between observed offsets.</p>
+</dd>
+</dl>
+</li>
+<li><p class="first"><tt class="docutils literal"><span class="pre">filter</span> <span class="pre">repeats</span></tt>: If you want to run the             <a class="reference internal" href="vis.analyzers.indexers.html#vis.analyzers.indexers.repeat.FilterByRepeatIndexer" title="vis.analyzers.indexers.repeat.FilterByRepeatIndexer"><tt class="xref py py-class docutils literal"><span class="pre">FilterByRepeatIndexer</span></tt></a>, set this setting to             <tt class="docutils literal"><span class="pre">True</span></tt>.</p>
+</li>
+<li><p class="first"><tt class="docutils literal"><span class="pre">voice</span> <span class="pre">combinations</span></tt>: If you want to consider certain specific voice combinations,             set this setting to a list of a list of iterables. The following value would analyze             the highest three voices with each other: <tt class="docutils literal"><span class="pre">'[[0,1,2]]'</span></tt> while this would analyze the             every part with the lowest for a four-part piece: <tt class="docutils literal"><span class="pre">'[[0,</span> <span class="pre">3],</span> <span class="pre">[1,</span> <span class="pre">3],</span> <span class="pre">[2,</span> <span class="pre">3]]'</span></tt>. This             should always be a <tt class="docutils literal"><span class="pre">basestring</span></tt> that nominally represents a list (like the values             shown above or <tt class="docutils literal"><span class="pre">'[all]'</span></tt> or <tt class="docutils literal"><span class="pre">'[all</span> <span class="pre">pairs]'</span></tt>).</p>
+</li>
+<li><p class="first"><tt class="docutils literal"><span class="pre">interval</span> <span class="pre">quality</span></tt>: If you want to display interval quality, set this setting to             <tt class="docutils literal"><span class="pre">True</span></tt>.</p>
+</li>
+<li><p class="first"><tt class="docutils literal"><span class="pre">simple</span> <span class="pre">intervals</span></tt>: If you want to display all intervals as their single-octave             equivalents, set this setting to <tt class="docutils literal"><span class="pre">True</span></tt>.</p>
+</li>
+</ul>
+<p><strong>Shared Settings:</strong>
+These settings are shared across all pieces. When you set or fetch a shared setting, the
+value of <tt class="docutils literal"><span class="pre">index</span></tt> is ignored, and can be anything.</p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">n</span></tt>: As specified in <tt class="xref py py-class docutils literal"><span class="pre">vis.analyzers.indexers.ngram.NGramIndexerpossible_settings</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">continuer</span></tt>: The</li>
+</ul>
+</dd></dl>
+
+</dd></dl>
+
 </div>
 </div>
 
@@ -144,7 +464,7 @@
           <a href="vis.analyzers.html" title="analyzers Package"
              >next</a> |</li>
         <li class="right" >
-          <a href="index.html" title="Documentation for the vis Music Analysis Framework"
+          <a href="about.html" title="Design Principles"
              >previous</a> |</li>
         <li><a href="index.html">vis X documentation</a> &raquo;</li> 
       </ul>

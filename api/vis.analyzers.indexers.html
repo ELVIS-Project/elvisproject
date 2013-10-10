@@ -23,9 +23,10 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="author" title="About these documents" href="about.html" />
     <link rel="top" title="vis X documentation" href="index.html" />
     <link rel="up" title="analyzers Package" href="vis.analyzers.html" />
-    <link rel="next" title="controllers Package" href="vis.controllers.html" />
+    <link rel="next" title="models Package" href="vis.models.html" />
     <link rel="prev" title="experimenters Package" href="vis.analyzers.experimenters.html" /> 
   </head>
   <body>
@@ -39,7 +40,7 @@
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
-          <a href="vis.controllers.html" title="controllers Package"
+          <a href="vis.models.html" title="models Package"
              accesskey="N">next</a> |</li>
         <li class="right" >
           <a href="vis.analyzers.experimenters.html" title="experimenters Package"
@@ -69,8 +70,8 @@
   <p class="topless"><a href="vis.analyzers.experimenters.html"
                         title="previous chapter">experimenters Package</a></p>
   <h4>Next topic</h4>
-  <p class="topless"><a href="vis.controllers.html"
-                        title="next chapter">controllers Package</a></p>
+  <p class="topless"><a href="vis.models.html"
+                        title="next chapter">models Package</a></p>
   <h3>This Page</h3>
   <ul class="this-page-menu">
     <li><a href="_sources/vis.analyzers.indexers.txt"
@@ -132,8 +133,8 @@ in a single part.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>score</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#list" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">list</span></tt></a> of <tt class="xref py py-class docutils literal"><span class="pre">pandas.Series</span></tt>) &#8211; The output of <tt class="xref py py-class docutils literal"><span class="pre">NoteRestIndexer</span></tt> for all parts in a piece.</li>
-<li><strong>settings</strong> (<a class="reference external" href="http://docs.python.org/library/stdtypes.html#dict" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">dict</span></tt></a>) &#8211; Required and optional settings. See descriptions in             <a class="reference internal" href="#vis.analyzers.indexers.interval.IntervalIndexer.possible_settings" title="vis.analyzers.indexers.interval.IntervalIndexer.possible_settings"><tt class="xref py py-const docutils literal"><span class="pre">IntervalIndexer.possible_settings</span></tt></a>.</li>
+<li><strong>score</strong> (<a class="reference external" href="http://docs.python.org/2.7/library/functions.html#list" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">list</span></tt></a> of <tt class="xref py py-class docutils literal"><span class="pre">pandas.Series</span></tt>) &#8211; The output of <tt class="xref py py-class docutils literal"><span class="pre">NoteRestIndexer</span></tt> for all parts in a piece.</li>
+<li><strong>settings</strong> (<a class="reference external" href="http://docs.python.org/2.7/library/stdtypes.html#dict" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">dict</span></tt></a>) &#8211; Required and optional settings. See descriptions in             <a class="reference internal" href="#vis.analyzers.indexers.interval.IntervalIndexer.possible_settings" title="vis.analyzers.indexers.interval.IntervalIndexer.possible_settings"><tt class="xref py py-const docutils literal"><span class="pre">IntervalIndexer.possible_settings</span></tt></a>.</li>
 </ul>
 </td>
 </tr>
@@ -149,7 +150,7 @@ in a single part.</p>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">A list of the new indices. The index of each Series corresponds to the index it             has in the list of <tt class="xref py py-class docutils literal"><span class="pre">Series</span></tt> given to the constructor.</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="http://docs.python.org/library/functions.html#list" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">list</span></tt></a> of <tt class="xref py py-class docutils literal"><span class="pre">pandas.Series</span></tt></td>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="http://docs.python.org/2.7/library/functions.html#list" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">list</span></tt></a> of <tt class="xref py py-class docutils literal"><span class="pre">pandas.Series</span></tt></td>
 </tr>
 </tbody>
 </table>
@@ -170,8 +171,8 @@ between two-part combinations.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>score</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#list" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">list</span></tt></a> of <tt class="xref py py-class docutils literal"><span class="pre">pandas.Series</span></tt>) &#8211; The output of <tt class="xref py py-class docutils literal"><span class="pre">NoteRestIndexer</span></tt> for all parts in a piece.</li>
-<li><strong>settings</strong> (<a class="reference external" href="http://docs.python.org/library/stdtypes.html#dict" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">dict</span></tt></a>) &#8211; Required and optional settings. See descriptions in             <a class="reference internal" href="#vis.analyzers.indexers.interval.IntervalIndexer.possible_settings" title="vis.analyzers.indexers.interval.IntervalIndexer.possible_settings"><tt class="xref py py-const docutils literal"><span class="pre">possible_settings</span></tt></a>.</li>
+<li><strong>score</strong> (<a class="reference external" href="http://docs.python.org/2.7/library/functions.html#list" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">list</span></tt></a> of <tt class="xref py py-class docutils literal"><span class="pre">pandas.Series</span></tt>) &#8211; The output of <tt class="xref py py-class docutils literal"><span class="pre">NoteRestIndexer</span></tt> for all parts in a piece.</li>
+<li><strong>settings</strong> (<a class="reference external" href="http://docs.python.org/2.7/library/stdtypes.html#dict" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">dict</span></tt></a>) &#8211; Required and optional settings. See descriptions in             <a class="reference internal" href="#vis.analyzers.indexers.interval.IntervalIndexer.possible_settings" title="vis.analyzers.indexers.interval.IntervalIndexer.possible_settings"><tt class="xref py py-const docutils literal"><span class="pre">possible_settings</span></tt></a>.</li>
 </ul>
 </td>
 </tr>
@@ -180,19 +181,19 @@ between two-part combinations.</p>
 <dl class="attribute">
 <dt id="vis.analyzers.indexers.interval.IntervalIndexer.default_settings">
 <tt class="descname">default_settings</tt><em class="property"> = {u'simple or compound': u'compound', u'quality': False}</em><a class="headerlink" href="#vis.analyzers.indexers.interval.IntervalIndexer.default_settings" title="Permalink to this definition">¶</a></dt>
-<dd><p>A <a class="reference external" href="http://docs.python.org/library/stdtypes.html#dict" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">dict</span></tt></a> of default settings for the <a class="reference internal" href="#vis.analyzers.indexers.interval.IntervalIndexer" title="vis.analyzers.indexers.interval.IntervalIndexer"><tt class="xref py py-class docutils literal"><span class="pre">IntervalIndexer</span></tt></a>.</p>
+<dd><p>A <a class="reference external" href="http://docs.python.org/2.7/library/stdtypes.html#dict" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">dict</span></tt></a> of default settings for the <a class="reference internal" href="#vis.analyzers.indexers.interval.IntervalIndexer" title="vis.analyzers.indexers.interval.IntervalIndexer"><tt class="xref py py-class docutils literal"><span class="pre">IntervalIndexer</span></tt></a>.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="vis.analyzers.indexers.interval.IntervalIndexer.possible_settings">
 <tt class="descname">possible_settings</tt><em class="property"> = [u'simple or compound', u'quality']</em><a class="headerlink" href="#vis.analyzers.indexers.interval.IntervalIndexer.possible_settings" title="Permalink to this definition">¶</a></dt>
-<dd><p>A <a class="reference external" href="http://docs.python.org/library/functions.html#list" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">list</span></tt></a> of possible settings for the <a class="reference internal" href="#vis.analyzers.indexers.interval.IntervalIndexer" title="vis.analyzers.indexers.interval.IntervalIndexer"><tt class="xref py py-class docutils literal"><span class="pre">IntervalIndexer</span></tt></a>.</p>
+<dd><p>A <a class="reference external" href="http://docs.python.org/2.7/library/functions.html#list" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">list</span></tt></a> of possible settings for the <a class="reference internal" href="#vis.analyzers.indexers.interval.IntervalIndexer" title="vis.analyzers.indexers.interval.IntervalIndexer"><tt class="xref py py-class docutils literal"><span class="pre">IntervalIndexer</span></tt></a>.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>u&#8217;simple_or_compound&#8217;</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#unicode" title="(in Python v2.7)"><em>unicode</em></a>) &#8211; Whether intervals should be represented in their single-octave form (either <tt class="xref py py-obj docutils literal"><span class="pre">u'simple'</span></tt> or <tt class="xref py py-obj docutils literal"><span class="pre">u'compound'</span></tt>).</li>
+<li><strong>u&#8217;simple_or_compound&#8217;</strong> (<a class="reference external" href="http://docs.python.org/2.7/library/functions.html#unicode" title="(in Python v2.7)"><em>unicode</em></a>) &#8211; Whether intervals should be represented in their single-octave form (either <tt class="xref py py-obj docutils literal"><span class="pre">u'simple'</span></tt> or <tt class="xref py py-obj docutils literal"><span class="pre">u'compound'</span></tt>).</li>
 <li><strong>u&#8217;quality&#8217;</strong> (<em>boolean</em>) &#8211; Whether to display an interval&#8217;s quality.</li>
 </ul>
 </td>
@@ -223,11 +224,11 @@ result of <tt class="xref py py-class docutils literal"><span class="pre">NoteRe
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The new indices. The dict index of each Series corresponds to the indices of
 the Part combinations used to generate it, in the order specified to the constructor.
-Each element in the Series is a <a class="reference external" href="http://docs.python.org/library/functions.html#unicode" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">unicode</span></tt></a>. For example, if you stored the output
+Each element in the Series is a <a class="reference external" href="http://docs.python.org/2.7/library/functions.html#unicode" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">unicode</span></tt></a>. For example, if you stored the output
 of this method in the &#8220;result&#8221; variable, then result[&#8216;[0, 1]&#8217;] will give you the Series
 with intervals from the highest and second-highest parts.</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="http://docs.python.org/library/stdtypes.html#dict" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">dict</span></tt></a> of <tt class="xref py py-class docutils literal"><span class="pre">pandas.Series</span></tt></td>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="http://docs.python.org/2.7/library/stdtypes.html#dict" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">dict</span></tt></a> of <tt class="xref py py-class docutils literal"><span class="pre">pandas.Series</span></tt></td>
 </tr>
 </tbody>
 </table>
@@ -272,11 +273,11 @@ of the parts held therein.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>key</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#unicode" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">unicode</span></tt></a>) &#8211; The key from <a class="reference internal" href="#vis.analyzers.indexers.interval.IntervalIndexer" title="vis.analyzers.indexers.interval.IntervalIndexer"><tt class="xref py py-class docutils literal"><span class="pre">IntervalIndexer</span></tt></a>.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>key</strong> (<a class="reference external" href="http://docs.python.org/2.7/library/functions.html#unicode" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">unicode</span></tt></a>) &#8211; The key from <a class="reference internal" href="#vis.analyzers.indexers.interval.IntervalIndexer" title="vis.analyzers.indexers.interval.IntervalIndexer"><tt class="xref py py-class docutils literal"><span class="pre">IntervalIndexer</span></tt></a>.</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The indices of parts referred to by the key.</td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="http://docs.python.org/library/functions.html#tuple" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">tuple</span></tt></a> of <a class="reference external" href="http://docs.python.org/library/functions.html#int" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">int</span></tt></a></td>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="http://docs.python.org/2.7/library/functions.html#tuple" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">tuple</span></tt></a> of <a class="reference external" href="http://docs.python.org/2.7/library/functions.html#int" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">int</span></tt></a></td>
 </tr>
 </tbody>
 </table>
@@ -303,7 +304,7 @@ parts do or do not have notes sounding together.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>simultaneity</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#list" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">list</span></tt></a> of <a class="reference external" href="http://docs.python.org/library/functions.html#basestring" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">basestring</span></tt></a>) &#8211; A two-item iterable with the note names (or <tt class="xref py py-obj docutils literal"><span class="pre">u'Rest'</span></tt>) for the top
+<li><strong>simultaneity</strong> (<a class="reference external" href="http://docs.python.org/2.7/library/functions.html#list" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">list</span></tt></a> of <a class="reference external" href="http://docs.python.org/2.7/library/functions.html#basestring" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">basestring</span></tt></a>) &#8211; A two-item iterable with the note names (or <tt class="xref py py-obj docutils literal"><span class="pre">u'Rest'</span></tt>) for the top
 then lower voice.</li>
 <li><strong>simple</strong> (<tt class="xref py py-obj docutils literal"><span class="pre">boolean</span></tt>) &#8211; Whether intervals should be reduced to their single-octave version.</li>
 <li><strong>quality</strong> (<tt class="xref py py-obj docutils literal"><span class="pre">boolean</span></tt>) &#8211; Whether the interval&#8217;s quality should be prepended.</li>
@@ -319,7 +320,7 @@ then lower voice.</li>
 <tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><tt class="xref py py-obj docutils literal"><span class="pre">u'Rest'</span></tt> if one or more of the parts is <tt class="xref py py-obj docutils literal"><span class="pre">u'Rest'</span></tt>; otherwise, the interval
 between parts.</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="http://docs.python.org/library/functions.html#unicode" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">unicode</span></tt></a></td>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="http://docs.python.org/2.7/library/functions.html#unicode" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">unicode</span></tt></a></td>
 </tr>
 </tbody>
 </table>
@@ -362,8 +363,8 @@ events are obviously ignored.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>score</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#list" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">list</span></tt></a> of <tt class="xref py py-class docutils literal"><span class="pre">pandas.Series</span></tt>) &#8211; A list of the &#8220;horizontal&#8221; and &#8220;vertical&#8221; indices to use for n-grams. You             can put the &#8220;horizontal&#8221; and &#8220;vertical&#8221; indices anywhere in the list, so long as you             use settings to specify the order.</li>
-<li><strong>settings</strong> (<a class="reference external" href="http://docs.python.org/library/stdtypes.html#dict" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">dict</span></tt></a>) &#8211; Required and optional settings. See descriptions in             <a class="reference internal" href="#vis.analyzers.indexers.ngram.NGramIndexer.possible_settings" title="vis.analyzers.indexers.ngram.NGramIndexer.possible_settings"><tt class="xref py py-const docutils literal"><span class="pre">possible_settings</span></tt></a>.</li>
+<li><strong>score</strong> (<a class="reference external" href="http://docs.python.org/2.7/library/functions.html#list" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">list</span></tt></a> of <tt class="xref py py-class docutils literal"><span class="pre">pandas.Series</span></tt>) &#8211; A list of the &#8220;horizontal&#8221; and &#8220;vertical&#8221; indices to use for n-grams. You             can put the &#8220;horizontal&#8221; and &#8220;vertical&#8221; indices anywhere in the list, so long as you             use settings to specify the order.</li>
+<li><strong>settings</strong> (<a class="reference external" href="http://docs.python.org/2.7/library/stdtypes.html#dict" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">dict</span></tt></a>) &#8211; Required and optional settings. See descriptions in             <a class="reference internal" href="#vis.analyzers.indexers.ngram.NGramIndexer.possible_settings" title="vis.analyzers.indexers.ngram.NGramIndexer.possible_settings"><tt class="xref py py-const docutils literal"><span class="pre">possible_settings</span></tt></a>.</li>
 </ul>
 </td>
 </tr>
@@ -384,28 +385,28 @@ events are obviously ignored.</p>
 <dl class="attribute">
 <dt id="vis.analyzers.indexers.ngram.NGramIndexer.default_settings">
 <tt class="descname">default_settings</tt><em class="property"> = {u'horizontal': [], u'continuer': u'_', u'mark singles': True, u'terminator': []}</em><a class="headerlink" href="#vis.analyzers.indexers.ngram.NGramIndexer.default_settings" title="Permalink to this definition">¶</a></dt>
-<dd><p>A <a class="reference external" href="http://docs.python.org/library/stdtypes.html#dict" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">dict</span></tt></a> of default settings for the <a class="reference internal" href="#vis.analyzers.indexers.ngram.NGramIndexer" title="vis.analyzers.indexers.ngram.NGramIndexer"><tt class="xref py py-class docutils literal"><span class="pre">NGramIndexer</span></tt></a>.</p>
+<dd><p>A <a class="reference external" href="http://docs.python.org/2.7/library/stdtypes.html#dict" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">dict</span></tt></a> of default settings for the <a class="reference internal" href="#vis.analyzers.indexers.ngram.NGramIndexer" title="vis.analyzers.indexers.ngram.NGramIndexer"><tt class="xref py py-class docutils literal"><span class="pre">NGramIndexer</span></tt></a>.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="vis.analyzers.indexers.ngram.NGramIndexer.possible_settings">
 <tt class="descname">possible_settings</tt><em class="property"> = [u'horizontal', u'vertical', u'n', u'mark singles', u'terminator', u'continuer']</em><a class="headerlink" href="#vis.analyzers.indexers.ngram.NGramIndexer.possible_settings" title="Permalink to this definition">¶</a></dt>
-<dd><p>A <a class="reference external" href="http://docs.python.org/library/functions.html#list" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">list</span></tt></a> of possible settings for the <a class="reference internal" href="#vis.analyzers.indexers.ngram.NGramIndexer" title="vis.analyzers.indexers.ngram.NGramIndexer"><tt class="xref py py-class docutils literal"><span class="pre">NGramIndexer</span></tt></a>.</p>
+<dd><p>A <a class="reference external" href="http://docs.python.org/2.7/library/functions.html#list" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">list</span></tt></a> of possible settings for the <a class="reference internal" href="#vis.analyzers.indexers.ngram.NGramIndexer" title="vis.analyzers.indexers.ngram.NGramIndexer"><tt class="xref py py-class docutils literal"><span class="pre">NGramIndexer</span></tt></a>.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>u&#8217;horizontal&#8217;</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#list" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">list</span></tt></a> of <a class="reference external" href="http://docs.python.org/library/functions.html#int" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">int</span></tt></a>) &#8211; The parts to consider as &#8220;horizontal.&#8221;</li>
-<li><strong>u&#8217;vertical&#8217;</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#list" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">list</span></tt></a> of <a class="reference external" href="http://docs.python.org/library/functions.html#int" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">int</span></tt></a>) &#8211; The parts to consider as &#8220;vertical.&#8221;</li>
-<li><strong>u&#8217;n&#8217;</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#int" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">int</span></tt></a>) &#8211; The number of &#8220;vertical&#8221; events per n-gram.</li>
-<li><strong>u&#8217;mark_singles&#8217;</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#bool" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">bool</span></tt></a>) &#8211; NOTE: this setting is <tt class="xref py py-obj docutils literal"><span class="pre">u'mark</span> <span class="pre">singles'</span></tt> and the underscore is only for
+<li><strong>u&#8217;horizontal&#8217;</strong> (<a class="reference external" href="http://docs.python.org/2.7/library/functions.html#list" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">list</span></tt></a> of <a class="reference external" href="http://docs.python.org/2.7/library/functions.html#int" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">int</span></tt></a>) &#8211; The parts to consider as &#8220;horizontal.&#8221;</li>
+<li><strong>u&#8217;vertical&#8217;</strong> (<a class="reference external" href="http://docs.python.org/2.7/library/functions.html#list" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">list</span></tt></a> of <a class="reference external" href="http://docs.python.org/2.7/library/functions.html#int" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">int</span></tt></a>) &#8211; The parts to consider as &#8220;vertical.&#8221;</li>
+<li><strong>u&#8217;n&#8217;</strong> (<a class="reference external" href="http://docs.python.org/2.7/library/functions.html#int" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">int</span></tt></a>) &#8211; The number of &#8220;vertical&#8221; events per n-gram.</li>
+<li><strong>u&#8217;mark_singles&#8217;</strong> (<a class="reference external" href="http://docs.python.org/2.7/library/functions.html#bool" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">bool</span></tt></a>) &#8211; NOTE: this setting is <tt class="xref py py-obj docutils literal"><span class="pre">u'mark</span> <span class="pre">singles'</span></tt> and the underscore is only for
 technical (documentation) reasons. Whether to use delimiters around a direction&#8217;s events
 when there is only one event in that direction (e.g., the &#8220;horizontal&#8221; maps only the
 activity of a single voice).</li>
-<li><strong>u&#8217;terminator&#8217;</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#list" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">list</span></tt></a> of <a class="reference external" href="http://docs.python.org/library/functions.html#basestring" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">basestring</span></tt></a>) &#8211; Do not find an n-gram with a vertical item that contains any of these
+<li><strong>u&#8217;terminator&#8217;</strong> (<a class="reference external" href="http://docs.python.org/2.7/library/functions.html#list" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">list</span></tt></a> of <a class="reference external" href="http://docs.python.org/2.7/library/functions.html#basestring" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">basestring</span></tt></a>) &#8211; Do not find an n-gram with a vertical item that contains any of these
 values.</li>
-<li><strong>u&#8217;continuer&#8217;</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#basestring" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">basestring</span></tt></a>) &#8211; When there is no &#8220;horizontal&#8221; event that corresponds to a vertical
+<li><strong>u&#8217;continuer&#8217;</strong> (<a class="reference external" href="http://docs.python.org/2.7/library/functions.html#basestring" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">basestring</span></tt></a>) &#8211; When there is no &#8220;horizontal&#8221; event that corresponds to a vertical
 event, this is printed instead, to show that the previous &#8220;horizontal&#8221; event continues.</li>
 </ul>
 </td>
@@ -435,7 +436,7 @@ event, this is printed instead, to show that the previous &#8220;horizontal&#822
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">A single-item list with the new index.</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="http://docs.python.org/library/functions.html#list" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">list</span></tt></a> of <tt class="xref py py-class docutils literal"><span class="pre">pandas.Series</span></tt></td>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="http://docs.python.org/2.7/library/functions.html#list" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">list</span></tt></a> of <tt class="xref py py-class docutils literal"><span class="pre">pandas.Series</span></tt></td>
 </tr>
 </tbody>
 </table>
@@ -460,8 +461,8 @@ their <tt class="xref py py-attr docutils literal"><span class="pre">pitchWithOc
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>score</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#list" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">list</span></tt></a> of <a class="reference external" href="http://web.mit.edu/music21/doc/moduleReference/moduleStream.html#music21.stream.Part" title="(in music21 v1.6.0)"><tt class="xref py py-class docutils literal"><span class="pre">music21.stream.Part</span></tt></a>) &#8211; A list of all the Parts to index.</li>
-<li><strong>settings</strong> (<a class="reference external" href="http://docs.python.org/library/stdtypes.html#dict" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">dict</span></tt></a> or <a class="reference external" href="http://docs.python.org/library/constants.html#None" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">None</span></tt></a>) &#8211; This indexer uses no settings, so this is ignored.</li>
+<li><strong>score</strong> (<a class="reference external" href="http://docs.python.org/2.7/library/functions.html#list" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">list</span></tt></a> of <a class="reference external" href="http://web.mit.edu/music21/doc/moduleReference/moduleStream.html#music21.stream.Part" title="(in music21 v1.6.0)"><tt class="xref py py-class docutils literal"><span class="pre">music21.stream.Part</span></tt></a>) &#8211; A list of all the Parts to index.</li>
+<li><strong>settings</strong> (<a class="reference external" href="http://docs.python.org/2.7/library/stdtypes.html#dict" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">dict</span></tt></a> or <a class="reference external" href="http://docs.python.org/2.7/library/constants.html#None" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">None</span></tt></a>) &#8211; This indexer uses no settings, so this is ignored.</li>
 </ul>
 </td>
 </tr>
@@ -489,7 +490,7 @@ their <tt class="xref py py-attr docutils literal"><span class="pre">pitchWithOc
 the Part used to generate it, in the order specified to the constructor. Each element
 in the Series is a unicode.</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="http://docs.python.org/library/functions.html#list" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">list</span></tt></a> of <tt class="xref py py-obj docutils literal"><span class="pre">pandas.Series</span></tt></td>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="http://docs.python.org/2.7/library/functions.html#list" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">list</span></tt></a> of <tt class="xref py py-obj docutils literal"><span class="pre">pandas.Series</span></tt></td>
 </tr>
 </tbody>
 </table>
@@ -500,12 +501,12 @@ in the Series is a unicode.</td>
 <dl class="function">
 <dt id="vis.analyzers.indexers.noterest.indexer_func">
 <tt class="descclassname">vis.analyzers.indexers.noterest.</tt><tt class="descname">indexer_func</tt><big>(</big><em>obj</em><big>)</big><a class="reference internal" href="_modules/vis/analyzers/indexers/noterest.html#indexer_func"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#vis.analyzers.indexers.noterest.indexer_func" title="Permalink to this definition">¶</a></dt>
-<dd><p>Used internally by <a class="reference internal" href="#vis.analyzers.indexers.noterest.NoteRestIndexer" title="vis.analyzers.indexers.noterest.NoteRestIndexer"><tt class="xref py py-class docutils literal"><span class="pre">NoteRestIndexer</span></tt></a>. Convert objects from the <a class="reference external" href="http://web.mit.edu/music21/doc/moduleReference/moduleNote.html#module-music21.note" title="(in music21 v1.6.0)"><tt class="xref py py-mod docutils literal"><span class="pre">music21.note</span></tt></a>     module into a <a class="reference external" href="http://docs.python.org/library/functions.html#unicode" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">unicode</span></tt></a>.</p>
+<dd><p>Used internally by <a class="reference internal" href="#vis.analyzers.indexers.noterest.NoteRestIndexer" title="vis.analyzers.indexers.noterest.NoteRestIndexer"><tt class="xref py py-class docutils literal"><span class="pre">NoteRestIndexer</span></tt></a>. Convert objects from the <a class="reference external" href="http://web.mit.edu/music21/doc/moduleReference/moduleNote.html#module-music21.note" title="(in music21 v1.6.0)"><tt class="xref py py-mod docutils literal"><span class="pre">music21.note</span></tt></a>     module into a <a class="reference external" href="http://docs.python.org/2.7/library/functions.html#unicode" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">unicode</span></tt></a>.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>obj</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#list" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">list</span></tt></a> of <a class="reference external" href="http://web.mit.edu/music21/doc/moduleReference/moduleNote.html#music21.note.Note" title="(in music21 v1.6.0)"><tt class="xref py py-class docutils literal"><span class="pre">music21.note.Note</span></tt></a> or <a class="reference external" href="http://web.mit.edu/music21/doc/moduleReference/moduleNote.html#music21.note.Rest" title="(in music21 v1.6.0)"><tt class="xref py py-class docutils literal"><span class="pre">music21.note.Rest</span></tt></a>) &#8211; A list with the object to convert.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>obj</strong> (<a class="reference external" href="http://docs.python.org/2.7/library/functions.html#list" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">list</span></tt></a> of <a class="reference external" href="http://web.mit.edu/music21/doc/moduleReference/moduleNote.html#music21.note.Note" title="(in music21 v1.6.0)"><tt class="xref py py-class docutils literal"><span class="pre">music21.note.Note</span></tt></a> or <a class="reference external" href="http://web.mit.edu/music21/doc/moduleReference/moduleNote.html#music21.note.Rest" title="(in music21 v1.6.0)"><tt class="xref py py-class docutils literal"><span class="pre">music21.note.Rest</span></tt></a>) &#8211; A list with the object to convert.</td>
 </tr>
 </tbody>
 </table>
@@ -517,7 +518,7 @@ in the Series is a unicode.</td>
 <tt class="xref py py-obj docutils literal"><span class="pre">u'Rest'</span></tt>; otherwise the <tt class="xref py py-attr docutils literal"><span class="pre">nameWithOctave</span></tt> attribute, which is the pitch class
 and octave of the <a class="reference external" href="http://web.mit.edu/music21/doc/moduleReference/moduleNote.html#music21.note.Note" title="(in music21 v1.6.0)"><tt class="xref py py-class docutils literal"><span class="pre">music21.note.Note</span></tt></a>.</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="http://docs.python.org/library/functions.html#unicode" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">unicode</span></tt></a></td>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="http://docs.python.org/2.7/library/functions.html#unicode" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">unicode</span></tt></a></td>
 </tr>
 </tbody>
 </table>
@@ -796,8 +797,8 @@ appear to end with a dissonant sonority!</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>score</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#list" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">list</span></tt></a> of <tt class="xref py py-obj docutils literal"><span class="pre">pandas.Series</span></tt>) &#8211; A list of Series you wish to filter by offset values, stored in the Index.</li>
-<li><strong>settings</strong> (<a class="reference external" href="http://docs.python.org/library/stdtypes.html#dict" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">dict</span></tt></a>) &#8211; There is one required setting. See <a class="reference internal" href="#vis.analyzers.indexers.offset.FilterByOffsetIndexer.possible_settings" title="vis.analyzers.indexers.offset.FilterByOffsetIndexer.possible_settings"><tt class="xref py py-const docutils literal"><span class="pre">possible_settings</span></tt></a>.</li>
+<li><strong>score</strong> (<a class="reference external" href="http://docs.python.org/2.7/library/functions.html#list" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">list</span></tt></a> of <tt class="xref py py-obj docutils literal"><span class="pre">pandas.Series</span></tt>) &#8211; A list of Series you wish to filter by offset values, stored in the Index.</li>
+<li><strong>settings</strong> (<a class="reference external" href="http://docs.python.org/2.7/library/stdtypes.html#dict" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">dict</span></tt></a>) &#8211; There is one required setting. See <a class="reference internal" href="#vis.analyzers.indexers.offset.FilterByOffsetIndexer.possible_settings" title="vis.analyzers.indexers.offset.FilterByOffsetIndexer.possible_settings"><tt class="xref py py-const docutils literal"><span class="pre">possible_settings</span></tt></a>.</li>
 </ul>
 </td>
 </tr>
@@ -819,12 +820,12 @@ than <tt class="docutils literal"><span class="pre">0.001</span></tt>.</p>
 <dl class="attribute">
 <dt id="vis.analyzers.indexers.offset.FilterByOffsetIndexer.possible_settings">
 <tt class="descname">possible_settings</tt><em class="property"> = [u'quarterLength']</em><a class="headerlink" href="#vis.analyzers.indexers.offset.FilterByOffsetIndexer.possible_settings" title="Permalink to this definition">¶</a></dt>
-<dd><p>A <a class="reference external" href="http://docs.python.org/library/functions.html#list" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">list</span></tt></a> of possible settings for the <a class="reference internal" href="#vis.analyzers.indexers.offset.FilterByOffsetIndexer" title="vis.analyzers.indexers.offset.FilterByOffsetIndexer"><tt class="xref py py-class docutils literal"><span class="pre">FilterByOffsetIndexer</span></tt></a>.</p>
+<dd><p>A <a class="reference external" href="http://docs.python.org/2.7/library/functions.html#list" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">list</span></tt></a> of possible settings for the <a class="reference internal" href="#vis.analyzers.indexers.offset.FilterByOffsetIndexer" title="vis.analyzers.indexers.offset.FilterByOffsetIndexer"><tt class="xref py py-class docutils literal"><span class="pre">FilterByOffsetIndexer</span></tt></a>.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>u&#8217;quarterLength&#8217;</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#float" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">float</span></tt></a>) &#8211; The quarterLength duration between observations desired in the
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>u&#8217;quarterLength&#8217;</strong> (<a class="reference external" href="http://docs.python.org/2.7/library/functions.html#float" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">float</span></tt></a>) &#8211; The quarterLength duration between observations desired in the
 output. This value must not have more than three digits to the right of the decimal
 (i.e. 0.001 is the smallest possible value).</td>
 </tr>
@@ -875,8 +876,8 @@ nearest multiple before.</td>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>score</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#list" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">list</span></tt></a> of <tt class="xref py py-obj docutils literal"><span class="pre">pandas.Series</span></tt>) &#8211; The indices from which to remove consecutive identical events.</li>
-<li><strong>settings</strong> (<a class="reference external" href="http://docs.python.org/library/stdtypes.html#dict" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">dict</span></tt></a> or <a class="reference external" href="http://docs.python.org/library/constants.html#None" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">None</span></tt></a>) &#8211; This indexer uses no settings, so this is ignored.</li>
+<li><strong>score</strong> (<a class="reference external" href="http://docs.python.org/2.7/library/functions.html#list" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">list</span></tt></a> of <tt class="xref py py-obj docutils literal"><span class="pre">pandas.Series</span></tt>) &#8211; The indices from which to remove consecutive identical events.</li>
+<li><strong>settings</strong> (<a class="reference external" href="http://docs.python.org/2.7/library/stdtypes.html#dict" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">dict</span></tt></a> or <a class="reference external" href="http://docs.python.org/2.7/library/constants.html#None" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">None</span></tt></a>) &#8211; This indexer uses no settings, so this is ignored.</li>
 </ul>
 </td>
 </tr>
@@ -905,9 +906,9 @@ nearest multiple before.</td>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">A list of the new indices. The index of each Series corresponds to the index of
 the Part used to generate it, in the order specified to the constructor. Each element
-in the Series is a <a class="reference external" href="http://docs.python.org/library/functions.html#basestring" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">basestring</span></tt></a>.</td>
+in the Series is a <a class="reference external" href="http://docs.python.org/2.7/library/functions.html#basestring" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">basestring</span></tt></a>.</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="http://docs.python.org/library/functions.html#list" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">list</span></tt></a> of <tt class="xref py py-obj docutils literal"><span class="pre">pandas.Series</span></tt></td>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="http://docs.python.org/2.7/library/functions.html#list" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">list</span></tt></a> of <tt class="xref py py-obj docutils literal"><span class="pre">pandas.Series</span></tt></td>
 </tr>
 </tbody>
 </table>
@@ -929,10 +930,10 @@ in the Series is a <a class="reference external" href="http://docs.python.org/li
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>score</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#list" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">list</span></tt></a> of <tt class="xref py py-class docutils literal"><span class="pre">pandas.Series</span></tt> or <a class="reference external" href="http://docs.python.org/library/functions.html#list" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">list</span></tt></a> of
+<li><strong>score</strong> (<a class="reference external" href="http://docs.python.org/2.7/library/functions.html#list" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">list</span></tt></a> of <tt class="xref py py-class docutils literal"><span class="pre">pandas.Series</span></tt> or <a class="reference external" href="http://docs.python.org/2.7/library/functions.html#list" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">list</span></tt></a> of
 <a class="reference external" href="http://web.mit.edu/music21/doc/moduleReference/moduleStream.html#music21.stream.Part" title="(in music21 v1.6.0)"><tt class="xref py py-class docutils literal"><span class="pre">music21.stream.Part</span></tt></a>) &#8211; Depending on how this Indexer works, this is a list of either Part or Series
 objects to use in creating a new index.</li>
-<li><strong>settings</strong> (<a class="reference external" href="http://docs.python.org/library/stdtypes.html#dict" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">dict</span></tt></a> or <a href="#id2"><span class="problematic" id="id3">:dict:`None`</span></a>) &#8211; All the settings required by this Indexer. All required settings should be
+<li><strong>settings</strong> (<a class="reference external" href="http://docs.python.org/2.7/library/stdtypes.html#dict" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">dict</span></tt></a> or <a href="#id2"><span class="problematic" id="id3">:dict:`None`</span></a>) &#8211; All the settings required by this Indexer. All required settings should be
 listed in subclasses. Default is None.</li>
 </ul>
 </td>
@@ -994,7 +995,7 @@ or <tt class="xref py py-class docutils literal"><span class="pre">pandas.Series
 the Part used to generate it, in the order specified to the constructor. Each element
 in the Series is a basestring.</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="http://docs.python.org/library/functions.html#list" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">list</span></tt></a> of <tt class="xref py py-obj docutils literal"><span class="pre">pandas.Series</span></tt></td>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="http://docs.python.org/2.7/library/functions.html#list" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">list</span></tt></a> of <tt class="xref py py-obj docutils literal"><span class="pre">pandas.Series</span></tt></td>
 </tr>
 </tbody>
 </table>
@@ -1018,7 +1019,7 @@ in the Series is a basestring.</td>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>obj</strong> (<tt class="xref py py-obj docutils literal"><span class="pre">pandas.Series</span></tt> of <a class="reference external" href="http://docs.python.org/library/functions.html#unicode" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">unicode</span></tt></a>) &#8211; The simultaneous event(s) to use when creating this index.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>obj</strong> (<tt class="xref py py-obj docutils literal"><span class="pre">pandas.Series</span></tt> of <a class="reference external" href="http://docs.python.org/2.7/library/functions.html#unicode" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">unicode</span></tt></a>) &#8211; The simultaneous event(s) to use when creating this index.</td>
 </tr>
 </tbody>
 </table>
@@ -1028,7 +1029,7 @@ in the Series is a basestring.</td>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The value to store for this index at this offset.</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="http://docs.python.org/library/functions.html#unicode" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">unicode</span></tt></a></td>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="http://docs.python.org/2.7/library/functions.html#unicode" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">unicode</span></tt></a></td>
 </tr>
 </tbody>
 </table>
@@ -1053,7 +1054,7 @@ in the Series is a basestring.</td>
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
-          <a href="vis.controllers.html" title="controllers Package"
+          <a href="vis.models.html" title="models Package"
              >next</a> |</li>
         <li class="right" >
           <a href="vis.analyzers.experimenters.html" title="experimenters Package"

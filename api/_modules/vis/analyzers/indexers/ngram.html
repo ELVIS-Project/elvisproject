@@ -23,6 +23,7 @@
     <script type="text/javascript" src="../../../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+    <link rel="author" title="About these documents" href="../../../../about.html" />
     <link rel="top" title="vis X documentation" href="../../../../index.html" />
     <link rel="up" title="Module code" href="../../../index.html" /> 
   </head>
@@ -89,7 +90,7 @@
 <span class="c"># along with this program.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
 <span class="c">#--------------------------------------------------------------------------------------------------</span>
 <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">k-part anything n-gram Indexer.</span>
+<span class="sd">Indexer to find k-part any-object n-grams.</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
 <span class="kn">import</span> <span class="nn">pandas</span>
@@ -158,29 +159,25 @@
 <span class="sd">    :keyword u&#39;continuer&#39;: When there is no &quot;horizontal&quot; event that corresponds to a vertical</span>
 <span class="sd">        event, this is printed instead, to show that the previous &quot;horizontal&quot; event continues.</span>
 <span class="sd">    :type u&#39;continuer&#39;: :obj:`basestring`</span>
+
+<span class="sd">    .. note:: The :obj:`u&#39;mark singles&#39;` setting should have no _ characters, which appear in our \</span>
+<span class="sd">        documentation only because of a technical limitation in the documentation tool.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">default_settings</span> <span class="o">=</span> <span class="p">{</span><span class="s">u&#39;mark singles&#39;</span><span class="p">:</span> <span class="bp">True</span><span class="p">,</span> <span class="s">u&#39;horizontal&#39;</span><span class="p">:</span> <span class="p">[],</span> <span class="s">u&#39;terminator&#39;</span><span class="p">:</span> <span class="p">[],</span>
                         <span class="s">u&#39;continuer&#39;</span><span class="p">:</span> <span class="s">u&#39;_&#39;</span><span class="p">}</span>
     <span class="s">&quot;A :obj:`dict` of default settings for the :class:`NGramIndexer`.&quot;</span>
 
-<div class="viewcode-block" id="NGramIndexer.__init__"><a class="viewcode-back" href="../../../../vis.analyzers.indexers.html#vis.analyzers.indexers.ngram.NGramIndexer.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">score</span><span class="p">,</span> <span class="n">settings</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">score</span><span class="p">,</span> <span class="n">settings</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Create a new NGramIndexer.</span>
-
-<span class="sd">        Parameters</span>
-<span class="sd">        ==========</span>
-<span class="sd">        :param score: A list of the &quot;horizontal&quot; and &quot;vertical&quot; indices to use for n-grams. You can</span>
-<span class="sd">            put the &quot;horizontal&quot; and &quot;vertical&quot; indices anywhere in the list, so long as you use</span>
-<span class="sd">            settings to specify the order.</span>
+<span class="sd">        :param score: A list of the &quot;horizontal&quot; and &quot;vertical&quot; indices to use for n-grams. You \</span>
+<span class="sd">            can put the &quot;horizontal&quot; and &quot;vertical&quot; indices anywhere in the list, so long as you \</span>
+<span class="sd">            use settings to specify the order.</span>
 <span class="sd">        :type score: :obj:`list` of :class:`pandas.Series`</span>
-
-<span class="sd">        :param settings: Required and optional settings. See descriptions in</span>
+<span class="sd">        :param settings: Required and optional settings. See descriptions in \</span>
 <span class="sd">            :const:`possible_settings`.</span>
 <span class="sd">        :type settings: :obj:`dict`</span>
 
-<span class="sd">        Raises</span>
-<span class="sd">        ======</span>
 <span class="sd">        :raises: :exc:`RuntimeError` if :obj:`score` is the wrong type.</span>
 <span class="sd">        :raises: :exc:`RuntimeError` if :obj:`score` is not a list of the same types.</span>
 <span class="sd">        :raises: :exc:`RuntimeError` if required settings are not present in :obj:`settings`.</span>
@@ -213,7 +210,7 @@
 
         <span class="c"># not using it</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_indexer_func</span> <span class="o">=</span> <span class="bp">None</span>
-</div>
+
     <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">_format_thing</span><span class="p">(</span><span class="n">things</span><span class="p">,</span> <span class="n">m_singles</span><span class="p">,</span> <span class="n">markers</span><span class="o">=</span><span class="p">(</span><span class="s">u&#39;[&#39;</span><span class="p">,</span> <span class="s">u&#39;]&#39;</span><span class="p">),</span> <span class="n">terminator</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>

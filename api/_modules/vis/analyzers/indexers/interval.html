@@ -23,6 +23,7 @@
     <script type="text/javascript" src="../../../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+    <link rel="author" title="About these documents" href="../../../../about.html" />
     <link rel="top" title="vis X documentation" href="../../../../index.html" />
     <link rel="up" title="Module code" href="../../../index.html" /> 
   </head>
@@ -106,9 +107,9 @@
 <span class="sd">    of the parts held therein.</span>
 
 <span class="sd">    :param key: The key from :class:`IntervalIndexer`.</span>
-<span class="sd">    :type key: :obj:`unicode1</span>
+<span class="sd">    :type key: :obj:`unicode`</span>
 <span class="sd">    :returns: The indices of parts referred to by the key.</span>
-<span class="sd">    :rtype: :obj:`tuple` of :obj:`integer`</span>
+<span class="sd">    :rtype: :obj:`tuple` of :obj:`int`</span>
 
 <span class="sd">    &gt;&gt;&gt; key_to_tuple(u&#39;5,6&#39;)</span>
 <span class="sd">    (5, 6)</span>
@@ -124,6 +125,8 @@
 </div>
 <div class="viewcode-block" id="real_indexer"><a class="viewcode-back" href="../../../../vis.analyzers.indexers.html#vis.analyzers.indexers.interval.real_indexer">[docs]</a><span class="k">def</span> <span class="nf">real_indexer</span><span class="p">(</span><span class="n">simultaneity</span><span class="p">,</span> <span class="n">simple</span><span class="p">,</span> <span class="n">quality</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Used internally by the :class:`IntervalIndexer` and :class:`HorizontalIntervalIndexer`.</span>
+
 <span class="sd">    Turn a notes-and-rests simultaneity into the name of the interval it represents. Note that,</span>
 <span class="sd">    because of the u&#39;Rest&#39; strings, you can compare the duration of the piece in which the two</span>
 <span class="sd">    parts do or do not have notes sounding together.</span>
@@ -175,6 +178,8 @@
 <span class="c"># and the function still only requires one argument at run-time from the Indexer.mp_indexer().</span></div>
 <div class="viewcode-block" id="indexer_qual_simple"><a class="viewcode-back" href="../../../../vis.analyzers.indexers.html#vis.analyzers.indexers.interval.indexer_qual_simple">[docs]</a><span class="k">def</span> <span class="nf">indexer_qual_simple</span><span class="p">(</span><span class="n">ecks</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Used internally by the :class:`IntervalIndexer` and :class:`HorizontalIntervalIndexer`.</span>
+
 <span class="sd">    Call :func:`real_indexer` with settings to print simple intervals with quality.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">real_indexer</span><span class="p">(</span><span class="n">ecks</span><span class="p">,</span> <span class="bp">True</span><span class="p">,</span> <span class="bp">True</span><span class="p">)</span>
@@ -182,6 +187,8 @@
 </div>
 <div class="viewcode-block" id="indexer_qual_comp"><a class="viewcode-back" href="../../../../vis.analyzers.indexers.html#vis.analyzers.indexers.interval.indexer_qual_comp">[docs]</a><span class="k">def</span> <span class="nf">indexer_qual_comp</span><span class="p">(</span><span class="n">ecks</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Used internally by the :class:`IntervalIndexer` and :class:`HorizontalIntervalIndexer`.</span>
+
 <span class="sd">    Call :func:`real_indexer` with settings to print compound intervals with quality.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">real_indexer</span><span class="p">(</span><span class="n">ecks</span><span class="p">,</span> <span class="bp">False</span><span class="p">,</span> <span class="bp">True</span><span class="p">)</span>
@@ -189,6 +196,8 @@
 </div>
 <div class="viewcode-block" id="indexer_nq_simple"><a class="viewcode-back" href="../../../../vis.analyzers.indexers.html#vis.analyzers.indexers.interval.indexer_nq_simple">[docs]</a><span class="k">def</span> <span class="nf">indexer_nq_simple</span><span class="p">(</span><span class="n">ecks</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Used internally by the :class:`IntervalIndexer` and :class:`HorizontalIntervalIndexer`.</span>
+
 <span class="sd">    Call :func:`real_indexer` with settings to print simple intervals without quality.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">real_indexer</span><span class="p">(</span><span class="n">ecks</span><span class="p">,</span> <span class="bp">True</span><span class="p">,</span> <span class="bp">False</span><span class="p">)</span>
@@ -196,6 +205,8 @@
 </div>
 <div class="viewcode-block" id="indexer_nq_comp"><a class="viewcode-back" href="../../../../vis.analyzers.indexers.html#vis.analyzers.indexers.interval.indexer_nq_comp">[docs]</a><span class="k">def</span> <span class="nf">indexer_nq_comp</span><span class="p">(</span><span class="n">ecks</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Used internally by the :class:`IntervalIndexer` and :class:`HorizontalIntervalIndexer`.</span>
+
 <span class="sd">    Call :func:`real_indexer` with settings to print compound intervals without quality.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">real_indexer</span><span class="p">(</span><span class="n">ecks</span><span class="p">,</span> <span class="bp">False</span><span class="p">,</span> <span class="bp">False</span><span class="p">)</span>
@@ -219,25 +230,24 @@
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    A :obj:`list` of possible settings for the :class:`IntervalIndexer`.</span>
 
-<span class="sd">    :keyword unicode u&#39;simple_or_compound&#39;: NOTE: This setting is :obj:`u&#39;simple or compound&#39;` and</span>
-<span class="sd">        you should not include the underscores. Whether intervals should be represented in their</span>
+<span class="sd">    :keyword unicode u&#39;simple_or_compound&#39;: Whether intervals should be represented in their \</span>
 <span class="sd">        single-octave form (either :obj:`u&#39;simple&#39;` or :obj:`u&#39;compound&#39;`).</span>
 <span class="sd">    :keyword boolean u&#39;quality&#39;: Whether to display an interval&#39;s quality.</span>
+
+<span class="sd">    .. note:: The :obj:`u&#39;simple or compound&#39;` setting should have no _ characters, which appear \</span>
+<span class="sd">        in our documentation only because of a technical limitation in the documentation tool.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">default_settings</span> <span class="o">=</span> <span class="p">{</span><span class="s">u&#39;simple or compound&#39;</span><span class="p">:</span> <span class="s">u&#39;compound&#39;</span><span class="p">,</span> <span class="s">u&#39;quality&#39;</span><span class="p">:</span> <span class="bp">False</span><span class="p">}</span>
     <span class="s">&quot;A :obj:`dict` of default settings for the :class:`IntervalIndexer`.&quot;</span>
 
-<div class="viewcode-block" id="IntervalIndexer.__init__"><a class="viewcode-back" href="../../../../vis.analyzers.indexers.html#vis.analyzers.indexers.interval.IntervalIndexer.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">score</span><span class="p">,</span> <span class="n">settings</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">score</span><span class="p">,</span> <span class="n">settings</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Create a new :class:`IntervalIndexer`. The output format is described in :meth:`run`.</span>
+<span class="sd">        The output format is described in :meth:`run`.</span>
 
-<span class="sd">        Parameters</span>
-<span class="sd">        ==========</span>
 <span class="sd">        :param score: The output of :class:`NoteRestIndexer` for all parts in a piece.</span>
 <span class="sd">        :type score: :obj:`list` of :class:`pandas.Series`</span>
-
-<span class="sd">        :param settings: Required and optional settings. See descriptions in</span>
+<span class="sd">        :param settings: Required and optional settings. See descriptions in \</span>
 <span class="sd">            :const:`possible_settings`.</span>
 <span class="sd">        :type settings: :obj:`dict`</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -270,7 +280,7 @@
                 <span class="bp">self</span><span class="o">.</span><span class="n">_indexer_func</span> <span class="o">=</span> <span class="n">indexer_nq_simple</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_indexer_func</span> <span class="o">=</span> <span class="n">indexer_nq_comp</span>
-</div>
+
 <div class="viewcode-block" id="IntervalIndexer.run"><a class="viewcode-back" href="../../../../vis.analyzers.indexers.html#vis.analyzers.indexers.interval.IntervalIndexer.run">[docs]</a>    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Make a new index of the piece.</span>
@@ -312,29 +322,25 @@
 <span class="sd">    You should provide the result of :class:`NoteRestIndexer`.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="HorizontalIntervalIndexer.__init__"><a class="viewcode-back" href="../../../../vis.analyzers.indexers.html#vis.analyzers.indexers.interval.HorizontalIntervalIndexer.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">score</span><span class="p">,</span> <span class="n">settings</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">score</span><span class="p">,</span> <span class="n">settings</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Create a new :class:`HorizontalIntervalIndexer`. The output format is described in</span>
-<span class="sd">        :meth:`run`.</span>
+<span class="sd">        The output format is described in :meth:`run`.</span>
 
-<span class="sd">        Parameters</span>
-<span class="sd">        ==========</span>
 <span class="sd">        :param score: The output of :class:`NoteRestIndexer` for all parts in a piece.</span>
 <span class="sd">        :type score: :obj:`list` of :class:`pandas.Series`</span>
-
-<span class="sd">        :param settings: Required and optional settings. See descriptions in</span>
+<span class="sd">        :param settings: Required and optional settings. See descriptions in \</span>
 <span class="sd">            :const:`IntervalIndexer.possible_settings`.</span>
 <span class="sd">        :type settings: :obj:`dict`</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">HorizontalIntervalIndexer</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="n">score</span><span class="p">,</span> <span class="n">settings</span><span class="p">)</span>
-</div>
+
 <div class="viewcode-block" id="HorizontalIntervalIndexer.run"><a class="viewcode-back" href="../../../../vis.analyzers.indexers.html#vis.analyzers.indexers.interval.HorizontalIntervalIndexer.run">[docs]</a>    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Make a new index of the piece.</span>
 
 <span class="sd">        Returns</span>
 <span class="sd">        =======</span>
-<span class="sd">        :returns: A list of the new indices. The index of each Series corresponds to the index it</span>
+<span class="sd">        :returns: A list of the new indices. The index of each Series corresponds to the index it \</span>
 <span class="sd">            has in the list of :class:`Series` given to the constructor.</span>
 <span class="sd">        :rtype: :obj:`list` of :class:`pandas.Series`</span>
 <span class="sd">        &quot;&quot;&quot;</span>

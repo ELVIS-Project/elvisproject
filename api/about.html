@@ -1,0 +1,378 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Design Principles &mdash; vis X documentation</title>
+    
+    <link rel="stylesheet" href="_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     'X',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="author" title="About these documents" href="#" />
+    <link rel="top" title="vis X documentation" href="index.html" />
+    <link rel="next" title="vis" href="modules.html" />
+    <link rel="prev" title="Documentation for the vis Music Analysis Framework" href="index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="modules.html" title="vis"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Documentation for the vis Music Analysis Framework"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">vis X documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Design Principles</a><ul>
+<li><a class="reference internal" href="#write-an-analyzer">Write an Analyzer</a></li>
+<li><a class="reference internal" href="#use-a-model">Use a Model</a></li>
+<li><a class="reference internal" href="#how-to-start">How to Start</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#install-and-test-the-framework">Install and Test the Framework</a></li>
+<li><a class="reference internal" href="#known-issues-and-limitations">Known Issues and Limitations</a></li>
+<li><a class="reference internal" href="#tutorial-make-a-new-workflow">Tutorial: Make a new Workflow</a><ul>
+<li><a class="reference internal" href="#develop-a-question">Develop a Question</a></li>
+<li><a class="reference internal" href="#what-does-the-ngramindexer-require">What Does the NGramIndexer Require?</a></li>
+<li><a class="reference internal" href="#how-shall-i-aggregate-results">How Shall I Aggregate Results?</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#tutorial-use-the-workflowmanager">Tutorial: Use the WorkflowManager</a><ul>
+<li><a class="reference internal" href="#port-a-query-into-the-workflowmanager">Port a Query into the WorkflowManager</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="index.html"
+                        title="previous chapter">Documentation for the <tt class="docutils literal"><span class="pre">vis</span></tt> Music Analysis Framework</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="modules.html"
+                        title="next chapter">vis</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/about.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="design-principles">
+<span id="id1"></span><h1>Design Principles<a class="headerlink" href="#design-principles" title="Permalink to this headline">¶</a></h1>
+<p>The vis framework has a simple design: write an <tt class="docutils literal"><span class="pre">analyzer</span></tt> to make an analytic judgment about a piece, then use the built-in <tt class="docutils literal"><span class="pre">models</span></tt> to ensure analyzers are run in the right order, with the right inputs and settings. Since music analysis is a complex task (really, a complicated complex of tasks), and the vis framework is highly abstracted, our simple design requires much explanation.</p>
+<div class="section" id="write-an-analyzer">
+<h2>Write an Analyzer<a class="headerlink" href="#write-an-analyzer" title="Permalink to this headline">¶</a></h2>
+<p>There are two types of analyzers: indexers and experimenters. Indexers consume a music21 <a class="reference external" href="http://web.mit.edu/music21/doc/moduleReference/moduleStream.html#music21.stream.Score" title="(in music21 v1.6.0)"><tt class="xref py py-class docutils literal"><span class="pre">Score</span></tt></a> or the result of another indexer and produce output that can sensibly be attached to a specific moment of a piece. Indexers may be relatively simple, like the <a class="reference internal" href="vis.analyzers.indexers.html#vis.analyzers.indexers.interval.IntervalIndexer" title="vis.analyzers.indexers.interval.IntervalIndexer"><tt class="xref py py-class docutils literal"><span class="pre">IntervalIndexer</span></tt></a>, which consumes an index of the notes and rests in a piece and outputs an index of the intervals between all possible pairings of parts. Indexers may be complicated, like the <a class="reference internal" href="vis.analyzers.indexers.html#vis.analyzers.indexers.ngram.NGramIndexer" title="vis.analyzers.indexers.ngram.NGramIndexer"><tt class="xref py py-class docutils literal"><span class="pre">NGramIndexer</span></tt></a>, which consumes at least one index of anything, and outputs an index of successions found therein. An indexer might tell you the scale degrees in a part, or the harmonic function of chords in the score.</p>
+<p>Experimenters always consume the result of an experimenter, and produce results that cannot be sensibly attached to a particular moment. Experimenters may be relatively simple, like the <a class="reference internal" href="vis.analyzers.experimenters.html#vis.analyzers.experimenters.frequency.FrequencyExperimenter" title="vis.analyzers.experimenters.frequency.FrequencyExperimenter"><tt class="xref py py-class docutils literal"><span class="pre">FrequencyExperimenter</span></tt></a>, which consumes any index and counts the number of occurrences of every unique object found within. Experimenters may be complicated, like one that would consume the result of the <tt class="xref py py-class docutils literal"><span class="pre">FrequencyExperimenter</span></tt> and create a Markov transition model.</p>
+<p>The vis framework already contains analyzers for various tasks, but we imagine many users will want to extend the framework with their own analyzers.</p>
+</div>
+<div class="section" id="use-a-model">
+<h2>Use a Model<a class="headerlink" href="#use-a-model" title="Permalink to this headline">¶</a></h2>
+<p>The vis framework has two data model objects. Use <a class="reference internal" href="vis.models.html#vis.models.indexed_piece.IndexedPiece" title="vis.models.indexed_piece.IndexedPiece"><tt class="xref py py-class docutils literal"><span class="pre">IndexedPiece</span></tt></a> for a single piece and <a class="reference internal" href="vis.models.html#vis.models.aggregated_pieces.AggregatedPieces" title="vis.models.aggregated_pieces.AggregatedPieces"><tt class="xref py py-class docutils literal"><span class="pre">AggregatedPieces</span></tt></a> for pieces in a group. In a typical application, you will write analyzers but never use them, and never modify but always use the models. The models know how to run analyzers on the piece or pieces they hold, how to import pieces safely, and how to find and access metadata. In the future, the models may support storing results from analyzers in a database so they need not be recalculated for future analyses, use multiprocessing to speed up analyses on multi-core computers, or facilitate transit to and from analyzers in other languages like Haskell. Programmers using the models may benefit from these features without modifying their programs, as they (should not) require changes to the API.</p>
+</div>
+<div class="section" id="how-to-start">
+<h2>How to Start<a class="headerlink" href="#how-to-start" title="Permalink to this headline">¶</a></h2>
+<p>After you install the framework, we recommend you begin with the two tutorials below (refer to <a class="reference internal" href="#make-a-new-workflow"><em>Tutorial: Make a new Workflow</em></a> and <a class="reference internal" href="#use-the-workflowmanager"><em>Tutorial: Use the WorkflowManager</em></a>). When you wish to write a new analyzer, refer to the documentation and source code for the <a class="reference internal" href="vis.analyzers.indexers.html#vis.analyzers.indexers.template.TemplateIndexer" title="vis.analyzers.indexers.template.TemplateIndexer"><tt class="xref py py-class docutils literal"><span class="pre">TemplateIndexer</span></tt></a> and <a class="reference internal" href="vis.analyzers.experimenters.html#vis.analyzers.experimenters.template.TemplateExperimenter" title="vis.analyzers.experimenters.template.TemplateExperimenter"><tt class="xref py py-class docutils literal"><span class="pre">TemplateExperimenter</span></tt></a>.</p>
+</div>
+</div>
+<div class="section" id="install-and-test-the-framework">
+<h1>Install and Test the Framework<a class="headerlink" href="#install-and-test-the-framework" title="Permalink to this headline">¶</a></h1>
+<p>If you want to use the <tt class="docutils literal"><span class="pre">vis</span></tt> framework, you must install it. Because the framework is not (yet?) available on the Python Package Index, you cannot use <tt class="docutils literal"><span class="pre">pip</span></tt>. While this limitation may hinder deployment efforts, it makes little difference for programmers while they extend and build on the framework. We recommend using git to clone either the &#8220;vis-stable&#8221; or &#8220;master&#8221; branch from the vis GitHub repository at <a class="reference external" href="https://github.com/crantila/vis">https://github.com/crantila/vis</a>. If you have installed git, but you need help cloning a repository, you may find useful information in the <a class="reference external" href="http://git-scm.com/book/en/Git-Basics-Getting-a-Git-Repository#Cloning-an-Existing-Repository">git documentation</a>.</p>
+<p>After you clone the vis repository, you should install its dependencies (currently music21, pandas, and mock). We recommend you use pip for easy installation and updating. From the main vis directory, run <tt class="docutils literal"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">-r</span> <span class="pre">requirements.txt</span></tt> to automatically download and install the library dependencies as specified in our <tt class="docutils literal"><span class="pre">requirements.txt</span></tt> file. We also recommend running <tt class="docutils literal"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">-r</span> <span class="pre">optional_requirements.txt</span></tt> to install several additional packages that improve the speed of pandas and allow additional output formats (Excel, HDF5). You may need to use <tt class="docutils literal"><span class="pre">sudo</span></tt> or <tt class="docutils literal"><span class="pre">su</span></tt> to run pip with the proper privileges. If you do not have pip installed, use your package manager (the package is probably called <tt class="docutils literal"><span class="pre">python-pip</span></tt>&#8212;at least it is for users of Fedora, Ubuntu, and openSUSE). If you are one of those unfortunate souls who uses Windows, or worse, Mac OS X, then clearly we come from different planets. The <a class="reference external" href="http://www.pip-installer.org/en/latest/installing.html">pip documentation</a> may help you.</p>
+<p>To ease development tasks, we modified the relevant <tt class="docutils literal"><span class="pre">__init__.py</span></tt> files to add &#8220;one directory up&#8221; (i.e., <tt class="docutils literal"><span class="pre">..</span></tt>) to the <tt class="docutils literal"><span class="pre">$PYTHONPATH</span></tt> so it is possible to import <tt class="docutils literal"><span class="pre">vis</span></tt> and its submodules by name.</p>
+<p>After you install the <tt class="docutils literal"><span class="pre">vis</span></tt> framework, we recommend running the included automated tests. From the main vis directory, run <tt class="docutils literal"><span class="pre">python</span> <span class="pre">run_tests.py</span></tt>. We currently expect at least one test to fail; refer to <a class="reference internal" href="#known-issues-and-limitations"><em>Known Issues and Limitations</em></a> for more information.</p>
+<p>Several components included with the framework are not required for its operation, so you should remove them if you will not use them. In particular, if you will not deploy a GUI-based desktop application, you can remove the PyQt4 interface files by deleting the <tt class="docutils literal"><span class="pre">views</span></tt> directory. Three other files are only used by the PyQt4 interface: <tt class="docutils literal"><span class="pre">main.py</span></tt>, <tt class="docutils literal"><span class="pre">models/importing.py</span></tt>, and <tt class="docutils literal"><span class="pre">models/analyzing.py</span></tt>. If you wish to use the PyQt4 interface, you must install PyQt4 with your package manager. In a pinch, you may also run <tt class="docutils literal"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">PyQt4</span></tt> after you install the Qt framework, which can be a pain if you aren&#8217;t lucky enough to run Linux.</p>
+<p>The <a class="reference internal" href="#vis.workflow.WorkflowManager" title="vis.workflow.WorkflowManager"><tt class="xref py py-class docutils literal"><span class="pre">WorkflowManager</span></tt></a> is also not required for the framework&#8217;s operation. To remove the WorkflowManager, delete the <tt class="docutils literal"><span class="pre">workflow.py</span></tt> and <tt class="docutils literal"><span class="pre">other_tests/test_workflow.py</span></tt> files. However, we recommend using the WorkflowManager either directly or as a pattern for writing your own queries. Where the rest of the vis framework provides the means with which to answer a wide variety of musical questions, the WorkflowManager uses the framework to answer specific questions, reducing the flexibility of the framework in order to increase the ease with which the answerable questions are answered. Please refer to <a class="reference internal" href="#use-the-workflowmanager"><em>Tutorial: Use the WorkflowManager</em></a> for more information.</p>
+</div>
+<div class="section" id="known-issues-and-limitations">
+<span id="id2"></span><h1>Known Issues and Limitations<a class="headerlink" href="#known-issues-and-limitations" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li>Issue: If you installed the version of music21 specified in our <tt class="docutils literal"><span class="pre">requirements.txt</span></tt> file, you should expect several failures. If you installed the previous version of music21 (1.5.0), you should expect one failure.</li>
+<li>Limitation: Some symbolic music files import to a music21 object called <a class="reference external" href="http://web.mit.edu/music21/doc/moduleReference/moduleStream.html#music21.stream.Opus" title="(in music21 v1.6.0)"><tt class="xref py py-class docutils literal"><span class="pre">Opus</span></tt></a>. During testing, this primarily happens with <tt class="docutils literal"><span class="pre">**kern</span></tt> files that contain multiple movements of a mass. Even though development on the vis framework is what prompted this music21 feature, and even though vis (before it was a framework) incorporated support for this feature, the framework&#8217;s current design cannot deal with Opus objects. The reason for this limitation is rather straight-forward: an <a class="reference internal" href="vis.models.html#vis.models.indexed_piece.IndexedPiece" title="vis.models.indexed_piece.IndexedPiece"><tt class="xref py py-class docutils literal"><span class="pre">IndexedPiece</span></tt></a> object assumes it holds a pathname that refers to a single musical entity (either a movement or, for single-movement works, a piece). <tt class="xref py py-class docutils literal"><span class="pre">IndexedPiece</span></tt> will only know its file imports to an <tt class="xref py py-class docutils literal"><span class="pre">Opus</span></tt> object <em>after</em> importing the file, which happens during the first call to <a class="reference internal" href="vis.models.html#vis.models.indexed_piece.IndexedPiece.get_data" title="vis.models.indexed_piece.IndexedPiece.get_data"><tt class="xref py py-meth docutils literal"><span class="pre">get_data()</span></tt></a>. There are many possible solutions, most of which are not technically challenging, but we have so far focussed on solving larger problems.</li>
+<li>Limitation: By default, the vis framework does not use multiprocessing at all. If you install the optional packages for pandas, many of the pandas-based indexers and experimenters will use multi-threading in C. However, there are many opportunities to use multiprocessing where we have yet to do so. While we initially planned for the indexers and experimenters to use multiprocessing, we later decided that the high overhead of multiprocessing in Python means we should leave the multiprocessing implementation up to application developers&#8212;the realm of the <tt class="xref py py-class docutils literal"><span class="pre">WorkflowManager</span></tt>.</li>
+<li>Limitation: This is a point of information for users and developers concerned with counterpoint. The framework currently offers no way to sensitively process voice crossing in contrapuntal modules (&#8220;interval n-grams&#8221;). &#8220;Higher&#8221; and &#8220;lower&#8221; voices are consistently presented in score order. We have planned for several ways to deal with this situation, but the developer assigned to the task is a busy doctoral student and a novice programmer, so they have not been fully implemented yet.</li>
+</ul>
+</div>
+<div class="section" id="tutorial-make-a-new-workflow">
+<span id="make-a-new-workflow"></span><h1>Tutorial: Make a new Workflow<a class="headerlink" href="#tutorial-make-a-new-workflow" title="Permalink to this headline">¶</a></h1>
+<p>Once you understand our framework&#8217;s architecture (explained in <a class="reference internal" href="#design-principles"><em>Design Principles</em></a>), you can start to design a new workflow to ask your own queries.</p>
+<div class="section" id="develop-a-question">
+<h2>Develop a Question<a class="headerlink" href="#develop-a-question" title="Permalink to this headline">¶</a></h2>
+<p>Pretend you are me. I want to describe what distinguishes the melodic styles of two composers. I have already chosen the composers and the pieces I will use to compare them, trying to make the test sets as similar as possible except for the different composers. I want to use the vis framework, and I want to be as lazy as possible, so I will try to avoid adding new analyzers.</p>
+<p>For my preliminary investigation, I will consider only patterns of melodic motion, since all required indexers and experimenters are already included with the vis framework. The <a class="reference internal" href="vis.analyzers.indexers.html#vis.analyzers.indexers.ngram.NGramIndexer" title="vis.analyzers.indexers.ngram.NGramIndexer"><tt class="xref py py-class docutils literal"><span class="pre">NGramIndexer</span></tt></a> provides vis with pattern-finding functionality, so to run my query I must consider two questions: (1) what does the <tt class="xref py py-class docutils literal"><span class="pre">NGramIndexer</span></tt> need in order to find melodic patterns? and (2) how shall I aggregate the melodic patterns across pieces?</p>
+<p>After the preliminary investigation, I would make my query more useful by using the &#8220;horizontal&#8221; and &#8220;vertical&#8221; functionality of the <tt class="xref py py-class docutils literal"><span class="pre">NGramIndexer</span></tt> to coordinate disparate musical elements that make up melodic identity. Writing a new <tt class="xref py py-class docutils literal"><span class="pre">Indexer</span></tt> to help combine melodic intervals with the duration of the note preceding the interval would be relatively easy, since music21 knows the duration of every note. A more subtle, but possibly more informative, query would combine melodic intervals with the scale degree of the preceding note. This is a much more complicated query, since it would require an indexer to find the key at a particular moment (an extremely complicated question) and an indexer that knows the scale degree of a note.</p>
+</div>
+<div class="section" id="what-does-the-ngramindexer-require">
+<h2>What Does the NGramIndexer Require?<a class="headerlink" href="#what-does-the-ngramindexer-require" title="Permalink to this headline">¶</a></h2>
+<p>I start by reading and understanding the documentation for the <a class="reference internal" href="vis.analyzers.indexers.html#vis.analyzers.indexers.ngram.NGramIndexer" title="vis.analyzers.indexers.ngram.NGramIndexer"><tt class="xref py py-class docutils literal"><span class="pre">NGramIndexer</span></tt></a>. This indexer&#8217;s power means it can be difficult to use in subtle and unexpected ways. For this simple preliminary investigation, we need only provide the melodic intervals of every part in an <tt class="xref py py-class docutils literal"><span class="pre">IndexedPiece</span></tt>. The melodic intervals will be the &#8220;vertical&#8221; events; there will be no &#8220;horizontal&#8221; events. We can change the &#8220;mark singles&#8221; and &#8220;continuer&#8221; settings any time as we please. We will probably want to try many different pattern lengths by changing the &#8220;n&#8221; setting. If we do not wish our melodic patterns to include rests, we can set &#8220;terminator&#8221; to <tt class="docutils literal"><span class="pre">[u'Rest']</span></tt>.</p>
+<p>Thus the only information <tt class="xref py py-class docutils literal"><span class="pre">NGramIndexer</span></tt> requires from another analyzer is the melodic intervals, produced by <tt class="xref py py-class docutils literal"><span class="pre">HorizontalIntervalIndexer</span></tt>, which will confusingly be the &#8220;vertical&#8221; event. As specified in its documentation, the <tt class="xref py py-class docutils literal"><span class="pre">HorizontalIntervalIndexer</span></tt> requires the output of the <a class="reference internal" href="vis.analyzers.indexers.html#vis.analyzers.indexers.noterest.NoteRestIndexer" title="vis.analyzers.indexers.noterest.NoteRestIndexer"><tt class="xref py py-class docutils literal"><span class="pre">NoteRestIndexer</span></tt></a>, which operates directly on the music21 <tt class="xref py py-class docutils literal"><span class="pre">Score</span></tt>.</p>
+<p>The first part of our query looks like this:</p>
+<div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15</pre></div></td><td class="code"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">vis.analyzers.indexers</span> <span class="kn">import</span> <span class="n">noterest</span><span class="p">,</span> <span class="n">interval</span><span class="p">,</span> <span class="n">ngram</span>
+<span class="kn">from</span> <span class="nn">vis.models.indexed_piece</span> <span class="kn">import</span> <span class="n">IndexedPiece</span>
+
+<span class="c"># prepare inputs and output-collectors</span>
+<span class="n">pathnames</span> <span class="o">=</span> <span class="p">[</span><span class="n">list_of_pathnames_here</span><span class="p">]</span>
+<span class="n">ind_ps</span> <span class="o">=</span> <span class="p">[</span><span class="n">IndexedPiece</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">pathnames</span><span class="p">]</span>
+<span class="n">interval_settings</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;quality&#39;</span><span class="p">:</span> <span class="bp">True</span><span class="p">}</span>
+<span class="n">ngram_settings</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;vertical&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s">&#39;n&#39;</span><span class="p">:</span> <span class="mi">3</span><span class="p">}</span>  <span class="c"># change &#39;n&#39; as required</span>
+<span class="n">ngram_results</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="c"># prepare for and run the NGramIndexer</span>
+<span class="k">for</span> <span class="n">piece</span> <span class="ow">in</span> <span class="n">ind_ps</span><span class="p">:</span>
+    <span class="n">intervals</span> <span class="o">=</span> <span class="n">piece</span><span class="o">.</span><span class="n">get_data</span><span class="p">([</span><span class="n">noterest</span><span class="o">.</span><span class="n">NoteRestIndexer</span><span class="p">,</span> <span class="n">interval</span><span class="o">.</span><span class="n">HorizontalIntervalIndexer</span><span class="p">],</span> <span class="n">interval_settings</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">part</span> <span class="ow">in</span> <span class="n">intervals</span><span class="p">:</span>
+        <span class="n">ngram_results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">piece</span><span class="o">.</span><span class="n">get_data</span><span class="p">([</span><span class="n">ngram</span><span class="o">.</span><span class="n">NGramIndexer</span><span class="p">],</span> <span class="n">ngram_settings</span><span class="p">,</span> <span class="p">[</span><span class="n">part</span><span class="p">])</span>
+</pre></div>
+</td></tr></table></div>
+<p>After the imports, we start by making a list of all the pathnames to use in this query, then use a Python list comprehension to make a list of <tt class="xref py py-class docutils literal"><span class="pre">IndexedPiece</span></tt> objcects for each file. We make the settings dictionaries to use for the interval then n-gram indexers on lines 7 and 8, but note we have not included all possible settings. The empty <tt class="docutils literal"><span class="pre">ngram_results</span></tt> list will store results from the <tt class="xref py py-class docutils literal"><span class="pre">NGramIndexer</span></tt>.</p>
+<p>The loop started on line 12 is a little confusing: why not use an <tt class="xref py py-class docutils literal"><span class="pre">AggregatedPieces</span></tt> object to run the <tt class="xref py py-class docutils literal"><span class="pre">NGramIndexer</span></tt> on all pieces with a single call to <tt class="xref py py-meth docutils literal"><span class="pre">get_data()</span></tt>? The reason is the inner loop, started on line 14: if we run the <tt class="xref py py-class docutils literal"><span class="pre">NGramIndexer</span></tt> on an <tt class="xref py py-class docutils literal"><span class="pre">IndexedPiece</span></tt> once, we can only index a single part, but we want results from all parts. This is the special burden of using the <tt class="xref py py-class docutils literal"><span class="pre">NGramIndexer</span></tt>, which is flexible but not (yet) intelligent. In order to index the melodic intervals in every part using the <tt class="xref py py-meth docutils literal"><span class="pre">get_data()</span></tt> call on line 15, we must add the nested loops.</p>
+</div>
+<div class="section" id="how-shall-i-aggregate-results">
+<h2>How Shall I Aggregate Results?<a class="headerlink" href="#how-shall-i-aggregate-results" title="Permalink to this headline">¶</a></h2>
+<p>For this analysis, I will simply count the number of occurrences of each harmonic interval pattern, which is called the &#8220;frequency.&#8221; It makes sense to calculate each piece separately, then combine the results across pieces. We&#8217;ll use the <a class="reference internal" href="vis.analyzers.experimenters.html#vis.analyzers.experimenters.frequency.FrequencyExperimenter" title="vis.analyzers.experimenters.frequency.FrequencyExperimenter"><tt class="xref py py-class docutils literal"><span class="pre">FrequencyExperimenter</span></tt></a> and <a class="reference internal" href="vis.analyzers.experimenters.html#vis.analyzers.experimenters.aggregator.ColumnAggregator" title="vis.analyzers.experimenters.aggregator.ColumnAggregator"><tt class="xref py py-class docutils literal"><span class="pre">ColumnAggregator</span></tt></a> experimenters for these tasks. The <tt class="xref py py-class docutils literal"><span class="pre">FrequencyExperimenter</span></tt> counts the number of occurrences of every unique token in another index into a <tt class="xref py py-class docutils literal"><span class="pre">pandas.Series</span></tt>, and the <tt class="xref py py-class docutils literal"><span class="pre">ColumnAggregator</span></tt> combines results across a list of <tt class="xref py py-class docutils literal"><span class="pre">Series</span></tt> or a <tt class="xref py py-class docutils literal"><span class="pre">DataFrame</span></tt> (which it treats as a list of <tt class="xref py py-class docutils literal"><span class="pre">Series</span></tt>) into a single <tt class="xref py py-class docutils literal"><span class="pre">Series</span></tt>.</p>
+<p>With these modifications, our program looks like this:</p>
+<div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23</pre></div></td><td class="code"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">vis.analyzers.indexers</span> <span class="kn">import</span> <span class="n">noterest</span><span class="p">,</span> <span class="n">interval</span><span class="p">,</span> <span class="n">ngram</span>
+<span class="kn">from</span> <span class="nn">vis.analyzers.experimenters</span> <span class="kn">import</span> <span class="n">frequency</span><span class="p">,</span> <span class="n">aggregator</span>
+<span class="kn">from</span> <span class="nn">vis.models.indexed_piece</span> <span class="kn">import</span> <span class="n">IndexedPiece</span>
+<span class="kn">from</span> <span class="nn">vis.models.aggregated_pieces</span> <span class="kn">import</span> <span class="n">AggregatedPieces</span>
+<span class="kn">from</span> <span class="nn">pandas</span> <span class="kn">import</span> <span class="n">DataFrame</span>
+
+<span class="c"># prepare inputs and output-collectors</span>
+<span class="n">pathnames</span> <span class="o">=</span> <span class="p">[</span><span class="n">list_of_pathnames_here</span><span class="p">]</span>
+<span class="n">ind_ps</span> <span class="o">=</span> <span class="p">[</span><span class="n">IndexedPiece</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">pathnames</span><span class="p">]</span>
+<span class="n">interval_settings</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;quality&#39;</span><span class="p">:</span> <span class="bp">True</span><span class="p">}</span>
+<span class="n">ngram_settings</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;vertical&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="s">&#39;n&#39;</span><span class="p">:</span> <span class="mi">3</span><span class="p">}</span>  <span class="c"># change &#39;n&#39; as required</span>
+<span class="n">ngram_freqs</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="c"># prepare for and run the NGramIndexer</span>
+<span class="k">for</span> <span class="n">piece</span> <span class="ow">in</span> <span class="n">ind_ps</span><span class="p">:</span>
+    <span class="n">intervals</span> <span class="o">=</span> <span class="n">piece</span><span class="o">.</span><span class="n">get_data</span><span class="p">([</span><span class="n">noterest</span><span class="o">.</span><span class="n">NoteRestIndexer</span><span class="p">,</span> <span class="n">interval</span><span class="o">.</span><span class="n">HorizontalIntervalIndexer</span><span class="p">],</span> <span class="n">interval_settings</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">part</span> <span class="ow">in</span> <span class="n">intervals</span><span class="p">:</span>
+        <span class="n">ngram_freqs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">piece</span><span class="o">.</span><span class="n">get_data</span><span class="p">([</span><span class="n">ngram</span><span class="o">.</span><span class="n">NGramIndexer</span><span class="p">,</span> <span class="n">frequency</span><span class="o">.</span><span class="n">FrequencyExperimenter</span><span class="p">],</span> <span class="n">ngram_settings</span><span class="p">,</span> <span class="p">[</span><span class="n">part</span><span class="p">]))</span>
+
+<span class="c"># aggregate results of all pieces</span>
+<span class="n">agg_p</span> <span class="o">=</span> <span class="n">AggregatedPieces</span><span class="p">(</span><span class="n">ind_ps</span><span class="p">)</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">agg_p</span><span class="o">.</span><span class="n">get_data</span><span class="p">([</span><span class="n">aggregator</span><span class="o">.</span><span class="n">ColumnAggregator</span><span class="p">],</span> <span class="p">[],</span> <span class="p">{},</span> <span class="n">ngram_freqs</span><span class="p">)</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">DataFrame</span><span class="p">({</span><span class="s">&#39;Frequencies&#39;</span><span class="p">:</span> <span class="n">result</span><span class="p">})</span>
+</pre></div>
+</td></tr></table></div>
+<p>The first thing to note is that I modified the loop from the previous step by adding the <tt class="xref py py-class docutils literal"><span class="pre">FrequencyExperimenter</span></tt> to the <tt class="xref py py-meth docutils literal"><span class="pre">get_data()</span></tt> call on line 18 that uses the <tt class="xref py py-class docutils literal"><span class="pre">NGramIndexer</span></tt>. As you can see, the aggregation step is actually the easiest; it simply requires we create an <tt class="xref py py-class docutils literal"><span class="pre">AggregatedPieces</span></tt> object and call its <tt class="xref py py-meth docutils literal"><span class="pre">get_data()</span></tt> method with the appropriate input, which is the frequency data we collected in the loop.</p>
+<p>On line 22, <tt class="docutils literal"><span class="pre">result</span></tt> holds a <tt class="xref py py-class docutils literal"><span class="pre">Series</span></tt> with all the information we need! To export your data to one of the supported formats (CSV, Excel, etc.) you must create a <tt class="xref py py-class docutils literal"><span class="pre">DataFrame</span></tt> and use one of the methods described in the <a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/io.html">pandas documentation</a>. The code on line 23 &#8220;converts&#8221; <tt class="docutils literal"><span class="pre">result</span></tt> into a <tt class="xref py py-class docutils literal"><span class="pre">DataFrame</span></tt> by giving the <tt class="xref py py-class docutils literal"><span class="pre">Series</span></tt> to the <tt class="xref py py-class docutils literal"><span class="pre">DataFrame</span></tt> constructor in a dictionary. The key is the name of the column, which you can change to any value valid as a Python dictionary key. Since the <tt class="xref py py-class docutils literal"><span class="pre">Series</span></tt> holds the frequencies of melodic interval patterns, it makes sense to call the column <tt class="docutils literal"><span class="pre">'Frequencies'</span></tt> in this case. You may also wish to sort the results by running <tt class="docutils literal"><span class="pre">result.sort()</span></tt> before you &#8220;convert&#8221; to a <tt class="xref py py-class docutils literal"><span class="pre">DataFrame</span></tt>. You can sort in descending order (with the most common events at the top) with <tt class="docutils literal"><span class="pre">result.sort(ascending=False)</span></tt>.</p>
+</div>
+</div>
+<div class="section" id="tutorial-use-the-workflowmanager">
+<span id="use-the-workflowmanager"></span><h1>Tutorial: Use the WorkflowManager<a class="headerlink" href="#tutorial-use-the-workflowmanager" title="Permalink to this headline">¶</a></h1>
+<p>The script developed in <a class="reference internal" href="#make-a-new-workflow"><em>Tutorial: Make a new Workflow</em></a> is suitable for users comfortable with an interactive Python shell. Application developers making a graphical interface&#8212;whether on the Web or in a desktop application&#8212;can take advantage of a further layer of abstraction offered by our <a class="reference internal" href="#vis.workflow.WorkflowManager" title="vis.workflow.WorkflowManager"><tt class="xref py py-class docutils literal"><span class="pre">WorkflowManager</span></tt></a>. Since developers often prefer to separate their user interface code from any of the so-called &#8220;business logic,&#8221; the <tt class="xref py py-class docutils literal"><span class="pre">WorkflowManager</span></tt> provides the means by which to connect the &#8220;dumb&#8221; user interface with the highly-abstracted vis framework. You can think of the <tt class="xref py py-class docutils literal"><span class="pre">WorkflowManager</span></tt> as the true back-end component of your application, and you should expect to rewrite it with every application you develop.</p>
+<p>The <tt class="xref py py-class docutils literal"><span class="pre">WorkflowManager</span></tt>&#8216;s documentation describes its functionality:</p>
+<dl class="class">
+<dt id="vis.workflow.WorkflowManager">
+<em class="property">class </em><tt class="descclassname">vis.workflow.</tt><tt class="descname">WorkflowManager</tt><big>(</big><em>vals</em><big>)</big><a class="reference internal" href="_modules/vis/workflow.html#WorkflowManager"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#vis.workflow.WorkflowManager" title="Permalink to this definition">¶</a></dt>
+<dd><p>The <tt class="xref py py-class docutils literal"><span class="pre">WorkflowManager</span></tt> automates several commonly-performed music analysis patterns.</p>
+<p>There are four basic tasks the <tt class="xref py py-class docutils literal"><span class="pre">WorkflowManager</span></tt> performs, each with its own method:</p>
+<ul class="simple">
+<li><tt class="xref py py-meth docutils literal"><span class="pre">load()</span></tt>, to import data from external formats (MusicXML, Stata, pickled, etc.).</li>
+<li><tt class="xref py py-meth docutils literal"><span class="pre">run()</span></tt>, which performs one of a small set of pre-defined analysis activities.</li>
+<li><tt class="xref py py-meth docutils literal"><span class="pre">output()</span></tt>, which outputs visualization data to disk.</li>
+<li><tt class="xref py py-meth docutils literal"><span class="pre">export()</span></tt>, which outputs &#8220;non-visual&#8221; data to disk (Stata, CSV, pickled, etc.)</li>
+</ul>
+<p>We also provide the following methods for setting and getting properties of the individual
+<a class="reference internal" href="vis.models.html#vis.models.indexed_piece.IndexedPiece" title="vis.models.indexed_piece.IndexedPiece"><tt class="xref py py-class docutils literal"><span class="pre">IndexedPiece</span></tt></a> objects:</p>
+<ul class="simple">
+<li><tt class="xref py py-meth docutils literal"><span class="pre">metadata()</span></tt>, to adjust or view the metadata of a piece.</li>
+<li><tt class="xref py py-meth docutils literal"><span class="pre">settings()</span></tt>, to adjust or view the settings of a piece.</li>
+</ul>
+<p>It&#8217;s often easier to use the <tt class="xref py py-class docutils literal"><span class="pre">WorkflowManager</span></tt>, by providing a list of pathnames         corresponding to the files you want to analyze. However, if you will later need access to         the <a class="reference internal" href="vis.models.html#vis.models.indexed_piece.IndexedPiece" title="vis.models.indexed_piece.IndexedPiece"><tt class="xref py py-class docutils literal"><span class="pre">IndexedPiece</span></tt></a> objects directly themselves, you         should provide them to the <tt class="xref py py-class docutils literal"><span class="pre">WorkflowManager</span></tt> as in the second example below.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>vals</strong> (<a class="reference external" href="http://docs.python.org/2.7/library/functions.html#list" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">list</span></tt></a> of <a class="reference external" href="http://docs.python.org/2.7/library/functions.html#basestring" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">basestring</span></tt></a> or of             <a class="reference internal" href="vis.models.html#vis.models.indexed_piece.IndexedPiece" title="vis.models.indexed_piece.IndexedPiece"><tt class="xref py py-obj docutils literal"><span class="pre">IndexedPiece</span></tt></a>) &#8211; A list of pathnames or IndexedPieces. If an item in the list is not             either an IndexedPiece or basestring, it is silently ignored.</td>
+</tr>
+</tbody>
+</table>
+<p>We manage the <a class="reference internal" href="vis.models.html#vis.models.indexed_piece.IndexedPiece" title="vis.models.indexed_piece.IndexedPiece"><tt class="xref py py-class docutils literal"><span class="pre">IndexedPiece</span></tt></a> objects:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">paths</span> <span class="o">=</span> <span class="p">[</span><span class="s">u&#39;test_corpus/bwv77.mxl&#39;</span><span class="p">,</span> <span class="s">u&#39;test_corpus/Kyrie.krn&#39;</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">path_work</span> <span class="o">=</span> <span class="n">WorkflowManager</span><span class="p">(</span><span class="n">paths</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>You manage the <a class="reference internal" href="vis.models.html#vis.models.indexed_piece.IndexedPiece" title="vis.models.indexed_piece.IndexedPiece"><tt class="xref py py-class docutils literal"><span class="pre">IndexedPiece</span></tt></a> objects:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">ips</span> <span class="o">=</span> <span class="p">[</span><span class="n">IndexedPiece</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">paths</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ip_work</span> <span class="o">=</span> <span class="n">WorkflowManager</span><span class="p">(</span><span class="n">ips</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<div class="section" id="port-a-query-into-the-workflowmanager">
+<h2>Port a Query into the WorkflowManager<a class="headerlink" href="#port-a-query-into-the-workflowmanager" title="Permalink to this headline">¶</a></h2>
+<p>If I want to port the <a class="reference internal" href="#make-a-new-workflow"><em>Tutorial: Make a new Workflow</em></a> query to the <tt class="xref py py-class docutils literal"><span class="pre">WorkflowManager</span></tt>, I need to fit its functionality into the existing methods. The <tt class="xref py py-meth docutils literal"><span class="pre">load()</span></tt>, <tt class="xref py py-meth docutils literal"><span class="pre">output()</span></tt>, and <tt class="xref py py-meth docutils literal"><span class="pre">export()</span></tt> methods are all related to preparing <tt class="xref py py-class docutils literal"><span class="pre">IndexedPiece</span></tt> objects for analysis and saving or outputting results. Since my query requires no special treatment in these areas, I will not modify those methods, and all of my changes will be in the <tt class="xref py py-meth docutils literal"><span class="pre">run()</span></tt> method.</p>
+<p>Since my new program only requires one query, I can make a very simple <tt class="xref py py-meth docutils literal"><span class="pre">run()</span></tt> method and remove the other hidden methods (<tt class="xref py py-meth docutils literal"><span class="pre">_intervs()</span></tt>, <tt class="xref py py-meth docutils literal"><span class="pre">_interval_ngrams()</span></tt>, <tt class="xref py py-meth docutils literal"><span class="pre">_variable_part_modules()</span></tt>, <tt class="xref py py-meth docutils literal"><span class="pre">_two_part_modules()</span></tt>, and <tt class="xref py py-meth docutils literal"><span class="pre">_all_part_modules()</span></tt>). Of course, you may wish to use those methods for inspiration when you build your own queries. When I add my new query&#8217;s logic to the <tt class="xref py py-meth docutils literal"><span class="pre">run()</span></tt> method, I get this:</p>
+<div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12</pre></div></td><td class="code"><div class="highlight"><pre><span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="n">ngram_settings</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;vertical&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="s">&#39;n&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">settigns</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span> <span class="s">&#39;n&#39;</span><span class="p">)}</span>
+    <span class="n">ngram_freqs</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">piece</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">):</span>
+        <span class="n">interval_settings</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;quality&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="s">&#39;interval quality&#39;</span><span class="p">)}</span>
+        <span class="n">intervals</span> <span class="o">=</span> <span class="n">piece</span><span class="o">.</span><span class="n">get_data</span><span class="p">([</span><span class="n">noterest</span><span class="o">.</span><span class="n">NoteRestIndexer</span><span class="p">,</span> <span class="n">interval</span><span class="o">.</span><span class="n">HorizontalIntervalIndexer</span><span class="p">],</span> <span class="n">interval_settings</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">part</span> <span class="ow">in</span> <span class="n">intervals</span><span class="p">:</span>
+            <span class="n">ngram_freqs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">piece</span><span class="o">.</span><span class="n">get_data</span><span class="p">([</span><span class="n">ngram</span><span class="o">.</span><span class="n">NGramIndexer</span><span class="p">,</span> <span class="n">frequency</span><span class="o">.</span><span class="n">FrequencyExperimenter</span><span class="p">],</span> <span class="n">ngram_settings</span><span class="p">,</span> <span class="p">[</span><span class="n">part</span><span class="p">]))</span>
+
+    <span class="n">agg_p</span> <span class="o">=</span> <span class="n">AggregatedPieces</span><span class="p">(</span><span class="n">ind_ps</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_result</span> <span class="o">=</span> <span class="n">agg_p</span><span class="o">.</span><span class="n">get_data</span><span class="p">([</span><span class="n">aggregator</span><span class="o">.</span><span class="n">ColumnAggregator</span><span class="p">],</span> <span class="p">[],</span> <span class="p">{},</span> <span class="n">ngram_freqs</span><span class="p">)</span>
+</pre></div>
+</td></tr></table></div>
+<p>I made the following changes:</p>
+<ul class="simple">
+<li>Remove the <tt class="docutils literal"><span class="pre">instruction</span></tt> parameter, since there is only one experiment.</li>
+<li>Move the <tt class="docutils literal"><span class="pre">import</span></tt> statements to the top of the file.</li>
+<li>Use <tt class="docutils literal"><span class="pre">self._data</span></tt> rather than building my own list of :class:<a href="#id3"><span class="problematic" id="id4">`</span></a>IndexedPiece`s (line 5).</li>
+<li>Shift <tt class="docutils literal"><span class="pre">interval_settings</span></tt> and received the value dynamically from the built-in <tt class="xref py py-class docutils literal"><span class="pre">WorkflowManager</span></tt> settings.</li>
+<li>Receive the <tt class="docutils literal"><span class="pre">n</span></tt> &#8220;shared setting&#8221; from the built-in <tt class="xref py py-class docutils literal"><span class="pre">WorkflowManager</span></tt> settings.</li>
+</ul>
+<p>I could also use the <tt class="xref py py-meth docutils literal"><span class="pre">WorkflowManager.settings()</span></tt> method to get other settings by piece or shared across all pieces, like <tt class="docutils literal"><span class="pre">'simple</span> <span class="pre">intervals'</span></tt>, which tells the <tt class="xref py py-class docutils literal"><span class="pre">HorizontalIntervalIndexer</span></tt> whether to display all intervals as their single-octave equivalents.</p>
+<p>To run the same analysis as in <a class="reference internal" href="#make-a-new-workflow"><em>Tutorial: Make a new Workflow</em></a>, use the <tt class="xref py py-class docutils literal"><span class="pre">WorkflowManager</span></tt> like this:</p>
+<div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9</pre></div></td><td class="code"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">vis.workflow</span> <span class="kn">import</span> <span class="n">WorkflowManager</span>
+
+<span class="n">pathnames</span> <span class="o">=</span> <span class="p">[</span><span class="n">list_of_pathnames</span><span class="p">]</span>
+<span class="n">work</span> <span class="o">=</span> <span class="n">WorkflowManager</span><span class="p">(</span><span class="n">pathnames</span><span class="p">)</span>
+<span class="n">work</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s">&#39;pieces&#39;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">work</span><span class="p">)):</span>
+    <span class="n">work</span><span class="o">.</span><span class="n">settings</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="s">&#39;quality&#39;</span><span class="p">,</span> <span class="bp">True</span><span class="p">)</span>
+<span class="n">work</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+<span class="n">work</span><span class="o">.</span><span class="n">export</span><span class="p">(</span><span class="s">&#39;CSV&#39;</span><span class="p">,</span> <span class="s">&#39;output_filename.csv&#39;</span><span class="p">)</span>
+</pre></div>
+</td></tr></table></div>
+<p>The code fragment above actually accomplishes more than the program in <a class="reference internal" href="#make-a-new-workflow"><em>Tutorial: Make a new Workflow</em></a> because <tt class="xref py py-meth docutils literal"><span class="pre">export()</span></tt> not only &#8220;converts&#8221; the results to a <tt class="xref py py-class docutils literal"><span class="pre">DataFrame</span></tt>, but also sorts and outputs the results.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="modules.html" title="vis"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Documentation for the vis Music Analysis Framework"
+             >previous</a> |</li>
+        <li><a href="index.html">vis X documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013, Christopher Antila.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2b2.
+    </div>
+  </body>
+</html>

@@ -23,6 +23,7 @@
     <script type="text/javascript" src="../../../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+    <link rel="author" title="About these documents" href="../../../../about.html" />
     <link rel="top" title="vis X documentation" href="../../../../index.html" />
     <link rel="up" title="Module code" href="../../../index.html" /> 
   </head>
@@ -98,7 +99,7 @@
 
 <div class="viewcode-block" id="experimenter_func"><a class="viewcode-back" href="../../../../vis.analyzers.experimenters.html#vis.analyzers.experimenters.frequency.experimenter_func">[docs]</a><span class="k">def</span> <span class="nf">experimenter_func</span><span class="p">(</span><span class="n">obj</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Calculate the frequencies of things in an index.</span>
+<span class="sd">    Used by the :class:`FrequencyExperimenter` to calculate the frequencies of things in an index.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ==========</span>
@@ -107,8 +108,8 @@
 
 <span class="sd">    Returns</span>
 <span class="sd">    =======</span>
-<span class="sd">    :returns: An identifier plus the result of this indexation. In the series, the index is the</span>
-<span class="sd">        names of objects found in the inputted series, and the value is the number of occurrences.</span>
+<span class="sd">    :returns: An identifier plus the result of this indexation. In the series, the index is the \</span>
+<span class="sd">        names of objects found in the inputted series, and the value is the number of occurrences. \</span>
 <span class="sd">        The first element is the first element given here, used for identification purposes.</span>
 <span class="sd">    :rtype: :obj:`tuple` of (anything, :class:`pandas.Series`)</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -127,34 +128,27 @@
     <span class="n">possible_settings</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="n">default_settings</span> <span class="o">=</span> <span class="p">{}</span>
 
-<div class="viewcode-block" id="FrequencyExperimenter.__init__"><a class="viewcode-back" href="../../../../vis.analyzers.experimenters.html#vis.analyzers.experimenters.frequency.FrequencyExperimenter.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">settings</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">settings</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Create a new FrequencyExperimenter.</span>
+<span class="sd">        .. note:: It is the caller&#39;s responsibility to provide indices with the proper settings.</span>
 
-<span class="sd">        NOTE: It is the caller&#39;s responsibility to provide the index with the proper settings.</span>
-
-<span class="sd">        Parameters</span>
-<span class="sd">        ==========</span>
-<span class="sd">        :param index: A list of Series, where each Series is the result of an indexer for one of</span>
-<span class="sd">            the parts in this score.</span>
+<span class="sd">        :param index: A list of :class:`Series`, where each one is the result of an indexer for \</span>
+<span class="sd">            one of the parts in this score.</span>
 <span class="sd">        :type index: :obj:`list` or :obj:`dict` of :class:`pandas.Series`</span>
-
 <span class="sd">        :param settings: This indexer uses no settings, so this is ignored.</span>
 <span class="sd">        :type settings: :obj:`dict` or :obj:`None`</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">FrequencyExperimenter</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span>
-</div>
+
 <div class="viewcode-block" id="FrequencyExperimenter.run"><a class="viewcode-back" href="../../../../vis.analyzers.experimenters.html#vis.analyzers.experimenters.frequency.FrequencyExperimenter.run">[docs]</a>    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Run the FrequencyExperimenter.</span>
+<span class="sd">        Run the :class:`FrequencyExperimenter`.</span>
 
-<span class="sd">        Returns</span>
-<span class="sd">        =======</span>
-<span class="sd">        :returns: The result of the experiment. Data is stored such that column labels correspond</span>
-<span class="sd">            to the part (combinations) totalled in the column, and row labels correspond to a type</span>
-<span class="sd">            of the kind of objects found in the given index. Note that all columns are totalled in</span>
-<span class="sd">            the &quot;all&quot; column, and that not every part combination will have every interval; in case</span>
-<span class="sd">            an interval does not appear in a part combination, the value is NaN.</span>
+<span class="sd">        :returns: The result of the experiment. Data is stored such that column labels correspond \</span>
+<span class="sd">            to the part (combinations) totalled in the column, and row labels correspond to a type \</span>
+<span class="sd">            of the kind of objects found in the given index. Note that all columns are totalled in \</span>
+<span class="sd">            the &quot;all&quot; column, and that not every part combination will have every interval; in \</span>
+<span class="sd">            case an interval does not appear in a part combination, the value is :obj:`numpy.NaN`.</span>
 <span class="sd">        :rtype: :class:`pandas.DataFrame`</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c"># assemble results per-part</span>

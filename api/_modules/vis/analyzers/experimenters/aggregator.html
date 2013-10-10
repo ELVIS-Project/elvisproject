@@ -23,6 +23,7 @@
     <script type="text/javascript" src="../../../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+    <link rel="author" title="About these documents" href="../../../../about.html" />
     <link rel="top" title="vis X documentation" href="../../../../index.html" />
     <link rel="up" title="Module code" href="../../../index.html" /> 
   </head>
@@ -98,36 +99,32 @@
 
 <div class="viewcode-block" id="ColumnAggregator"><a class="viewcode-back" href="../../../../vis.analyzers.experimenters.html#vis.analyzers.experimenters.aggregator.ColumnAggregator">[docs]</a><span class="k">class</span> <span class="nc">ColumnAggregator</span><span class="p">(</span><span class="n">experimenter</span><span class="o">.</span><span class="n">Experimenter</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Experiment that aggregates data from all columns of a DataFrame, a list of DataFrames, or a</span>
-<span class="sd">    list of Series, into a single Series. Aggregation is done through addition. If a DataFrame has</span>
-<span class="sd">    a column with the name u&#39;all&#39;, it will *not* be included in the aggregation.</span>
+<span class="sd">    Experiment that aggregates data from all columns of a :class:`DataFrame`, a list of \</span>
+<span class="sd">    :class:`DataFrame` objects, or a list of :class:`Series`, into a single :class:`Series`. \</span>
+<span class="sd">    Aggregation is done through addition. If a :class:`DataFrame` has a column with the name \</span>
+<span class="sd">    :obj:`u&#39;all&#39;`, it will *not* be included in the aggregation.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="ColumnAggregator.__init__"><a class="viewcode-back" href="../../../../vis.analyzers.experimenters.html#vis.analyzers.experimenters.aggregator.ColumnAggregator.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">settings</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">settings</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Create a new :class:`ColumnAggregator`.</span>
-
-<span class="sd">        Parameters</span>
-<span class="sd">        ==========</span>
-<span class="sd">        :param index: The data to aggregate. You should ensure the row index of each pandas object</span>
-<span class="sd">            can be sensibly combined. The data should be numbers. If a DataFrame has a column with</span>
-<span class="sd">            the name u&#39;all&#39;, it will *not* be included in the aggregation.</span>
-<span class="sd">        :type index: :class:`pandas.DataFrame` or :obj:`list` of :class:`pandas.DataFrame` or of</span>
+<span class="sd">        :param index: The data to aggregate. You should ensure the row index of each pandas object \</span>
+<span class="sd">            can be sensibly combined. The data should be numbers.</span>
+<span class="sd">        :type index: :class:`pandas.DataFrame` or :obj:`list` of :class:`pandas.DataFrame` or of \</span>
 <span class="sd">            :class:`pandas.Series`</span>
 
 <span class="sd">        :param settings: This indexer uses no settings, so this is ignored.</span>
 <span class="sd">        :type settings: :obj:`dict` or :obj:`None`</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">ColumnAggregator</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span>
-</div>
+
 <div class="viewcode-block" id="ColumnAggregator.run"><a class="viewcode-back" href="../../../../vis.analyzers.experimenters.html#vis.analyzers.experimenters.aggregator.ColumnAggregator.run">[docs]</a>    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Run the :class:`ColumnAggregator` experiment.</span>
 
 <span class="sd">        Returns</span>
 <span class="sd">        =======</span>
-<span class="sd">        :returns: A Series with an index that is the combination of all indices of provided pandas</span>
-<span class="sd">            objects, and the value is the sum of all the values in the pandas objects.</span>
+<span class="sd">        :returns: A :class:`Series` with an index that is the combination of all indices of the \</span>
+<span class="sd">            provided pandas objects, and the value is the sum of all values in the pandas objects.</span>
 <span class="sd">        :rtype: :class:`pandas.Series`</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c"># make sure we have a single DataFrame</span>

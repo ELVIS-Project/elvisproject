@@ -23,6 +23,7 @@
     <script type="text/javascript" src="../../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <link rel="author" title="About these documents" href="../../../about.html" />
     <link rel="top" title="vis X documentation" href="../../../index.html" />
     <link rel="up" title="Module code" href="../../index.html" /> 
   </head>
@@ -177,7 +178,7 @@
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Hold indexed data from a musical score.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-<div class="viewcode-block" id="IndexedPiece.__init__"><a class="viewcode-back" href="../../../vis.models.html#vis.models.indexed_piece.IndexedPiece.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pathname</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pathname</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Create a new :class:`IndexedPiece`.</span>
 
@@ -207,16 +208,16 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_noterest_results</span> <span class="o">=</span> <span class="bp">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_metadata</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="n">init_metadata</span><span class="p">()</span>
-</div>
-<div class="viewcode-block" id="IndexedPiece.__repr__"><a class="viewcode-back" href="../../../vis.models.html#vis.models.indexed_piece.IndexedPiece.__repr__">[docs]</a>    <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="s">u&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="s">u&#39;vis.models.indexed_piece.IndexedPiece(u</span><span class="se">\&#39;</span><span class="s">&#39;</span><span class="p">,</span>
                          <span class="bp">self</span><span class="o">.</span><span class="n">metadata</span><span class="p">(</span><span class="s">u&#39;pathname&#39;</span><span class="p">),</span>
                          <span class="s">u&#39;</span><span class="se">\&#39;</span><span class="s">)&#39;</span><span class="p">])</span>
-</div>
-<div class="viewcode-block" id="IndexedPiece.__str__"><a class="viewcode-back" href="../../../vis.models.html#vis.models.indexed_piece.IndexedPiece.__str__">[docs]</a>    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="nb">unicode</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span>
-</div>
-<div class="viewcode-block" id="IndexedPiece.__unicode__"><a class="viewcode-back" href="../../../vis.models.html#vis.models.indexed_piece.IndexedPiece.__unicode__">[docs]</a>    <span class="k">def</span> <span class="nf">__unicode__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">__unicode__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">post</span> <span class="o">=</span> <span class="p">[</span><span class="s">u&#39;&lt;IndexedPiece (&#39;</span><span class="p">]</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_imported</span><span class="p">:</span>
             <span class="n">post</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">metadata</span><span class="p">(</span><span class="s">u&#39;title&#39;</span><span class="p">))</span>
@@ -226,7 +227,7 @@
             <span class="n">post</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">metadata</span><span class="p">(</span><span class="s">u&#39;pathname&#39;</span><span class="p">))</span>
         <span class="n">post</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s">u&#39;)&gt;&#39;</span><span class="p">)</span>
         <span class="k">return</span> <span class="s">u&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">post</span><span class="p">)</span>
-</div>
+
     <span class="k">def</span> <span class="nf">_import_score</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Import the score to music21 format.</span>
