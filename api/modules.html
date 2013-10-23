@@ -173,15 +173,19 @@
 </div>
 <dl class="method">
 <dt id="vis.workflow.WorkflowManager.export">
-<tt class="descname">export</tt><big>(</big><em>form</em>, <em>pathname=None</em><big>)</big><a class="reference internal" href="_modules/vis/workflow.html#WorkflowManager.export"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#vis.workflow.WorkflowManager.export" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">export</tt><big>(</big><em>form</em>, <em>pathname=None</em>, <em>top_x=None</em>, <em>threshold=None</em><big>)</big><a class="reference internal" href="_modules/vis/workflow.html#WorkflowManager.export"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#vis.workflow.WorkflowManager.export" title="Permalink to this definition">¶</a></dt>
 <dd><p>Save data from the most recent result of <a class="reference internal" href="#vis.workflow.WorkflowManager.run" title="vis.workflow.WorkflowManager.run"><tt class="xref py py-meth docutils literal"><span class="pre">run()</span></tt></a> to a file.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>form</strong> (<a class="reference external" href="http://docs.python.org/2.7/library/functions.html#basestring" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">basestring</span></tt></a>) &#8211; The output format you want.</li>
-<li><strong>pathname</strong> (<a class="reference external" href="http://docs.python.org/2.7/library/functions.html#basestring" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">basestring</span></tt></a>) &#8211; The pathname for output. If not specified, we will choose.</li>
+<li><strong>form</strong> (<tt class="docutils literal"><span class="pre">basestring</span></tt>) &#8211; The output format you want.</li>
+<li><strong>pathname</strong> (<tt class="docutils literal"><span class="pre">basestring</span></tt>) &#8211; The pathname for the output. The default is &#8220;test_output/output_result&#8221;
+and file extensions are applied automatically.</li>
+<li><strong>top_x</strong> (<tt class="docutils literal"><span class="pre">int</span></tt>) &#8211; This is the &#8220;X&#8221; in &#8220;only show the top X results.&#8221; The default is <tt class="docutils literal"><span class="pre">None</span></tt>.</li>
+<li><strong>threshold</strong> (<em>number</em>) &#8211; If a result is strictly less than this number, it won&#8217;t be included. The
+default is <tt class="docutils literal"><span class="pre">None</span></tt>.</li>
 </ul>
 </td>
 </tr>
@@ -208,16 +212,11 @@
 </tbody>
 </table>
 <p>Formats:</p>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">Only <tt class="docutils literal"><span class="pre">CSV</span></tt>,``Excel``, and <tt class="docutils literal"><span class="pre">Stata</span></tt> work at the moment.</p>
-</div>
 <ul class="simple">
-<li><tt class="xref py py-obj docutils literal"><span class="pre">u'CSV'</span></tt>: output a Series or DataFrame to a CSV file.</li>
-<li><tt class="xref py py-obj docutils literal"><span class="pre">u'HDF5'</span></tt>: output a Series or DataFrame to an HDF5 file.</li>
-<li><tt class="xref py py-obj docutils literal"><span class="pre">u'pickle'</span></tt>: save everything to a pickle file so we can re-load the current state             later (NOTE: this does not work yet)</li>
-<li><tt class="xref py py-obj docutils literal"><span class="pre">u'Stata'</span></tt>: output a Stata file for importing to R.</li>
-<li><tt class="xref py py-obj docutils literal"><span class="pre">u'Excel'</span></tt>: output an Excel file for Peter Schubert.</li>
+<li><tt class="docutils literal"><span class="pre">u'CSV'</span></tt>: output a Series or DataFrame to a CSV file.</li>
+<li><tt class="docutils literal"><span class="pre">u'Stata'</span></tt>: output a Stata file for importing to R.</li>
+<li><tt class="docutils literal"><span class="pre">u'Excel'</span></tt>: output an Excel file for Peter Schubert.</li>
+<li><tt class="docutils literal"><span class="pre">u'HTML'</span></tt>: output an HTML table, as used by the vis PyQt4 GUI.</li>
 </ul>
 </dd></dl>
 
@@ -291,16 +290,19 @@ non-existant field or a field that has not yet been initialized.</p>
 
 <dl class="method">
 <dt id="vis.workflow.WorkflowManager.output">
-<tt class="descname">output</tt><big>(</big><em>instruction</em>, <em>pathname=u'test_output/output_result'</em><big>)</big><a class="reference internal" href="_modules/vis/workflow.html#WorkflowManager.output"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#vis.workflow.WorkflowManager.output" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">output</tt><big>(</big><em>instruction</em>, <em>pathname=None</em>, <em>top_x=None</em>, <em>threshold=None</em><big>)</big><a class="reference internal" href="_modules/vis/workflow.html#WorkflowManager.output"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#vis.workflow.WorkflowManager.output" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create a visualization from the most recent result of <a class="reference internal" href="#vis.workflow.WorkflowManager.run" title="vis.workflow.WorkflowManager.run"><tt class="xref py py-meth docutils literal"><span class="pre">run()</span></tt></a> and save it to a file.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>instruction</strong> (<a class="reference external" href="http://docs.python.org/2.7/library/functions.html#basestring" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">basestring</span></tt></a>) &#8211; The type of visualization to output.</li>
-<li><strong>pathname</strong> (<a class="reference external" href="http://docs.python.org/2.7/library/functions.html#basestring" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">basestring</span></tt></a>) &#8211; The pathname for the output. If not specified, we will choose. Do not
-provide a filename extension&#8212;this is automatic.</li>
+<li><strong>instruction</strong> (<tt class="docutils literal"><span class="pre">basestring</span></tt>) &#8211; The type of visualization to output.</li>
+<li><strong>pathname</strong> (<tt class="docutils literal"><span class="pre">basestring</span></tt>) &#8211; The pathname for the output. The default is &#8220;test_output/output_result&#8221;
+and file extensions are applied automatically.</li>
+<li><strong>top_x</strong> (<tt class="docutils literal"><span class="pre">int</span></tt>) &#8211; This is the &#8220;X&#8221; in &#8220;only show the top X results.&#8221; The default is <tt class="docutils literal"><span class="pre">None</span></tt>.</li>
+<li><strong>threshold</strong> (<em>number</em>) &#8211; If a result is strictly less than this number, it won&#8217;t be included. The
+default is <tt class="docutils literal"><span class="pre">None</span></tt>.</li>
 </ul>
 </td>
 </tr>
@@ -475,7 +477,7 @@ value of <tt class="docutils literal"><span class="pre">index</span></tt> is ign
     </div>
     <div class="footer">
         &copy; Copyright 2013 Christopher Antila, CC-BY-SA.
-      Last updated on 11 Oct 2013.
+      Last updated on 23 Oct 2013.
       Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2b2.
     </div>
   </body>

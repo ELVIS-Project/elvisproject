@@ -26,7 +26,7 @@ If you want to use the ``vis`` framework, you must install it. Because the frame
 
 If you installed git, but you need help to clone a repository, you may find useful information in the `git documentation <http://git-scm.com/book/en/Git-Basics-Getting-a-Git-Repository#Cloning-an-Existing-Repository>`_.
 
-.. important:: By default, git copies the repository into a directory called "vis." If you rename this directory, no modules will import.
+.. important:: By default, git copies the repository into a directory called "vis." Do not rename this directory. If you do, no modules will import.
 
 After you clone the vis repository, you should install its dependencies (currently music21, pandas, and mock). We recommend you use pip for easy installation and updating. From the main vis directory, run ``pip install -r requirements.txt`` to automatically download and install the library dependencies as specified in our ``requirements.txt`` file. We also recommend you run ``pip install -r optional_requirements.txt`` to install several additional packages that improve the speed of pandas and allow additional output formats (Excel, HDF5). You may need to use ``sudo`` or ``su`` to run pip with the proper privileges. If you do not have pip installed, use your package manager (the package is probably called ``python-pip``---at least for users of Fedora, Ubuntu, and openSUSE). If you are one of those unfortunate souls who uses Windows, or worse, Mac OS X, then clearly we come from different planets. The `pip documentation <http://www.pip-installer.org/en/latest/installing.html>`_ may help you.
 
