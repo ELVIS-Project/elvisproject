@@ -94,6 +94,8 @@
 <span class="c"># along with this program.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
 <span class="c">#--------------------------------------------------------------------------------------------------</span>
 <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">.. codeauthor:: Christopher Antila &lt;crantila@fedoraproject.org&gt;</span>
+
 <span class="sd">Workflow controller, to automate commonly-performed tasks.</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
@@ -123,11 +125,13 @@
 <span class="sd">    * :meth:`metadata`, to adjust or view the metadata of a piece.</span>
 <span class="sd">    * :meth:`settings`, to adjust or view the settings of a piece.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="c"># TODO: pay attention to voice-combination settings for finding interval n-grams</span>
 
     <span class="c"># Instance Variables</span>
     <span class="c"># - self._data = list of IndexedPieces</span>
     <span class="c"># - self._result = result of the most recent call to run()</span>
+
+    <span class="c"># path to the R-language script that makes bar charts</span>
+    <span class="n">_R_bar_chart_path</span> <span class="o">=</span> <span class="s">u&#39;scripts/R_bar_chart.r&#39;</span>
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">vals</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -144,12 +148,12 @@
 <span class="sd">            :obj:`~vis.models.indexed_piece.IndexedPiece`</span>
 
 <span class="sd">        We manage the :class:`~vis.models.indexed_piece.IndexedPiece` objects::</span>
-<span class="sd">        </span>
+
 <span class="sd">        &gt;&gt;&gt; paths = [u&#39;test_corpus/bwv77.mxl&#39;, u&#39;test_corpus/Kyrie.krn&#39;]</span>
 <span class="sd">        &gt;&gt;&gt; path_work = WorkflowManager(paths)</span>
 
 <span class="sd">        You manage the :class:`~vis.models.indexed_piece.IndexedPiece` objects::</span>
-<span class="sd">        </span>
+
 <span class="sd">        &gt;&gt;&gt; ips = [IndexedPiece(x) for x in paths]</span>
 <span class="sd">        &gt;&gt;&gt; ip_work = WorkflowManager(ips)</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -171,6 +175,8 @@
                 <span class="n">piece_sett</span><span class="p">[</span><span class="n">sett</span><span class="p">]</span> <span class="o">=</span> <span class="bp">False</span>
         <span class="c"># hold settings common to all IndexedPieces</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_shared_settings</span> <span class="o">=</span> <span class="p">{</span><span class="s">u&#39;n&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s">u&#39;continuer&#39;</span><span class="p">:</span> <span class="s">u&#39;_&#39;</span><span class="p">,</span> <span class="s">u&#39;mark singles&#39;</span><span class="p">:</span> <span class="bp">False</span><span class="p">}</span>
+        <span class="c"># which was the most recent experiment run? Either &#39;intervals&#39; or &#39;n-grams&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_previous_exp</span> <span class="o">=</span> <span class="bp">None</span>
 
     <span class="k">def</span> <span class="nf">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -187,12 +193,12 @@
 <div class="viewcode-block" id="WorkflowManager.load"><a class="viewcode-back" href="../../modules.html#vis.workflow.WorkflowManager.load">[docs]</a>    <span class="k">def</span> <span class="nf">load</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instruction</span><span class="p">,</span> <span class="n">pathname</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Import analysis data from long-term storage on a filesystem. This should primarily be \</span>
-<span class="sd">        used for the :obj:`u&#39;pieces&#39;` instruction, to control when the initial music21 import \</span>
+<span class="sd">        used for the ``u&#39;pieces&#39;`` instruction, to control when the initial music21 import \</span>
 <span class="sd">        happens.</span>
 
 <span class="sd">        **Instructions:**</span>
 
-<span class="sd">        .. note:: only :obj:`u&#39;pieces&#39;` is implemented at this time.</span>
+<span class="sd">        .. note:: only ``u&#39;pieces&#39;`` is implemented at this time.</span>
 
 <span class="sd">        * :obj:`u&#39;pieces&#39;`, to import all pieces, collect metadata, and run :class:`NoteRestIndexer`</span>
 <span class="sd">        * :obj:`u&#39;hdf5&#39;` to load data from a previous :meth:`export`.</span>
@@ -203,8 +209,8 @@
 <span class="sd">        ==========</span>
 <span class="sd">        :parameter instruction: The type of data to load.</span>
 <span class="sd">        :type instruction: :obj:`basestring`</span>
-<span class="sd">        :parameter pathname: The pathname of the data to import; not required for the u&#39;pieces&#39; \</span>
-<span class="sd">            instruction.</span>
+<span class="sd">        :parameter pathname: The pathname of the data to import; not required for the \</span>
+<span class="sd">            ``u&#39;pieces&#39;`` instruction.</span>
 <span class="sd">        :type pathname: :obj:`basestring`</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c"># TODO: rewrite this with multiprocessing</span>
@@ -251,8 +257,6 @@
 <span class="sd">            sonification program. You should then call :meth:`export` with the :obj:`u&#39;CSV&#39;` \</span>
 <span class="sd">            instruction.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="c"># TODO: handle RepeatFilter</span>
-        <span class="c"># TODO: handle OffsetIndexer</span>
         <span class="c"># NOTE: do not re-order the instructions or this method will break</span>
         <span class="n">possible_instructions</span> <span class="o">=</span> <span class="p">[</span><span class="s">u&#39;intervals&#39;</span><span class="p">,</span>
                                  <span class="s">u&#39;interval n-grams&#39;</span><span class="p">]</span>
@@ -262,8 +266,10 @@
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">instruction</span><span class="p">)</span> <span class="o">&lt;</span> <span class="nb">min</span><span class="p">([</span><span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">possible_instructions</span><span class="p">]):</span>
             <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="n">error_msg</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">instruction</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">possible_instructions</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_previous_exp</span> <span class="o">=</span> <span class="s">u&#39;intervals&#39;</span>
             <span class="n">post</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_intervs</span><span class="p">()</span>
         <span class="k">elif</span> <span class="n">instruction</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">possible_instructions</span><span class="p">[</span><span class="mi">1</span><span class="p">]):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_previous_exp</span> <span class="o">=</span> <span class="s">u&#39;n-grams&#39;</span>
             <span class="n">post</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_interval_ngrams</span><span class="p">()</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="n">error_msg</span><span class="p">)</span>
@@ -354,8 +360,7 @@
             <span class="n">horiz_ints</span> <span class="o">=</span> <span class="n">piece</span><span class="o">.</span><span class="n">get_data</span><span class="p">([</span><span class="n">repeat</span><span class="o">.</span><span class="n">FilterByRepeatIndexer</span><span class="p">],</span> <span class="p">{},</span> <span class="n">horiz_ints</span><span class="p">)</span>
         <span class="c"># figure out which combinations we need... this might raise a ValueError, but there&#39;s not</span>
         <span class="c"># much we can do to save the situation, so we might as well let it go up</span>
-        <span class="n">needed_combos</span> <span class="o">=</span> <span class="bp">None</span>
-        <span class="n">needed_combos</span> <span class="o">=</span> <span class="p">[</span><span class="n">ast</span><span class="o">.</span><span class="n">literal_eval</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="s">u&#39;voice combinations&#39;</span><span class="p">)]</span>
+        <span class="n">needed_combos</span> <span class="o">=</span> <span class="n">ast</span><span class="o">.</span><span class="n">literal_eval</span><span class="p">(</span><span class="nb">unicode</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="s">u&#39;voice combinations&#39;</span><span class="p">)))</span>
         <span class="c"># each key in vert_ints corresponds to a two-voice combination we should use</span>
         <span class="k">for</span> <span class="n">combo</span> <span class="ow">in</span> <span class="n">needed_combos</span><span class="p">:</span>
             <span class="c"># make the list of parts</span>
@@ -580,17 +585,48 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">to_format</span>
 
-<div class="viewcode-block" id="WorkflowManager.output"><a class="viewcode-back" href="../../modules.html#vis.workflow.WorkflowManager.output">[docs]</a>    <span class="k">def</span> <span class="nf">output</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instruction</span><span class="p">,</span> <span class="n">pathname</span><span class="o">=</span><span class="s">u&#39;test_output/output_result&#39;</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">_get_dataframe</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s">u&#39;data&#39;</span><span class="p">,</span> <span class="n">top_x</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">threshold</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        &quot;Convert&quot; ``self._result`` into a :class:`DataFrame`, including only the top ``X`` results</span>
+<span class="sd">        that are greater than ``threshold``. Note that the threshold filter is applied first.</span>
+
+<span class="sd">        :param name: String to use for the column name of the Series currently held in self._result.</span>
+<span class="sd">            The default is u&#39;data&#39;.</span>
+<span class="sd">        :type name: ``basestring``</span>
+<span class="sd">        :param top_x: This is the &quot;X&quot; in &quot;only show the top X results.&quot; The default is ``None``.</span>
+<span class="sd">        :type top_x: ``int``</span>
+<span class="sd">        :param threshold: If a result is strictly less than this number, it won&#39;t be included. The</span>
+<span class="sd">            default is ``None``.</span>
+<span class="sd">        :type threshold: number</span>
+
+<span class="sd">        :returns: A DataFrame with self._result as the only column.</span>
+<span class="sd">        :rtype: :class:`DataFrame`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">post</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="k">if</span> <span class="n">threshold</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">post</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_result</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_result</span> <span class="o">&gt;</span> <span class="n">threshold</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">post</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_result</span>
+        <span class="k">if</span> <span class="n">top_x</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">post</span> <span class="o">=</span> <span class="n">post</span><span class="p">[:</span><span class="n">top_x</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">pandas</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="n">name</span><span class="p">:</span> <span class="n">post</span><span class="p">})</span>
+
+<div class="viewcode-block" id="WorkflowManager.output"><a class="viewcode-back" href="../../modules.html#vis.workflow.WorkflowManager.output">[docs]</a>    <span class="k">def</span> <span class="nf">output</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instruction</span><span class="p">,</span> <span class="n">pathname</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">top_x</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">threshold</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Create a visualization from the most recent result of :meth:`run` and save it to a file.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ==========</span>
 <span class="sd">        :parameter instruction: The type of visualization to output.</span>
-<span class="sd">        :type instruction: :obj:`basestring`</span>
-<span class="sd">        :parameter pathname: The pathname for the output. If not specified, we will choose. Do not</span>
-<span class="sd">            provide a filename extension---this is automatic.</span>
-<span class="sd">        :type pathname: :obj:`basestring`</span>
+<span class="sd">        :type instruction: ``basestring``</span>
+<span class="sd">        :parameter pathname: The pathname for the output. The default is &quot;test_output/output_result&quot;</span>
+<span class="sd">            and file extensions are applied automatically.</span>
+<span class="sd">        :type pathname: ``basestring``</span>
+<span class="sd">        :param top_x: This is the &quot;X&quot; in &quot;only show the top X results.&quot; The default is ``None``.</span>
+<span class="sd">        :type top_x: ``int``</span>
+<span class="sd">        :param threshold: If a result is strictly less than this number, it won&#39;t be included. The</span>
+<span class="sd">            default is ``None``.</span>
+<span class="sd">        :type threshold: number</span>
 
 <span class="sd">        Returns</span>
 <span class="sd">        =======</span>
@@ -613,21 +649,35 @@
         <span class="k">if</span> <span class="n">instruction</span> <span class="o">==</span> <span class="s">u&#39;LilyPond&#39;</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s">u&#39;I didn</span><span class="se">\&#39;</span><span class="s">t write that part yet!&#39;</span><span class="p">)</span>
         <span class="k">elif</span> <span class="n">instruction</span> <span class="o">==</span> <span class="s">u&#39;R histogram&#39;</span><span class="p">:</span>
+            <span class="c"># ensure we have some results</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_result</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
-                <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s">u&#39;Call run() before calling output()&#39;</span><span class="p">)</span>
+                <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s">u&#39;Call run() before calling export()&#39;</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
+                <span class="c"># properly set output paths</span>
+                <span class="n">pathname</span> <span class="o">=</span> <span class="s">u&#39;test_output/output_result&#39;</span> <span class="k">if</span> <span class="n">pathname</span> <span class="ow">is</span> <span class="bp">None</span> <span class="k">else</span> <span class="nb">unicode</span><span class="p">(</span><span class="n">pathname</span><span class="p">)</span>
                 <span class="n">stata_path</span> <span class="o">=</span> <span class="n">pathname</span> <span class="o">+</span> <span class="s">u&#39;.dta&#39;</span>
                 <span class="n">png_path</span> <span class="o">=</span> <span class="n">pathname</span> <span class="o">+</span> <span class="s">u&#39;.png&#39;</span>
-                <span class="n">out_me</span> <span class="o">=</span> <span class="n">pandas</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s">u&#39;freq&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_result</span><span class="p">})</span>
+                <span class="c"># ensure we have a DataFrame</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_result</span><span class="p">,</span> <span class="n">pandas</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">):</span>
+                    <span class="n">out_me</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_dataframe</span><span class="p">(</span><span class="s">u&#39;freq&#39;</span><span class="p">,</span> <span class="n">top_x</span><span class="p">,</span> <span class="n">threshold</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">out_me</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_result</span>
                 <span class="n">out_me</span><span class="o">.</span><span class="n">to_stata</span><span class="p">(</span><span class="n">stata_path</span><span class="p">)</span>
-                <span class="n">call_to_r</span> <span class="o">=</span> <span class="p">[</span><span class="s">u&#39;R&#39;</span><span class="p">,</span> <span class="s">u&#39;--vanilla&#39;</span><span class="p">,</span> <span class="s">u&#39;-f&#39;</span><span class="p">,</span> <span class="s">u&#39;R_script.r&#39;</span><span class="p">,</span> <span class="s">u&#39;--args&#39;</span><span class="p">,</span> <span class="n">stata_path</span><span class="p">,</span>
-                             <span class="n">png_path</span><span class="p">]</span>
+                <span class="n">token</span> <span class="o">=</span> <span class="bp">None</span>
+                <span class="k">if</span> <span class="s">u&#39;intervals&#39;</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">_previous_exp</span><span class="p">:</span>
+                    <span class="n">token</span> <span class="o">=</span> <span class="s">u&#39;int&#39;</span>
+                <span class="k">elif</span> <span class="s">u&#39;n-grams&#39;</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">_previous_exp</span><span class="p">:</span>
+                    <span class="n">token</span> <span class="o">=</span> <span class="nb">unicode</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span> <span class="s">u&#39;n&#39;</span><span class="p">))</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">token</span> <span class="o">=</span> <span class="s">u&#39;things&#39;</span>
+                <span class="n">call_to_r</span> <span class="o">=</span> <span class="p">[</span><span class="s">u&#39;R&#39;</span><span class="p">,</span> <span class="s">u&#39;--vanilla&#39;</span><span class="p">,</span> <span class="s">u&#39;-f&#39;</span><span class="p">,</span> <span class="n">WorkflowManager</span><span class="o">.</span><span class="n">_R_bar_chart_path</span><span class="p">,</span>
+                             <span class="s">u&#39;--args&#39;</span><span class="p">,</span> <span class="n">stata_path</span><span class="p">,</span> <span class="n">png_path</span><span class="p">,</span> <span class="n">token</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">))]</span>
                 <span class="n">subprocess</span><span class="o">.</span><span class="n">call</span><span class="p">(</span><span class="n">call_to_r</span><span class="p">)</span>
                 <span class="k">return</span> <span class="n">png_path</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s">u&#39;Unrecognized instruction: &#39;</span> <span class="o">+</span> <span class="nb">unicode</span><span class="p">(</span><span class="n">instruction</span><span class="p">))</span>
 </div>
-<div class="viewcode-block" id="WorkflowManager.export"><a class="viewcode-back" href="../../modules.html#vis.workflow.WorkflowManager.export">[docs]</a>    <span class="k">def</span> <span class="nf">export</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">form</span><span class="p">,</span> <span class="n">pathname</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+<div class="viewcode-block" id="WorkflowManager.export"><a class="viewcode-back" href="../../modules.html#vis.workflow.WorkflowManager.export">[docs]</a>    <span class="k">def</span> <span class="nf">export</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">form</span><span class="p">,</span> <span class="n">pathname</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">top_x</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">threshold</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Save data from the most recent result of :meth:`run` to a file.</span>
 
@@ -635,8 +685,14 @@
 <span class="sd">        ==========</span>
 <span class="sd">        :parameter form: The output format you want.</span>
 <span class="sd">        :type form: :obj:`basestring`</span>
-<span class="sd">        :parameter pathname: The pathname for output. If not specified, we will choose.</span>
+<span class="sd">        :parameter pathname: The pathname for the output. The default is</span>
+<span class="sd">            ``test_output/output_result``. File extensions are applied automatically.</span>
 <span class="sd">        :type pathname: :obj:`basestring`</span>
+<span class="sd">        :param top_x: This is the &quot;X&quot; in &quot;only show the top X results.&quot; The default is ``None``.</span>
+<span class="sd">        :type top_x: :obj:`int`</span>
+<span class="sd">        :param threshold: If a result is strictly less than this number, it won&#39;t be included. The</span>
+<span class="sd">            default is :obj:`None`.</span>
+<span class="sd">        :type threshold: :obj:`int` or :obj:`float`</span>
 
 <span class="sd">        Returns</span>
 <span class="sd">        =======</span>
@@ -650,34 +706,31 @@
 
 <span class="sd">        Formats:</span>
 
-<span class="sd">        .. note:: Only ``CSV``,``Excel``, and ``Stata`` work at the moment.</span>
-
-<span class="sd">        * :obj:`u&#39;CSV&#39;`: output a Series or DataFrame to a CSV file.</span>
-<span class="sd">        * :obj:`u&#39;HDF5&#39;`: output a Series or DataFrame to an HDF5 file.</span>
-<span class="sd">        * :obj:`u&#39;pickle&#39;`: save everything to a pickle file so we can re-load the current state \</span>
-<span class="sd">            later (NOTE: this does not work yet)</span>
-<span class="sd">        * :obj:`u&#39;Stata&#39;`: output a Stata file for importing to R.</span>
-<span class="sd">        * :obj:`u&#39;Excel&#39;`: output an Excel file for Peter Schubert.</span>
+<span class="sd">        * ``u&#39;CSV&#39;``: output a Series or DataFrame to a CSV file.</span>
+<span class="sd">        * ``u&#39;Stata&#39;``: output a Stata file for importing to R.</span>
+<span class="sd">        * ``u&#39;Excel&#39;``: output an Excel file for Peter Schubert.</span>
+<span class="sd">        * ``u&#39;HTML&#39;``: output an HTML table, as used by the vis PyQt4 GUI.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c"># ensure we have some results</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_result</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s">u&#39;Call run() before calling export()&#39;</span><span class="p">)</span>
         <span class="c"># ensure we have a DataFrame</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_result</span><span class="p">,</span> <span class="n">pandas</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">):</span>
-            <span class="n">export_me</span> <span class="o">=</span> <span class="n">pandas</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s">u&#39;data&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_result</span><span class="p">})</span>
+            <span class="n">export_me</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_dataframe</span><span class="p">(</span><span class="s">u&#39;data&#39;</span><span class="p">,</span> <span class="n">top_x</span><span class="p">,</span> <span class="n">threshold</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">export_me</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_result</span>
         <span class="c"># key is the instruction; value is (extension, export_method)</span>
         <span class="n">directory</span> <span class="o">=</span> <span class="p">{</span><span class="s">u&#39;CSV&#39;</span><span class="p">:</span> <span class="p">(</span><span class="s">u&#39;.csv&#39;</span><span class="p">,</span> <span class="n">export_me</span><span class="o">.</span><span class="n">to_csv</span><span class="p">),</span>
                      <span class="s">u&#39;Stata&#39;</span><span class="p">:</span> <span class="p">(</span><span class="s">u&#39;.dta&#39;</span><span class="p">,</span> <span class="n">export_me</span><span class="o">.</span><span class="n">to_stata</span><span class="p">),</span>
-                     <span class="s">u&#39;Excel&#39;</span><span class="p">:</span> <span class="p">(</span><span class="s">u&#39;.xlsx&#39;</span><span class="p">,</span> <span class="n">export_me</span><span class="o">.</span><span class="n">to_excel</span><span class="p">)}</span>
+                     <span class="s">u&#39;Excel&#39;</span><span class="p">:</span> <span class="p">(</span><span class="s">u&#39;.xlsx&#39;</span><span class="p">,</span> <span class="n">export_me</span><span class="o">.</span><span class="n">to_excel</span><span class="p">),</span>
+                     <span class="s">u&#39;HTML&#39;</span><span class="p">:</span> <span class="p">(</span><span class="s">u&#39;.html&#39;</span><span class="p">,</span> <span class="n">export_me</span><span class="o">.</span><span class="n">to_html</span><span class="p">)}</span>
         <span class="c"># ensure we have a valid output format</span>
         <span class="k">if</span> <span class="n">form</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">directory</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s">u&#39;Unrecognized output format: &#39;</span> <span class="o">+</span> <span class="nb">unicode</span><span class="p">(</span><span class="n">form</span><span class="p">))</span>
         <span class="c"># ensure we have an output path</span>
         <span class="n">pathname</span> <span class="o">=</span> <span class="s">u&#39;test_output/no_path&#39;</span> <span class="k">if</span> <span class="n">pathname</span> <span class="ow">is</span> <span class="bp">None</span> <span class="k">else</span> <span class="nb">unicode</span><span class="p">(</span><span class="n">pathname</span><span class="p">)</span>
         <span class="c"># ensure there&#39;s a file extension</span>
-        <span class="k">if</span> <span class="n">directory</span><span class="p">[</span><span class="n">form</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="n">pathname</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">directory</span><span class="p">[</span><span class="n">form</span><span class="p">][</span><span class="mi">0</span><span class="p">]):]:</span>
+        <span class="k">if</span> <span class="n">directory</span><span class="p">[</span><span class="n">form</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="n">pathname</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">directory</span><span class="p">[</span><span class="n">form</span><span class="p">][</span><span class="mi">0</span><span class="p">]):]:</span>
             <span class="n">pathname</span> <span class="o">+=</span> <span class="n">directory</span><span class="p">[</span><span class="n">form</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
         <span class="c"># call the to_whatever() method</span>
         <span class="n">directory</span><span class="p">[</span><span class="n">form</span><span class="p">][</span><span class="mi">1</span><span class="p">](</span><span class="n">pathname</span><span class="p">)</span>
@@ -686,13 +739,13 @@
 <div class="viewcode-block" id="WorkflowManager.metadata"><a class="viewcode-back" href="../../modules.html#vis.workflow.WorkflowManager.metadata">[docs]</a>    <span class="k">def</span> <span class="nf">metadata</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">field</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Use this method to get or set a particular metadatum. The valid field names are listed in</span>
-<span class="sd">        IndexedPiece.:meth:`~vis.models.indexed_piece.IndexedPiece.metadata`.</span>
+<span class="sd">        :meth:`~vis.models.indexed_piece.IndexedPiece.metadata` for :class:`IndexedPiece`.</span>
 
 <span class="sd">        A metadatum is a salient musical characteristic of a particular piece, and does not change</span>
 <span class="sd">        across analyses.</span>
 
 <span class="sd">        :param index: The index of the piece to access. The range of valid indices is ``0`` through</span>
-<span class="sd">            one fewer than the return value of calling :func:`len` on this WorkflowManager.</span>
+<span class="sd">            one fewer than the return value of calling :func:`len` on this :class:`WorkflowManager`.</span>
 <span class="sd">        :type index: :obj:`int`</span>
 <span class="sd">        :param field: The name of the field to be accessed or modified.</span>
 <span class="sd">        :type field: :obj:`basestring`</span>
@@ -801,7 +854,7 @@
     </div>
     <div class="footer">
         &copy; Copyright 2013 Christopher Antila, CC-BY-SA.
-      Last updated on 11 Oct 2013.
+      Last updated on 29 Oct 2013.
       Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2b2.
     </div>
   </body>

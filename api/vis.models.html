@@ -167,7 +167,7 @@ indexers and experimenters to be run to get the results you want.</p>
 <p>The same settings dict will be given to all experiments and indexers.</p>
 <p>If you want the results from all IndexedPieces separately, provide an empty list as the
 <tt class="docutils literal"><span class="pre">aggregated_experiments</span></tt> argument.</p>
-<p>The first analyzer in <tt class="docutils literal"><span class="pre">independent_analyzers</span></tt> should use a <a class="reference external" href="http://web.mit.edu/music21/doc/moduleReference/moduleStream.html#music21.stream.Score" title="(in music21 v1.6.0)"><tt class="xref py py-class docutils literal"><span class="pre">music21.stream.Score</span></tt></a>.</p>
+<p>The first analyzer in <tt class="docutils literal"><span class="pre">independent_analyzers</span></tt> should use a <tt class="xref py py-class docutils literal"><span class="pre">music21.stream.Score</span></tt>.</p>
 <p><strong>Examples:</strong></p>
 <p>Run analyzer C then D on each piece individually, then provide a list of those results to
 Experimenter A, and pass its output to Experimenter B.</p>
@@ -187,7 +187,7 @@ Experimenter A, and pass its output to Experimenter B.</p>
 in the order you want to run them.</li>
 <li><strong>independent_analyzers</strong> (<em>list of types</em>) &#8211; The analyzers to run on each piece before aggregation, in the
 order you want to run them.</li>
-<li><strong>settings</strong> (<a class="reference external" href="http://docs.python.org/2.7/library/stdtypes.html#dict" title="(in Python v2.7)"><em>dict</em></a>) &#8211; Settings to be used with the analyzers.</li>
+<li><strong>settings</strong> (<em>dict</em>) &#8211; Settings to be used with the analyzers.</li>
 <li><strong>data</strong> (list of <tt class="xref py py-class docutils literal"><span class="pre">pandas.Series</span></tt> or <tt class="xref py py-class docutils literal"><span class="pre">pandas.DataFrame</span></tt>) &#8211; Input data for the first analyzer to run. This is for internal use only.</li>
 </ul>
 </td>
@@ -220,7 +220,7 @@ with the experimental results for one piece.</td>
 <tt class="descclassname">AggregatedPieces.</tt><tt class="descname">metadata</tt><big>(</big><em>field</em><big>)</big><a class="reference internal" href="_modules/vis/models/aggregated_pieces.html#AggregatedPieces.metadata"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#vis.models.aggregated_pieces.AggregatedPieces.metadata" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get a metadatum about the IndexedPieces stored in this AggregatedPieces.</p>
 <p>If only some of the stored IndexedPieces have had their metadata initialized, this method
-returns incompelete metadata. Missing data will be represented as <a class="reference external" href="http://docs.python.org/2.7/library/constants.html#None" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">None</span></tt></a> in the list,
+returns incompelete metadata. Missing data will be represented as <tt class="xref py py-obj docutils literal"><span class="pre">None</span></tt> in the list,
 but it will not appear in <tt class="docutils literal"><span class="pre">date_range</span></tt> unless there are no dates. If you need full
 metadata, we recommend running an Indexer that requires a <tt class="xref py py-class docutils literal"><span class="pre">Score</span></tt> object on all the
 IndexedPieces (like <a class="reference internal" href="vis.analyzers.indexers.html#vis.analyzers.indexers.noterest.NoteRestIndexer" title="vis.analyzers.indexers.noterest.NoteRestIndexer"><tt class="xref py py-class docutils literal"><span class="pre">vis.analyzers.indexers.noterest.NoteRestIndexer</span></tt></a>).</p>
@@ -237,7 +237,7 @@ IndexedPieces (like <a class="reference internal" href="vis.analyzers.indexers.h
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>field</strong> (<a class="reference external" href="http://docs.python.org/2.7/library/functions.html#basestring" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">basestring</span></tt></a>) &#8211; The name of the field to be accessed or modified.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>field</strong> (<tt class="xref py py-obj docutils literal"><span class="pre">basestring</span></tt>) &#8211; The name of the field to be accessed or modified.</td>
 </tr>
 </tbody>
 </table>
@@ -278,7 +278,7 @@ field that has not yet been initialized in the IndexedPieces.</td>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>pathname</strong> (<a class="reference external" href="http://docs.python.org/2.7/library/functions.html#basestring" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">basestring</span></tt></a>) &#8211; Pathname to the file music21 will import for this IndexedPiece.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>pathname</strong> (<tt class="xref py py-obj docutils literal"><span class="pre">basestring</span></tt>) &#8211; Pathname to the file music21 will import for this IndexedPiece.</td>
 </tr>
 </tbody>
 </table>
@@ -301,9 +301,9 @@ field that has not yet been initialized in the IndexedPieces.</td>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>analyzer_cls</strong> (<a class="reference external" href="http://docs.python.org/2.7/library/functions.html#list" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">list</span></tt></a> of <a class="reference external" href="http://docs.python.org/2.7/library/functions.html#type" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">type</span></tt></a>) &#8211; the analyzers to run, in the order they should be run</li>
-<li><strong>settings</strong> (<a class="reference external" href="http://docs.python.org/2.7/library/stdtypes.html#dict" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">dict</span></tt></a>) &#8211; Settings to be used with the analyzers.</li>
-<li><strong>data</strong> (<a class="reference external" href="http://docs.python.org/2.7/library/functions.html#list" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">list</span></tt></a> of <tt class="xref py py-class docutils literal"><span class="pre">pandas.Series</span></tt> or <tt class="xref py py-class docutils literal"><span class="pre">pandas.DataFrame</span></tt>) &#8211; Input data for the first analyzer to run. If the first indexer uses a Score,
+<li><strong>analyzer_cls</strong> (<tt class="xref py py-obj docutils literal"><span class="pre">list</span></tt> of <tt class="xref py py-obj docutils literal"><span class="pre">type</span></tt>) &#8211; the analyzers to run, in the order they should be run</li>
+<li><strong>settings</strong> (<tt class="xref py py-obj docutils literal"><span class="pre">dict</span></tt>) &#8211; Settings to be used with the analyzers.</li>
+<li><strong>data</strong> (<tt class="xref py py-obj docutils literal"><span class="pre">list</span></tt> of <tt class="xref py py-class docutils literal"><span class="pre">pandas.Series</span></tt> or <tt class="xref py py-class docutils literal"><span class="pre">pandas.DataFrame</span></tt>) &#8211; Input data for the first analyzer to run. If the first indexer uses a Score,
 you should leave this as None.</li>
 </ul>
 </td>
@@ -316,7 +316,7 @@ you should leave this as None.</li>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Results of the analyzer.</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><tt class="xref py py-class docutils literal"><span class="pre">pandas.DataFrame</span></tt> or <a class="reference external" href="http://docs.python.org/2.7/library/functions.html#list" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">list</span></tt></a> of <tt class="xref py py-class docutils literal"><span class="pre">pandas.Series</span></tt></td>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><tt class="xref py py-class docutils literal"><span class="pre">pandas.DataFrame</span></tt> or <tt class="xref py py-obj docutils literal"><span class="pre">list</span></tt> of <tt class="xref py py-class docutils literal"><span class="pre">pandas.Series</span></tt></td>
 </tr>
 </tbody>
 </table>
@@ -327,9 +327,9 @@ you should leave this as None.</li>
 <tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><tt class="xref py py-exc docutils literal"><span class="pre">TypeError</span></tt> if the <tt class="docutils literal"><span class="pre">analyzer_cls</span></tt> is invalid or cannot be found.</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><tt class="xref py py-exc docutils literal"><span class="pre">RuntimeError</span></tt> if the first analyzer class in <tt class="docutils literal"><span class="pre">analyzer_cls</span></tt> does not use
-<a class="reference external" href="http://web.mit.edu/music21/doc/moduleReference/moduleStream.html#music21.stream.Score" title="(in music21 v1.6.0)"><tt class="xref py py-class docutils literal"><span class="pre">music21.stream.Score</span></tt></a> objects, and <tt class="docutils literal"><span class="pre">data</span></tt> is <a class="reference external" href="http://docs.python.org/2.7/library/constants.html#None" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">None</span></tt></a>.</td>
+<tt class="xref py py-class docutils literal"><span class="pre">music21.stream.Score</span></tt> objects, and <tt class="docutils literal"><span class="pre">data</span></tt> is <tt class="xref py py-obj docutils literal"><span class="pre">None</span></tt>.</td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><tt class="xref py py-exc docutils literal"><span class="pre">NotImplementedError</span></tt> if the file imports as a <a class="reference external" href="http://web.mit.edu/music21/doc/moduleReference/moduleStream.html#music21.stream.Opus" title="(in music21 v1.6.0)"><tt class="xref py py-class docutils literal"><span class="pre">music21.stream.Opus</span></tt></a>
+<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><tt class="xref py py-exc docutils literal"><span class="pre">NotImplementedError</span></tt> if the file imports as a <tt class="xref py py-class docutils literal"><span class="pre">music21.stream.Opus</span></tt>
 object, since we cannot yet deal with those properly (since they should be treated as
 more than one piece).</td>
 </tr>
@@ -346,8 +346,8 @@ more than one piece).</td>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>field</strong> (<a class="reference external" href="http://docs.python.org/2.7/library/functions.html#basestring" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">basestring</span></tt></a>) &#8211; The name of the field to be accessed or modified.</li>
-<li><strong>value</strong> (<a class="reference external" href="http://docs.python.org/2.7/library/functions.html#object" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">object</span></tt></a> or <a class="reference external" href="http://docs.python.org/2.7/library/constants.html#None" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">None</span></tt></a>) &#8211; If not None, the new value to be assigned to <tt class="docutils literal"><span class="pre">field</span></tt>.</li>
+<li><strong>field</strong> (<tt class="xref py py-obj docutils literal"><span class="pre">basestring</span></tt>) &#8211; The name of the field to be accessed or modified.</li>
+<li><strong>value</strong> (<tt class="xref py py-obj docutils literal"><span class="pre">object</span></tt> or <tt class="xref py py-obj docutils literal"><span class="pre">None</span></tt>) &#8211; If not None, the new value to be assigned to <tt class="docutils literal"><span class="pre">field</span></tt>.</li>
 </ul>
 </td>
 </tr>
@@ -360,7 +360,7 @@ more than one piece).</td>
 <tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The value of the requested field or None, if assigning, or if accessing a
 non-existant field or a field that has not yet been initialized.</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="http://docs.python.org/2.7/library/functions.html#object" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">object</span></tt></a> or <a class="reference external" href="http://docs.python.org/2.7/library/constants.html#None" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">None</span></tt></a></td>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><tt class="xref py py-obj docutils literal"><span class="pre">object</span></tt> or <tt class="xref py py-obj docutils literal"><span class="pre">None</span></tt></td>
 </tr>
 </tbody>
 </table>
@@ -368,7 +368,7 @@ non-existant field or a field that has not yet been initialized.</td>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><tt class="xref py py-exc docutils literal"><span class="pre">TypeError</span></tt> if <tt class="docutils literal"><span class="pre">field</span></tt> is not a <a class="reference external" href="http://docs.python.org/2.7/library/functions.html#basestring" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">basestring</span></tt></a>.</td>
+<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><tt class="xref py py-exc docutils literal"><span class="pre">TypeError</span></tt> if <tt class="docutils literal"><span class="pre">field</span></tt> is not a <tt class="xref py py-obj docutils literal"><span class="pre">basestring</span></tt>.</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><tt class="xref py py-exc docutils literal"><span class="pre">AttributeError</span></tt> if accessing an invalid <tt class="docutils literal"><span class="pre">field</span></tt> (see valid fields below).</td>
 </tr>
@@ -474,7 +474,7 @@ from music21.</td>
     </div>
     <div class="footer">
         &copy; Copyright 2013 Christopher Antila, CC-BY-SA.
-      Last updated on 11 Oct 2013.
+      Last updated on 29 Oct 2013.
       Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2b2.
     </div>
   </body>
