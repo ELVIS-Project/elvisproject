@@ -94,6 +94,9 @@
 <span class="c"># along with this program.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
 <span class="c">#--------------------------------------------------------------------------------------------------</span>
 <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">.. codeauthor:: Jamie Klassen &lt;michigan.j.frog@gmail.com&gt;</span>
+<span class="sd">.. codeauthor:: Christopher Antila &lt;crantila@fedoraproject.org&gt;</span>
+
 <span class="sd">This model represents an indexed and analyzed piece of music.</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
@@ -265,23 +268,28 @@
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get or set metadata about the piece.</span>
 
+<span class="sd">        .. note:: Some metadata fields may not be available for all pieces. The available metadata</span>
+<span class="sd">            fields depend on the specific file imported. Not-available fields return the value</span>
+<span class="sd">            :const:`None`. We guarantee non-:const:`None` values for ``pathname``, ``title``, and</span>
+<span class="sd">            ``parts``.</span>
+
 <span class="sd">        Parameters</span>
 <span class="sd">        ==========</span>
 <span class="sd">        :param field: The name of the field to be accessed or modified.</span>
-<span class="sd">        :type field: :obj:`basestring`</span>
+<span class="sd">        :type field: :class:`basestring`</span>
 
-<span class="sd">        :param value: If not None, the new value to be assigned to ``field``.</span>
-<span class="sd">        :type value: :obj:`object` or :obj:`None`</span>
+<span class="sd">        :param value: If not :const:`None`, the value to be assigned to ``field``.</span>
+<span class="sd">        :type value: :class:`object` or :const:`None`</span>
 
 <span class="sd">        Returns</span>
 <span class="sd">        =======</span>
-<span class="sd">        :returns: The value of the requested field or None, if assigning, or if accessing a</span>
-<span class="sd">            non-existant field or a field that has not yet been initialized.</span>
-<span class="sd">        :rtype: :obj:`object` or :obj:`None`</span>
+<span class="sd">        :returns: The value of the requested field or :const:`None`, if assigning, or if accessing</span>
+<span class="sd">            a non-existant field or a field that has not yet been initialized.</span>
+<span class="sd">        :rtype: :class:`object` or :const:`None`</span>
 
 <span class="sd">        Raises</span>
 <span class="sd">        ======</span>
-<span class="sd">        :raises: :exc:`TypeError` if ``field`` is not a :obj:`basestring`.</span>
+<span class="sd">        :raises: :exc:`TypeError` if ``field`` is not a :class:`basestring`.</span>
 <span class="sd">        :raises: :exc:`AttributeError` if accessing an invalid ``field`` (see valid fields below).</span>
 
 <span class="sd">        +---------------------+--------------------------------------------------------------------+</span>
@@ -427,7 +435,7 @@
     </div>
     <div class="footer">
         &copy; Copyright 2013 Christopher Antila, CC-BY-SA.
-      Last updated on 11 Oct 2013.
+      Last updated on 25 Nov 2013.
       Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2b2.
     </div>
   </body>

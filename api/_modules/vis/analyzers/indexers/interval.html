@@ -94,6 +94,8 @@
 <span class="c"># along with this program.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
 <span class="c">#--------------------------------------------------------------------------------------------------</span>
 <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">.. codeauthor:: Christopher Antila &lt;crantila@fedoraproject.org&gt;</span>
+
 <span class="sd">Index intervals. Use the :class:`IntervalIndexer` to find vertical (harmonic) intervals between two</span>
 <span class="sd">parts. Use the :class:`HorizontalIntervalIndexer` to find horizontal (melodic) intervals in the</span>
 <span class="sd">same part.</span>
@@ -232,28 +234,28 @@
 
     <span class="n">possible_settings</span> <span class="o">=</span> <span class="p">[</span><span class="s">u&#39;simple or compound&#39;</span><span class="p">,</span> <span class="s">u&#39;quality&#39;</span><span class="p">]</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    A :obj:`list` of possible settings for the :class:`IntervalIndexer`.</span>
+<span class="sd">    A list of possible settings for the :class:`IntervalIndexer`.</span>
 
-<span class="sd">    :keyword unicode u&#39;simple_or_compound&#39;: Whether intervals should be represented in their \</span>
-<span class="sd">        single-octave form (either :obj:`u&#39;simple&#39;` or :obj:`u&#39;compound&#39;`).</span>
+<span class="sd">    :keyword unicode ``u&#39;simple or compound&#39;``: Whether intervals should be represented in their \</span>
+<span class="sd">        single-octave form (either ``u&#39;simple&#39;`` or ``u&#39;compound&#39;``).</span>
 <span class="sd">    :keyword boolean u&#39;quality&#39;: Whether to display an interval&#39;s quality.</span>
 
-<span class="sd">    .. note:: The :obj:`u&#39;simple or compound&#39;` setting should have no _ characters, which appear \</span>
+<span class="sd">    .. note:: The ``u&#39;simple or compound&#39;`` setting should have no ``_`` characters, which appear \</span>
 <span class="sd">        in our documentation only because of a technical limitation in the documentation tool.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">default_settings</span> <span class="o">=</span> <span class="p">{</span><span class="s">u&#39;simple or compound&#39;</span><span class="p">:</span> <span class="s">u&#39;compound&#39;</span><span class="p">,</span> <span class="s">u&#39;quality&#39;</span><span class="p">:</span> <span class="bp">False</span><span class="p">}</span>
-    <span class="s">&quot;A :obj:`dict` of default settings for the :class:`IntervalIndexer`.&quot;</span>
+    <span class="s">&quot;A dict of default settings for the :class:`IntervalIndexer`.&quot;</span>
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">score</span><span class="p">,</span> <span class="n">settings</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        The output format is described in :meth:`run`.</span>
 
 <span class="sd">        :param score: The output of :class:`NoteRestIndexer` for all parts in a piece.</span>
-<span class="sd">        :type score: :obj:`list` of :class:`pandas.Series`</span>
+<span class="sd">        :type score: list of :class:`pandas.Series`</span>
 <span class="sd">        :param settings: Required and optional settings. See descriptions in \</span>
 <span class="sd">            :const:`possible_settings`.</span>
-<span class="sd">        :type settings: :obj:`dict`</span>
+<span class="sd">        :type settings: dict</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="k">if</span> <span class="n">settings</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
@@ -291,12 +293,13 @@
 
 <span class="sd">        Returns</span>
 <span class="sd">        =======</span>
-<span class="sd">        :returns: The new indices. The dict index of each Series corresponds to the indices of</span>
-<span class="sd">            the Part combinations used to generate it, in the order specified to the constructor.</span>
-<span class="sd">            Each element in the Series is a :obj:`unicode`. For example, if you stored the output</span>
-<span class="sd">            of this method in the &quot;result&quot; variable, then result[&#39;[0, 1]&#39;] will give you the Series</span>
-<span class="sd">            with intervals from the highest and second-highest parts.</span>
-<span class="sd">        :rtype: :obj:`dict` of :class:`pandas.Series`</span>
+<span class="sd">        :returns: The new indices. The dict index of each :class:`Series` corresponds to the</span>
+<span class="sd">            indices of the :class:`Part` combinations used to generate it, in the order specified</span>
+<span class="sd">            to the constructor. Each element in the :class:`Series` is a ``unicode``. For example,</span>
+<span class="sd">            if you stored the output of this method in the ``result`` variable, then</span>
+<span class="sd">            ``result[&#39;0, 1&#39;]`` will give you the :class:`Series` with intervals from the highest</span>
+<span class="sd">            and second-highest parts.</span>
+<span class="sd">        :rtype: dict of :class:`pandas.Series`</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">combinations</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="c"># To calculate all 2-part combinations:</span>
@@ -331,10 +334,10 @@
 <span class="sd">        The output format is described in :meth:`run`.</span>
 
 <span class="sd">        :param score: The output of :class:`NoteRestIndexer` for all parts in a piece.</span>
-<span class="sd">        :type score: :obj:`list` of :class:`pandas.Series`</span>
+<span class="sd">        :type score: list of :class:`pandas.Series`</span>
 <span class="sd">        :param settings: Required and optional settings. See descriptions in \</span>
 <span class="sd">            :const:`IntervalIndexer.possible_settings`.</span>
-<span class="sd">        :type settings: :obj:`dict`</span>
+<span class="sd">        :type settings: dict</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">HorizontalIntervalIndexer</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="n">score</span><span class="p">,</span> <span class="n">settings</span><span class="p">)</span>
 
@@ -390,7 +393,7 @@
     </div>
     <div class="footer">
         &copy; Copyright 2013 Christopher Antila, CC-BY-SA.
-      Last updated on 11 Oct 2013.
+      Last updated on 25 Nov 2013.
       Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2b2.
     </div>
   </body>

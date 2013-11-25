@@ -94,6 +94,8 @@
 <span class="c"># along with this program.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
 <span class="c">#--------------------------------------------------------------------------------------------------</span>
 <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">.. codeauthor:: Christopher Antila &lt;crantila@fedoraproject.org&gt;</span>
+
 <span class="sd">Indexers that modify the &quot;offset&quot; values (floats stored as the &quot;index&quot; of a :class:`pandas.Series`),</span>
 <span class="sd">potentially adding repetitions of or removing pre-existing events, without modifying the events</span>
 <span class="sd">themselves.</span>
@@ -223,25 +225,25 @@
 
     <span class="n">possible_settings</span> <span class="o">=</span> <span class="p">[</span><span class="s">u&#39;quarterLength&#39;</span><span class="p">]</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    A :obj:`list` of possible settings for the :class:`FilterByOffsetIndexer`.</span>
+<span class="sd">    A ``list`` of possible settings for the :class:`FilterByOffsetIndexer`.</span>
 
 <span class="sd">    :keyword u&#39;quarterLength&#39;: The quarterLength duration between observations desired in the</span>
 <span class="sd">        output. This value must not have more than three digits to the right of the decimal</span>
 <span class="sd">        (i.e. 0.001 is the smallest possible value).</span>
-<span class="sd">    :type u&#39;quarterLength&#39;: :obj:`float`</span>
+<span class="sd">    :type u&#39;quarterLength&#39;: ``float``</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">score</span><span class="p">,</span> <span class="n">settings</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :param score: A list of Series you wish to filter by offset values, stored in the Index.</span>
-<span class="sd">        :type score: :obj:`list` of :obj:`pandas.Series`</span>
+<span class="sd">        :type score: ``list`` of :class:`pandas.Series`</span>
 <span class="sd">        :param settings: There is one required setting. See :const:`possible_settings`.</span>
-<span class="sd">        :type settings: :obj:`dict`</span>
+<span class="sd">        :type settings: ``dict`</span>
 
-<span class="sd">        :raises: :exc:`RuntimeError` if :obj:`score` is the wrong type.</span>
-<span class="sd">        :raises: :exc:`RuntimeError` if :obj:`score` is not a list of the same types.</span>
-<span class="sd">        :raises: :exc:`RuntimeError` if the required setting is not present in :obj:`settings`.</span>
-<span class="sd">        :raises: :exc:`RuntimeError` if the :obj:`u&#39;quarterLength&#39;` setting has a value less</span>
+<span class="sd">        :raises: :exc:`RuntimeError` if ``score`` is the wrong type.</span>
+<span class="sd">        :raises: :exc:`RuntimeError` if ``score`` is not a list of the same types.</span>
+<span class="sd">        :raises: :exc:`RuntimeError` if the required setting is not present in ``settings``.</span>
+<span class="sd">        :raises: :exc:`RuntimeError` if the ``u&#39;quarterLength&#39;`` setting has a value less</span>
 <span class="sd">            than ``0.001``.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">FilterByOffsetIndexer</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="n">score</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span>
@@ -276,7 +278,7 @@
 <span class="sd">        :rtype: :class:`pandas.DataFrame`</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="mi">0</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_score</span><span class="p">):</span>
-            <span class="k">return</span> <span class="n">pandas</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
+            <span class="k">return</span> <span class="p">[]</span>
         <span class="n">start_offset</span> <span class="o">=</span> <span class="bp">None</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="n">start_offset</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">min</span><span class="p">([</span><span class="n">part</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">part</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_score</span><span class="p">])</span> <span class="o">*</span> <span class="mi">1000</span><span class="p">)</span>
@@ -288,18 +290,18 @@
                     <span class="n">start_offset</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">part</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
             <span class="k">if</span> <span class="n">start_offset</span> <span class="o">==</span> <span class="p">[]:</span>
                 <span class="c"># all the parts have no length, so return a DataFrame with as many empty parts</span>
-                <span class="k">return</span> <span class="n">pandas</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="n">i</span><span class="p">:</span> <span class="n">pandas</span><span class="o">.</span><span class="n">Series</span><span class="p">()</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_score</span><span class="p">))})</span>
+                <span class="k">return</span> <span class="p">[</span><span class="n">pandas</span><span class="o">.</span><span class="n">Series</span><span class="p">()</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_score</span><span class="p">))]</span>
             <span class="n">start_offset</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="n">start_offset</span><span class="p">))</span>
         <span class="n">step</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_settings</span><span class="p">[</span><span class="s">u&#39;quarterLength&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="mi">1000</span><span class="p">)</span>
-        <span class="n">post</span> <span class="o">=</span> <span class="p">{}</span>
-        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_score</span><span class="p">)):</span>
-            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_score</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">index</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">:</span>
-                <span class="n">post</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_score</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
-                <span class="k">continue</span>
-            <span class="n">end_offset</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_score</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="mi">1000</span><span class="p">)</span>
-            <span class="n">off_list</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">pandas</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">start_offset</span><span class="p">,</span> <span class="n">end_offset</span> <span class="o">+</span> <span class="n">step</span><span class="p">,</span> <span class="n">step</span><span class="p">))</span><span class="o">.</span><span class="n">div</span><span class="p">(</span><span class="mf">1000.0</span><span class="p">))</span>
-            <span class="n">post</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_score</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">reindex</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="n">off_list</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s">&#39;ffill&#39;</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">pandas</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">post</span><span class="p">)</span></div></div>
+        <span class="n">post</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">part</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_score</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">part</span><span class="o">.</span><span class="n">index</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="n">post</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">part</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">end_offset</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">part</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="mi">1000</span><span class="p">)</span>
+                <span class="n">off_list</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">pandas</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">start_offset</span><span class="p">,</span> <span class="n">end_offset</span> <span class="o">+</span> <span class="n">step</span><span class="p">,</span> <span class="n">step</span><span class="p">))</span><span class="o">.</span><span class="n">div</span><span class="p">(</span><span class="mf">1000.0</span><span class="p">))</span>  <span class="c"># pylint: disable=C0301</span>
+                <span class="n">post</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">part</span><span class="o">.</span><span class="n">reindex</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="n">off_list</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s">&#39;ffill&#39;</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">post</span></div></div>
 </pre></div>
 
           </div>
@@ -322,7 +324,7 @@
     </div>
     <div class="footer">
         &copy; Copyright 2013 Christopher Antila, CC-BY-SA.
-      Last updated on 11 Oct 2013.
+      Last updated on 25 Nov 2013.
       Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2b2.
     </div>
   </body>

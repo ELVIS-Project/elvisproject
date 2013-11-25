@@ -96,7 +96,9 @@
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">.. codeauthor:: Christopher Antila &lt;crantila@fedoraproject.org&gt;</span>
 
-<span class="sd">Workflow controller, to automate commonly-performed tasks.</span>
+<span class="sd">The ``workflow`` module holds the :class:`WorkflowManager`, which automates several common music</span>
+<span class="sd">analysis patterns for counterpoint. The :class:`TemplateWorkflow` class is a template for writing</span>
+<span class="sd">new ``WorkflowManager`` classes.</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
 <span class="kn">import</span> <span class="nn">ast</span>
@@ -110,20 +112,32 @@
 
 <div class="viewcode-block" id="WorkflowManager"><a class="viewcode-back" href="../../modules.html#vis.workflow.WorkflowManager">[docs]</a><span class="k">class</span> <span class="nc">WorkflowManager</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    The :class:`WorkflowManager` automates several commonly-performed music analysis patterns.</span>
+<span class="sd">    :parameter pathnames: A list of pathnames.</span>
+<span class="sd">    :type pathnames: ``list`` of ``basestring``</span>
 
-<span class="sd">    There are four basic tasks the :class:`WorkflowManager` performs, each with its own method:</span>
+<span class="sd">    The :class:`WorkflowManager` automates several common music analysis patterns for counterpoint.</span>
+<span class="sd">    Use the ``WorkflowManager`` with these four tasks:</span>
 
-<span class="sd">    * :meth:`load`, to import data from external formats (MusicXML, Stata, pickled, etc.).</span>
-<span class="sd">    * :meth:`run`, which performs one of a small set of pre-defined analysis activities.</span>
-<span class="sd">    * :meth:`output`, which outputs visualization data to disk.</span>
-<span class="sd">    * :meth:`export`, which outputs &quot;non-visual&quot; data to disk (Stata, CSV, pickled, etc.)</span>
+<span class="sd">    * :meth:`load`, to import pieces from symbolic data formats.</span>
+<span class="sd">    * :meth:`run`, to perform a pre-defined analysis.</span>
+<span class="sd">    * :meth:`output`, to output a visualization of the analysis results.</span>
+<span class="sd">    * :meth:`export`, to output a text-based version of the analysis results.</span>
 
-<span class="sd">    We also provide the following methods for setting and getting properties of the individual</span>
-<span class="sd">    :class:`~vis.models.indexed_piece.IndexedPiece` objects:</span>
+<span class="sd">    Before you analyze, you may wish to use these methods:</span>
 
-<span class="sd">    * :meth:`metadata`, to adjust or view the metadata of a piece.</span>
-<span class="sd">    * :meth:`settings`, to adjust or view the settings of a piece.</span>
+<span class="sd">    * :meth:`metadata`, to get or set the metadata of a specific :class:`IndexedPiece` managed by \</span>
+<span class="sd">        this ``WorkflowManager``.</span>
+<span class="sd">    * :meth:`settings`, to get or set a setting related to analysis (for example, whether to \</span>
+<span class="sd">        display the quality of intervals).</span>
+
+<span class="sd">    You may also treat a ``WorkflowManager`` as a container:</span>
+
+<span class="sd">    &gt;&gt;&gt; wm = WorkflowManager(&#39;piece1.mxl&#39;, &#39;piece2.krn&#39;)</span>
+<span class="sd">    &gt;&gt;&gt; len(wm)</span>
+<span class="sd">    2</span>
+<span class="sd">    &gt;&gt;&gt; ip = wm[1]</span>
+<span class="sd">    &gt;&gt;&gt; type(ip)</span>
+<span class="sd">    &lt;class &#39;vis.models.indexed_piece.IndexedPiece&#39;&gt;</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="c"># Instance Variables</span>
@@ -133,33 +147,10 @@
     <span class="c"># path to the R-language script that makes bar charts</span>
     <span class="n">_R_bar_chart_path</span> <span class="o">=</span> <span class="s">u&#39;scripts/R_bar_chart.r&#39;</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">vals</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        It&#39;s often easier to use the :class:`WorkflowManager`, by providing a list of pathnames \</span>
-<span class="sd">        corresponding to the files you want to analyze. However, if you will later need access to \</span>
-<span class="sd">        the :class:`~vis.models.indexed_piece.IndexedPiece` objects directly themselves, you \</span>
-<span class="sd">        should provide them to the :class:`WorkflowManager` as in the second example below.</span>
-
-<span class="sd">        Parameters</span>
-<span class="sd">        ==========</span>
-<span class="sd">        :parameter vals: A list of pathnames or IndexedPieces. If an item in the list is not \</span>
-<span class="sd">            either an IndexedPiece or basestring, it is silently ignored.</span>
-<span class="sd">        :type vals: :obj:`list` of :obj:`basestring` or of \</span>
-<span class="sd">            :obj:`~vis.models.indexed_piece.IndexedPiece`</span>
-
-<span class="sd">        We manage the :class:`~vis.models.indexed_piece.IndexedPiece` objects::</span>
-
-<span class="sd">        &gt;&gt;&gt; paths = [u&#39;test_corpus/bwv77.mxl&#39;, u&#39;test_corpus/Kyrie.krn&#39;]</span>
-<span class="sd">        &gt;&gt;&gt; path_work = WorkflowManager(paths)</span>
-
-<span class="sd">        You manage the :class:`~vis.models.indexed_piece.IndexedPiece` objects::</span>
-
-<span class="sd">        &gt;&gt;&gt; ips = [IndexedPiece(x) for x in paths]</span>
-<span class="sd">        &gt;&gt;&gt; ip_work = WorkflowManager(ips)</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="c"># hold the list of IndexedPiece</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pathnames</span><span class="p">):</span>
+        <span class="c"># create the list of IndexedPiece objects</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_data</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="k">for</span> <span class="n">each_val</span> <span class="ow">in</span> <span class="n">vals</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">each_val</span> <span class="ow">in</span> <span class="n">pathnames</span><span class="p">:</span>
             <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">each_val</span><span class="p">,</span> <span class="nb">basestring</span><span class="p">):</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">indexed_piece</span><span class="o">.</span><span class="n">IndexedPiece</span><span class="p">(</span><span class="n">each_val</span><span class="p">))</span>
             <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">each_val</span><span class="p">,</span> <span class="n">indexed_piece</span><span class="o">.</span><span class="n">IndexedPiece</span><span class="p">):</span>
@@ -171,10 +162,11 @@
         <span class="k">for</span> <span class="n">piece_sett</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_settings</span><span class="p">:</span>
             <span class="k">for</span> <span class="n">sett</span> <span class="ow">in</span> <span class="p">[</span><span class="s">u&#39;offset interval&#39;</span><span class="p">,</span> <span class="s">u&#39;voice combinations&#39;</span><span class="p">]:</span>
                 <span class="n">piece_sett</span><span class="p">[</span><span class="n">sett</span><span class="p">]</span> <span class="o">=</span> <span class="bp">None</span>
-            <span class="k">for</span> <span class="n">sett</span> <span class="ow">in</span> <span class="p">[</span><span class="s">u&#39;filter repeats&#39;</span><span class="p">,</span> <span class="s">u&#39;interval quality&#39;</span><span class="p">,</span> <span class="s">u&#39;simple intervals&#39;</span><span class="p">]:</span>
+            <span class="k">for</span> <span class="n">sett</span> <span class="ow">in</span> <span class="p">[</span><span class="s">u&#39;filter repeats&#39;</span><span class="p">]:</span>
                 <span class="n">piece_sett</span><span class="p">[</span><span class="n">sett</span><span class="p">]</span> <span class="o">=</span> <span class="bp">False</span>
         <span class="c"># hold settings common to all IndexedPieces</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_shared_settings</span> <span class="o">=</span> <span class="p">{</span><span class="s">u&#39;n&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s">u&#39;continuer&#39;</span><span class="p">:</span> <span class="s">u&#39;_&#39;</span><span class="p">,</span> <span class="s">u&#39;mark singles&#39;</span><span class="p">:</span> <span class="bp">False</span><span class="p">}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_shared_settings</span> <span class="o">=</span> <span class="p">{</span><span class="s">u&#39;n&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s">u&#39;continuer&#39;</span><span class="p">:</span> <span class="s">u&#39;_&#39;</span><span class="p">,</span> <span class="s">u&#39;mark singles&#39;</span><span class="p">:</span> <span class="bp">False</span><span class="p">,</span>
+                                 <span class="s">u&#39;interval quality&#39;</span><span class="p">:</span> <span class="bp">False</span><span class="p">,</span> <span class="s">u&#39;simple intervals&#39;</span><span class="p">:</span> <span class="bp">False</span><span class="p">}</span>
         <span class="c"># which was the most recent experiment run? Either &#39;intervals&#39; or &#39;n-grams&#39;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_previous_exp</span> <span class="o">=</span> <span class="bp">None</span>
 
@@ -196,14 +188,8 @@
 <span class="sd">        used for the ``u&#39;pieces&#39;`` instruction, to control when the initial music21 import \</span>
 <span class="sd">        happens.</span>
 
-<span class="sd">        **Instructions:**</span>
-
-<span class="sd">        .. note:: only ``u&#39;pieces&#39;`` is implemented at this time.</span>
-
-<span class="sd">        * :obj:`u&#39;pieces&#39;`, to import all pieces, collect metadata, and run :class:`NoteRestIndexer`</span>
-<span class="sd">        * :obj:`u&#39;hdf5&#39;` to load data from a previous :meth:`export`.</span>
-<span class="sd">        * :obj:`u&#39;stata&#39;` to load data from a previous :meth:`export`.</span>
-<span class="sd">        * :obj:`u&#39;pickle&#39;` to load data from a previous :meth:`export`.</span>
+<span class="sd">        Use :meth:`load` with an instruction other than ``u&#39;pieces&#39;`` to load results from a</span>
+<span class="sd">        previous analysis run by :meth:`run`.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ==========</span>
@@ -212,6 +198,15 @@
 <span class="sd">        :parameter pathname: The pathname of the data to import; not required for the \</span>
 <span class="sd">            ``u&#39;pieces&#39;`` instruction.</span>
 <span class="sd">        :type pathname: :obj:`basestring`</span>
+
+<span class="sd">        **Instructions:**</span>
+
+<span class="sd">        .. note:: only ``u&#39;pieces&#39;`` is implemented at this time.</span>
+
+<span class="sd">        * :obj:`u&#39;pieces&#39;`, to import all pieces, collect metadata, and run :class:`NoteRestIndexer`</span>
+<span class="sd">        * :obj:`u&#39;hdf5&#39;` to load data from a previous :meth:`export`.</span>
+<span class="sd">        * :obj:`u&#39;stata&#39;` to load data from a previous :meth:`export`.</span>
+<span class="sd">        * :obj:`u&#39;pickle&#39;` to load data from a previous :meth:`export`.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c"># TODO: rewrite this with multiprocessing</span>
         <span class="c"># NOTE: you may want to have the worker process create a new IndexedPiece object, import it</span>
@@ -227,35 +222,29 @@
 </div>
 <div class="viewcode-block" id="WorkflowManager.run"><a class="viewcode-back" href="../../modules.html#vis.workflow.WorkflowManager.run">[docs]</a>    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instruction</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Run a commonly-requested experiment workflow.</span>
+<span class="sd">        Run the workflow of an experiment.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ==========</span>
-<span class="sd">        :parameter instruction: The experiment workflow to run.</span>
+<span class="sd">        :parameter instruction: The experiment to run.</span>
 <span class="sd">        :type instruction: ``basestring``</span>
 
 <span class="sd">        Returns</span>
 <span class="sd">        =======</span>
-<span class="sd">        :returns: The result of the experiment workflow.</span>
+<span class="sd">        :returns: The result of the experiment.</span>
 <span class="sd">        :rtype: :class:`pandas.Series` or :class:`pandas.DataFrame`</span>
 
 <span class="sd">        Raises</span>
 <span class="sd">        ======</span>
-<span class="sd">        :raises: :exc:`RuntimeError` if the :obj:`instruction` does not make sense.</span>
+<span class="sd">        :raises: :exc:`RuntimeError` if the ``instruction`` is not valid for this</span>
+<span class="sd">            ``WorkflowManager``.</span>
 
-<span class="sd">        Instructions:</span>
+<span class="sd">        **Instructions:**</span>
 
 <span class="sd">        * ``u&#39;intervals&#39;``: finds the frequency of vertical intervals in all \</span>
 <span class="sd">            2-part voice combinations.</span>
 <span class="sd">        * ``u&#39;interval n-grams&#39;``: finds the frequency of any-part vertical interval n-grams in \</span>
 <span class="sd">            voice pairs specified in the settings. Remember to provide the ``u&#39;n&#39;`` setting.</span>
-
-<span class="sd">        Modifiers:</span>
-
-<span class="sd">        * :obj:`u&#39; for SuperCollider&#39;`: append this to :obj:`u&#39;all-combinations intervals&#39;` to \</span>
-<span class="sd">            prepare a :class:`DataFrame` with the information required for Mike Winters&#39; \</span>
-<span class="sd">            sonification program. You should then call :meth:`export` with the :obj:`u&#39;CSV&#39;` \</span>
-<span class="sd">            instruction.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c"># NOTE: do not re-order the instructions or this method will break</span>
         <span class="n">possible_instructions</span> <span class="o">=</span> <span class="p">[</span><span class="s">u&#39;intervals&#39;</span><span class="p">,</span>
@@ -273,9 +262,6 @@
             <span class="n">post</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_interval_ngrams</span><span class="p">()</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="n">error_msg</span><span class="p">)</span>
-        <span class="c"># format for SuperCollider, if required</span>
-        <span class="k">if</span> <span class="o">-</span><span class="mi">1</span> <span class="o">!=</span> <span class="n">instruction</span><span class="o">.</span><span class="n">rfind</span><span class="p">(</span><span class="s">u&#39; for SuperCollider&#39;</span><span class="p">):</span>
-            <span class="n">post</span> <span class="o">=</span> <span class="n">WorkflowManager</span><span class="o">.</span><span class="n">_for_sc</span><span class="p">(</span><span class="n">post</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_result</span> <span class="o">=</span> <span class="n">post</span>
         <span class="k">return</span> <span class="n">post</span>
 </div>
@@ -512,23 +498,24 @@
 <span class="sd">        :rtype: :class:`pandas.Series`</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">int_freqs</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="c"># shared settings for the IntervalIndexer</span>
+        <span class="n">setts</span> <span class="o">=</span> <span class="p">{</span><span class="s">u&#39;quality&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span> <span class="s">u&#39;interval quality&#39;</span><span class="p">)}</span>
+        <span class="n">setts</span><span class="p">[</span><span class="s">u&#39;simple or compound&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">u&#39;simple&#39;</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span> <span class="s">u&#39;simple intervals&#39;</span><span class="p">)</span> <span class="o">==</span> \
+                                       <span class="bp">True</span> <span class="k">else</span> <span class="s">u&#39;compound&#39;</span>
         <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">piece</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">):</span>
-            <span class="c"># prepare settings for, then run IntervalIndexer</span>
-            <span class="n">setts</span> <span class="o">=</span> <span class="p">{</span><span class="s">u&#39;quality&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_settings</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="s">u&#39;interval quality&#39;</span><span class="p">]}</span>
-            <span class="n">setts</span><span class="p">[</span><span class="s">u&#39;simple or compound&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">u&#39;simple&#39;</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_settings</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="s">u&#39;simple intervals&#39;</span><span class="p">]</span> <span class="o">==</span> \
-                                           <span class="bp">True</span> <span class="k">else</span> <span class="s">u&#39;compound&#39;</span>
             <span class="n">vert_ints</span> <span class="o">=</span> <span class="n">piece</span><span class="o">.</span><span class="n">get_data</span><span class="p">([</span><span class="n">noterest</span><span class="o">.</span><span class="n">NoteRestIndexer</span><span class="p">,</span> <span class="n">interval</span><span class="o">.</span><span class="n">IntervalIndexer</span><span class="p">],</span> <span class="n">setts</span><span class="p">)</span>
             <span class="c"># see which voice pairs we need; if relevant, remove unneeded voice pairs</span>
-            <span class="n">combos</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_settings</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="s">u&#39;voice combinations&#39;</span><span class="p">]</span>
+            <span class="n">combos</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="s">u&#39;voice combinations&#39;</span><span class="p">)</span>
+            <span class="k">print</span><span class="p">(</span><span class="s">&#39;&quot;&#39;</span> <span class="o">+</span> <span class="n">combos</span> <span class="o">+</span> <span class="s">&#39;&quot;&#39;</span><span class="p">)</span>  <span class="c"># DEBUG</span>
             <span class="k">if</span> <span class="n">combos</span> <span class="o">!=</span> <span class="s">u&#39;[all]&#39;</span> <span class="ow">and</span> <span class="n">combos</span> <span class="o">!=</span> <span class="s">u&#39;[all pairs]&#39;</span> <span class="ow">and</span> <span class="n">combos</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
                 <span class="n">vert_ints</span> <span class="o">=</span> <span class="n">WorkflowManager</span><span class="o">.</span><span class="n">_remove_extra_pairs</span><span class="p">(</span><span class="n">vert_ints</span><span class="p">,</span> <span class="n">combos</span><span class="p">)</span>
             <span class="c"># we no longer need to know the combinations&#39; names, so we can make a list</span>
             <span class="n">vert_ints</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">vert_ints</span><span class="o">.</span><span class="n">itervalues</span><span class="p">())</span>
             <span class="c"># run the offset and repeat indexers, if required</span>
-            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_settings</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="s">u&#39;offset interval&#39;</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
-                <span class="n">off_sets</span> <span class="o">=</span> <span class="p">{</span><span class="s">u&#39;quarterLength&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_settings</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="s">u&#39;offset interval&#39;</span><span class="p">]}</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="s">u&#39;offset interval&#39;</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+                <span class="n">off_sets</span> <span class="o">=</span> <span class="p">{</span><span class="s">u&#39;quarterLength&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="s">u&#39;offset interval&#39;</span><span class="p">)}</span>
                 <span class="n">vert_ints</span> <span class="o">=</span> <span class="n">piece</span><span class="o">.</span><span class="n">get_data</span><span class="p">([</span><span class="n">offset</span><span class="o">.</span><span class="n">FilterByOffsetIndexer</span><span class="p">],</span> <span class="n">off_sets</span><span class="p">,</span> <span class="n">vert_ints</span><span class="p">)</span>
-            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_settings</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="s">u&#39;filter repeats&#39;</span><span class="p">]</span> <span class="ow">is</span> <span class="bp">True</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="s">u&#39;filter repeats&#39;</span><span class="p">)</span> <span class="ow">is</span> <span class="bp">True</span><span class="p">:</span>
                 <span class="n">vert_ints</span> <span class="o">=</span> <span class="n">piece</span><span class="o">.</span><span class="n">get_data</span><span class="p">([</span><span class="n">repeat</span><span class="o">.</span><span class="n">FilterByRepeatIndexer</span><span class="p">],</span> <span class="p">{},</span> <span class="n">vert_ints</span><span class="p">)</span>
             <span class="c"># aggregate results and save for later</span>
             <span class="n">int_freqs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">piece</span><span class="o">.</span><span class="n">get_data</span><span class="p">([</span><span class="n">frequency</span><span class="o">.</span><span class="n">FrequencyExperimenter</span><span class="p">,</span>
@@ -571,19 +558,8 @@
                     <span class="n">delete_these</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
             <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">delete_these</span><span class="p">:</span>
                 <span class="k">del</span> <span class="n">vert_ints</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+            <span class="k">print</span><span class="p">(</span><span class="s">&#39;!!!!!!!!!!!!!!!!!!! d</span><span class="se">\&#39;</span><span class="s">1337 &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">delete_these</span><span class="p">))</span>  <span class="c"># DEBUGS</span>
             <span class="k">return</span> <span class="n">vert_ints</span>
-
-    <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">_for_sc</span><span class="p">(</span><span class="n">to_format</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Format a record for output to the vis SuperCollider application.</span>
-
-<span class="sd">        :parameter to_format: The experimental results to be formatted.</span>
-<span class="sd">        :type to_format: ???</span>
-<span class="sd">        :returns: The results, formatted for SuperCollider.</span>
-<span class="sd">        :rtype: ???</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="n">to_format</span>
 
     <span class="k">def</span> <span class="nf">_get_dataframe</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s">u&#39;data&#39;</span><span class="p">,</span> <span class="n">top_x</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">threshold</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -619,12 +595,12 @@
 <span class="sd">        ==========</span>
 <span class="sd">        :parameter instruction: The type of visualization to output.</span>
 <span class="sd">        :type instruction: ``basestring``</span>
-<span class="sd">        :parameter pathname: The pathname for the output. The default is &quot;test_output/output_result&quot;</span>
-<span class="sd">            and file extensions are applied automatically.</span>
+<span class="sd">        :parameter pathname: The pathname for the output. The default is</span>
+<span class="sd">            ``&#39;test_output/output_result``. A file extension is applied automatically.</span>
 <span class="sd">        :type pathname: ``basestring``</span>
 <span class="sd">        :param top_x: This is the &quot;X&quot; in &quot;only show the top X results.&quot; The default is ``None``.</span>
 <span class="sd">        :type top_x: ``int``</span>
-<span class="sd">        :param threshold: If a result is strictly less than this number, it won&#39;t be included. The</span>
+<span class="sd">        :param threshold: If a result is strictly less than this number, it will be left out. The</span>
 <span class="sd">            default is ``None``.</span>
 <span class="sd">        :type threshold: number</span>
 
@@ -738,8 +714,8 @@
 </div>
 <div class="viewcode-block" id="WorkflowManager.metadata"><a class="viewcode-back" href="../../modules.html#vis.workflow.WorkflowManager.metadata">[docs]</a>    <span class="k">def</span> <span class="nf">metadata</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">field</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Use this method to get or set a particular metadatum. The valid field names are listed in</span>
-<span class="sd">        :meth:`~vis.models.indexed_piece.IndexedPiece.metadata` for :class:`IndexedPiece`.</span>
+<span class="sd">        Get or set a metadata field. The valid field names are determined by :class:`IndexedPiece`</span>
+<span class="sd">        (refer to the documentation for :meth:`~vis.models.indexed_piece.IndexedPiece.metadata`).</span>
 
 <span class="sd">        A metadatum is a salient musical characteristic of a particular piece, and does not change</span>
 <span class="sd">        across analyses.</span>
@@ -757,14 +733,14 @@
 <span class="sd">        :rtype: :obj:`object` or :obj:`None`</span>
 
 <span class="sd">        :raises: :exc:`TypeError` if ``field`` is not a ``basestring``.</span>
-<span class="sd">        :raises: :exc:`AttributeError` if accessing an invalid ``field`` (see valid fields below).</span>
+<span class="sd">        :raises: :exc:`AttributeError` if accessing an invalid ``field``.</span>
 <span class="sd">        :raises: :exc:`IndexError` if ``index`` is invalid for this ``WorkflowManager``.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="n">index</span><span class="p">]</span><span class="o">.</span><span class="n">metadata</span><span class="p">(</span><span class="n">field</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
 </div>
 <div class="viewcode-block" id="WorkflowManager.settings"><a class="viewcode-back" href="../../modules.html#vis.workflow.WorkflowManager.settings">[docs]</a>    <span class="k">def</span> <span class="nf">settings</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">field</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Use this method to get or set a particular setting. The valid values are listed below.</span>
+<span class="sd">        Get or set a value related to analysis. The valid values are listed below.</span>
 
 <span class="sd">        A setting is related to this particular analysis, and is not a salient musical feature of</span>
 <span class="sd">        the work itself.</span>
@@ -786,12 +762,12 @@
 <span class="sd">        :raises: :exc:`IndexError` if ``index`` is invalid for this ``WorkflowManager``.</span>
 <span class="sd">        :raises: :exc:`ValueError` if ``index`` and ``value`` are both ``None``.</span>
 
-<span class="sd">        **Piece-Specific Setting Fields:**</span>
-<span class="sd">        These settings can be set independently for each piece.</span>
+<span class="sd">        **Piece-Specific Settings:**</span>
+<span class="sd">        Pieces do not share these settings.</span>
 
 <span class="sd">        * ``offset interval``: If you want to run the \</span>
 <span class="sd">            :class:`~vis.analyzers.indexers.offset.FilterByOffsetIndexer`, specify a value for this</span>
-<span class="sd">            setting that will become the quarterLength duration between observed offsets.</span>
+<span class="sd">            setting that will become the ``quarterLength`` duration between observed offsets.</span>
 <span class="sd">        * ``filter repeats``: If you want to run the \</span>
 <span class="sd">            :class:`~vis.analyzers.indexers.repeat.FilterByRepeatIndexer`, set this setting to \</span>
 <span class="sd">            ``True``.</span>
@@ -801,17 +777,18 @@
 <span class="sd">            every part with the lowest for a four-part piece: ``&#39;[[0, 3], [1, 3], [2, 3]]&#39;``. This \</span>
 <span class="sd">            should always be a ``basestring`` that nominally represents a list (like the values \</span>
 <span class="sd">            shown above or ``&#39;[all]&#39;`` or ``&#39;[all pairs]&#39;``).</span>
+
+<span class="sd">        **Shared Settings:**</span>
+<span class="sd">        All pieces share these settings. The value of ``index`` is ignored for shared settings, so</span>
+<span class="sd">        it can be anything.</span>
+
+<span class="sd">        * ``n``: As specified in :attr:`vis.analyzers.indexers.ngram.NGramIndexer.possible_settings`</span>
+<span class="sd">        * ``continuer``: As specified in \</span>
+<span class="sd">            :attr:`vis.analyzers.indexers.ngram.NGramIndexer.possible_settings`</span>
 <span class="sd">        * ``interval quality``: If you want to display interval quality, set this setting to \</span>
 <span class="sd">            ``True``.</span>
 <span class="sd">        * ``simple intervals``: If you want to display all intervals as their single-octave \</span>
 <span class="sd">            equivalents, set this setting to ``True``.</span>
-
-<span class="sd">        **Shared Settings:**</span>
-<span class="sd">        These settings are shared across all pieces. When you set or fetch a shared setting, the</span>
-<span class="sd">        value of ``index`` is ignored, and can be anything.</span>
-
-<span class="sd">        * ``n``: As specified in :class:`vis.analyzers.indexers.ngram.NGramIndexerpossible_settings`</span>
-<span class="sd">        * ``continuer``: The</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">field</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_shared_settings</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">value</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
@@ -854,7 +831,7 @@
     </div>
     <div class="footer">
         &copy; Copyright 2013 Christopher Antila, CC-BY-SA.
-      Last updated on 29 Oct 2013.
+      Last updated on 25 Nov 2013.
       Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2b2.
     </div>
   </body>
