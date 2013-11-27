@@ -61,7 +61,10 @@
 <li><a class="reference internal" href="#how-to-start">How to Start</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#install-and-test-the-framework">Install and Test the Framework</a></li>
+<li><a class="reference internal" href="#install-and-test-the-framework">Install and Test the Framework</a><ul>
+<li><a class="reference internal" href="#install-r-and-ggplot2-for-graphs">Install R and ggplot2 for Graphs</a></li>
+</ul>
+</li>
 <li><a class="reference internal" href="#known-issues-and-limitations">Known Issues and Limitations</a></li>
 <li><a class="reference internal" href="#tutorial-make-a-new-workflow">Tutorial: Make a new Workflow</a><ul>
 <li><a class="reference internal" href="#develop-a-question">Develop a Question</a></li>
@@ -137,6 +140,40 @@
 <p>To ease development tasks, we modified the relevant <tt class="docutils literal"><span class="pre">__init__.py</span></tt> files to add &#8220;one directory up&#8221; (i.e., <tt class="docutils literal"><span class="pre">..</span></tt>) to the <tt class="docutils literal"><span class="pre">$PYTHONPATH</span></tt> so it is possible to import <tt class="docutils literal"><span class="pre">vis</span></tt> and its submodules from within the &#8220;vis&#8221; directory.</p>
 <p>After you install the <tt class="docutils literal"><span class="pre">vis</span></tt> framework, we recommend you run our automated tests. From the main vis directory, run <tt class="docutils literal"><span class="pre">python</span> <span class="pre">run_tests.py</span></tt>. Python prints <tt class="docutils literal"><span class="pre">.</span></tt> for every test that passes, and a large error or warning for every test that fails. Certain versions of music21 may cause tests to fail; refer to <a class="reference internal" href="#known-issues-and-limitations"><em>Known Issues and Limitations</em></a> for more information.</p>
 <p>The <a class="reference internal" href="modules.html#vis.workflow.WorkflowManager" title="vis.workflow.WorkflowManager"><tt class="xref py py-class docutils literal"><span class="pre">WorkflowManager</span></tt></a> is not required for the framework&#8217;s operation. We recommend you use the <tt class="xref py py-class docutils literal"><span class="pre">WorkflowManager</span></tt> directly or as an example to write new applications. The vis framework gives you tools to answer a wide variety of musical questions. The <tt class="xref py py-class docutils literal"><span class="pre">WorkflowManager</span></tt> uses the framework to answer specific questions. Please refer to <a class="reference internal" href="#use-the-workflowmanager"><em>Tutorial: Use the WorkflowManager</em></a> for more information. If you will not use the <tt class="xref py py-class docutils literal"><span class="pre">WorkflowManager</span></tt>, we recommend you delete it: remove the <tt class="docutils literal"><span class="pre">workflow.py</span></tt> and <tt class="docutils literal"><span class="pre">other_tests/test_workflow.py</span></tt> files.</p>
+<div class="section" id="install-r-and-ggplot2-for-graphs">
+<h2>Install R and ggplot2 for Graphs<a class="headerlink" href="#install-r-and-ggplot2-for-graphs" title="Permalink to this headline">¶</a></h2>
+<p>If you wish to produce graphs with the VIS Framework, you must install an R interpreter and the &#8220;ggplot2&#8221; library. We use the version 3.0.x series of R.</p>
+<p>If you use a &#8220;Windows&#8221; or &#8220;OS X&#8221; computer, download a pre-compiled binary from <a class="reference external" href="http://cran.r-project.org">http://cran.r-project.org</a>. If you use a &#8220;Linux&#8221; computer (or &#8220;BSD,&#8221; etc.), check your package manager for R 3.0.x. You may have a problem if you search for &#8220;R,&#8221; since it is a common letter, so we recommend you assume the package is called &#8220;R&#8221; and try to search only if that does not work. If your distribution does not provide an R binary, or provides an older version than 3.0.0, install R from source code: <a class="reference external" href="http://cran.r-project.org/doc/manuals/r-release/R-admin.html">http://cran.r-project.org/doc/manuals/r-release/R-admin.html</a>.</p>
+<p>In all cases, if you encounter a problem, the R manuals are extensive, but require careful attention.</p>
+<p>Your distribution may provide a package for &#8220;ggplot&#8221; or &#8220;ggplot2.&#8221; The following instructions work for all operating systems:</p>
+<ol class="arabic">
+<li><p class="first">Start R (with superuser privileges, if not on Windows).</p>
+</li>
+<li><p class="first">Run the following command to install ggplot:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">install</span><span class="o">.</span><span class="n">packages</span><span class="p">(</span><span class="s">&quot;ggplot2&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Run the following commands to test R and ggplot:</p>
+<div class="highlight-python"><pre>huron &lt;- data.frame(year=1875:1972, level=as.vector(LakeHuron))
+library(plyr)
+huron$decade &lt;- round_any(huron$year, 10, floor)
+library(ggplot)
+h &lt;- ggplot(huron, aes(x=year))
+h + geom_ribbon(aes(ymin=level-1, ymax=level+1))</pre>
+</div>
+</li>
+</ol>
+<p>Expect to see a chart like this:</p>
+<div class="figure">
+<img alt="Ribbon chart produced by the ggplot package in the R language." src="_images/geom_ribbon-6.png" />
+<p class="caption">Image credit: taken from the <a class="reference external" href="http://docs.ggplot2.org/current/geom_ribbon.html">&#8220;ggplot2&#8221; documentation</a> on 26 November 2013; reused here under the GNU General Public License, version 2.</p>
+</div>
+<p>Quit R. You do not need to save your workspace:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">q</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
 </div>
 <div class="section" id="known-issues-and-limitations">
 <span id="id2"></span><h1>Known Issues and Limitations<a class="headerlink" href="#known-issues-and-limitations" title="Permalink to this headline">¶</a></h1>
@@ -387,7 +424,7 @@ Use the <tt class="docutils literal"><span class="pre">WorkflowManager</span></t
     </div>
     <div class="footer">
         &copy; Copyright 2013 Christopher Antila, CC-BY-SA.
-      Last updated on 25 Nov 2013.
+      Last updated on 26 Nov 2013.
       Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2b2.
     </div>
   </body>

@@ -181,33 +181,30 @@ be listed in subclasses. Default is {}.</li>
 <em class="property">class </em><tt class="descclassname">vis.analyzers.indexer.</tt><tt class="descname">Indexer</tt><big>(</big><em>score</em>, <em>settings=None</em><big>)</big><a class="reference internal" href="_modules/vis/analyzers/indexer.html#Indexer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#vis.analyzers.indexer.Indexer" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></p>
 <p>Create an index of a music21 stream.</p>
-<p>Use the &#8220;requires_score&#8221; attribute to know whether the __init__() method should be given a
-list of music21.stream.Part objects. If False, use the &#8220;required_indices&#8221; attribute to get a
-list of the names of Indexers that should be provided instead.</p>
-<p>The name of the indexer, as stored in an IndexedPiece, is the unicode-format version of the
-class name.</p>
+<p>Use the <tt class="xref py py-attr docutils literal"><span class="pre">requires_score</span></tt> attribute to know whether <tt class="xref py py-meth docutils literal"><span class="pre">__init__()</span></tt> requires a list of
+<a class="reference external" href="http://web.mit.edu/music21/doc/moduleReference/moduleStream.html#music21.stream.Part" title="(in music21 v1.7.1)"><tt class="xref py py-class docutils literal"><span class="pre">Part</span></tt></a> objects. If <tt class="docutils literal"><span class="pre">False</span></tt>, read the documentation to know which
+indexers&#8217; results it requires.</p>
+<p>The name of the indexer, as stored in an <tt class="xref py py-class docutils literal"><span class="pre">IndexedPiece</span></tt>, is the unicode-format version
+of the class name.</p>
 <p>Create a new Indexer.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>score</strong> (<em>list of pandas.Series or of music21.stream.Part</em>) &#8211; Depending on how this Indexer works, this is a list of either Part or Series
-obejcts to use in creating a new index.</li>
-<li><strong>settings</strong> (<em>dict or None</em>) &#8211; A dict of all the settings required by this Indexer. All required
-settings should be listed in subclasses. Default is None.</li>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>score</strong> (list of <tt class="xref py py-class docutils literal"><span class="pre">pandas.Series</span></tt> or <a class="reference external" href="http://web.mit.edu/music21/doc/moduleReference/moduleStream.html#music21.stream.Part" title="(in music21 v1.7.1)"><tt class="xref py py-class docutils literal"><span class="pre">music21.stream.Part</span></tt></a>) &#8211; Depending on how this Indexer works, this is a list of either <tt class="xref py py-class docutils literal"><span class="pre">Part</span></tt>
+or <tt class="xref py py-class docutils literal"><span class="pre">Series</span></tt> objects to use in creating a new index.</li>
+<li><strong>settings</strong> (<em>dict or None</em>) &#8211; A dict of all the settings required by this <a class="reference internal" href="#vis.analyzers.indexer.Indexer" title="vis.analyzers.indexer.Indexer"><tt class="xref py py-class docutils literal"><span class="pre">Indexer</span></tt></a>. All required
+settings should be listed in subclasses. Default is <tt class="docutils literal"><span class="pre">None</span></tt>.</li>
 </ul>
 </td>
 </tr>
-</tbody>
-</table>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body">RuntimeError, if
-- the &#8220;score&#8221; argument is not a list of the right type.
-- required settings are not present in the &#8220;settings&#8221; argument.</td>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><p class="first"><tt class="xref py py-exc docutils literal"><span class="pre">TypeError</span></tt> if the <tt class="docutils literal"><span class="pre">score</span></tt> argument is not a list of the right types.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><p class="first last"><tt class="xref py py-exc docutils literal"><span class="pre">RuntimeError</span></tt> if the required settings are not present in the <tt class="docutils literal"><span class="pre">settings</span></tt>
+argument.</p>
+</td>
 </tr>
 </tbody>
 </table>
@@ -234,11 +231,12 @@ settings should be listed in subclasses. Default is None.</li>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">A list of the new indices. The index of each Series corresponds to the index of
-the Part used to generate it, in the order specified to the constructor. Each element in
-the Series is an instance of music21.base.ElementWrapper.</td>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">A list of the new indices. The index of each <tt class="xref py py-class docutils literal"><span class="pre">Series</span></tt> corresponds to the
+index of the <tt class="xref py py-class docutils literal"><span class="pre">Part</span></tt> or <tt class="xref py py-class docutils literal"><span class="pre">Series</span></tt> used to generate it, as given to the
+constructor. Each element in each <tt class="xref py py-class docutils literal"><span class="pre">Series</span></tt> is a basestring (unless specified
+otherwise in a subclass).</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">list of pandas.Series</td>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">list of <tt class="xref py py-class docutils literal"><span class="pre">pandas.Series</span></tt></td>
 </tr>
 </tbody>
 </table>
@@ -421,7 +419,7 @@ offset of the event in the input Stream.</td>
     </div>
     <div class="footer">
         &copy; Copyright 2013 Christopher Antila, CC-BY-SA.
-      Last updated on 11 Oct 2013.
+      Last updated on 26 Nov 2013.
       Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2b2.
     </div>
   </body>
