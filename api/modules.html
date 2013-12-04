@@ -225,13 +225,18 @@ default is <a class="reference external" href="http://docs.python.org/2.7/librar
 <dd><p>Import analysis data from long-term storage on a filesystem. This should primarily be         used for the <tt class="docutils literal"><span class="pre">u'pieces'</span></tt> instruction, to control when the initial music21 import         happens.</p>
 <p>Use <a class="reference internal" href="#vis.workflow.WorkflowManager.load" title="vis.workflow.WorkflowManager.load"><tt class="xref py py-meth docutils literal"><span class="pre">load()</span></tt></a> with an instruction other than <tt class="docutils literal"><span class="pre">u'pieces'</span></tt> to load results from a
 previous analysis run by <a class="reference internal" href="#vis.workflow.WorkflowManager.run" title="vis.workflow.WorkflowManager.run"><tt class="xref py py-meth docutils literal"><span class="pre">run()</span></tt></a>.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">If one of the files imports as a <a class="reference external" href="http://web.mit.edu/music21/doc/moduleReference/moduleStream.html#music21.stream.Opus" title="(in music21 v1.7.1)"><tt class="xref py py-class docutils literal"><span class="pre">music21.stream.Opus</span></tt></a>, the number of
+pieces and their order <em>will</em> change.</p>
+</div>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>instruction</strong> (<a class="reference external" href="http://docs.python.org/2.7/library/functions.html#basestring" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">basestring</span></tt></a>) &#8211; The type of data to load.</li>
-<li><strong>pathname</strong> (<a class="reference external" href="http://docs.python.org/2.7/library/functions.html#basestring" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">basestring</span></tt></a>) &#8211; The pathname of the data to import; not required for the             <tt class="docutils literal"><span class="pre">u'pieces'</span></tt> instruction.</li>
+<li><strong>instruction</strong> (<a class="reference external" href="http://docs.python.org/2.7/library/functions.html#basestring" title="(in Python v2.7)"><em>basestring</em></a>) &#8211; The type of data to load.</li>
+<li><strong>pathname</strong> (<a class="reference external" href="http://docs.python.org/2.7/library/functions.html#basestring" title="(in Python v2.7)"><em>basestring</em></a>) &#8211; The pathname of the data to import; not required for the             <tt class="docutils literal"><span class="pre">u'pieces'</span></tt> instruction.</li>
 </ul>
 </td>
 </tr>
@@ -243,10 +248,10 @@ previous analysis run by <a class="reference internal" href="#vis.workflow.Workf
 <p class="last">only <tt class="docutils literal"><span class="pre">u'pieces'</span></tt> is implemented at this time.</p>
 </div>
 <ul class="simple">
-<li><tt class="xref py py-obj docutils literal"><span class="pre">u'pieces'</span></tt>, to import all pieces, collect metadata, and run <tt class="xref py py-class docutils literal"><span class="pre">NoteRestIndexer</span></tt></li>
-<li><tt class="xref py py-obj docutils literal"><span class="pre">u'hdf5'</span></tt> to load data from a previous <a class="reference internal" href="#vis.workflow.WorkflowManager.export" title="vis.workflow.WorkflowManager.export"><tt class="xref py py-meth docutils literal"><span class="pre">export()</span></tt></a>.</li>
-<li><tt class="xref py py-obj docutils literal"><span class="pre">u'stata'</span></tt> to load data from a previous <a class="reference internal" href="#vis.workflow.WorkflowManager.export" title="vis.workflow.WorkflowManager.export"><tt class="xref py py-meth docutils literal"><span class="pre">export()</span></tt></a>.</li>
-<li><tt class="xref py py-obj docutils literal"><span class="pre">u'pickle'</span></tt> to load data from a previous <a class="reference internal" href="#vis.workflow.WorkflowManager.export" title="vis.workflow.WorkflowManager.export"><tt class="xref py py-meth docutils literal"><span class="pre">export()</span></tt></a>.</li>
+<li><tt class="docutils literal"><span class="pre">u'pieces'</span></tt>, to import all pieces, collect metadata, and run <tt class="xref py py-class docutils literal"><span class="pre">NoteRestIndexer</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">u'hdf5'</span></tt> to load data from a previous <a class="reference internal" href="#vis.workflow.WorkflowManager.export" title="vis.workflow.WorkflowManager.export"><tt class="xref py py-meth docutils literal"><span class="pre">export()</span></tt></a>.</li>
+<li><tt class="docutils literal"><span class="pre">u'stata'</span></tt> to load data from a previous <a class="reference internal" href="#vis.workflow.WorkflowManager.export" title="vis.workflow.WorkflowManager.export"><tt class="xref py py-meth docutils literal"><span class="pre">export()</span></tt></a>.</li>
+<li><tt class="docutils literal"><span class="pre">u'pickle'</span></tt> to load data from a previous <a class="reference internal" href="#vis.workflow.WorkflowManager.export" title="vis.workflow.WorkflowManager.export"><tt class="xref py py-meth docutils literal"><span class="pre">export()</span></tt></a>.</li>
 </ul>
 </dd></dl>
 
@@ -345,7 +350,7 @@ default is <tt class="docutils literal"><span class="pre">None</span></tt>.</li>
 <dl class="method">
 <dt id="vis.workflow.WorkflowManager.run">
 <tt class="descname">run</tt><big>(</big><em>instruction</em><big>)</big><a class="reference internal" href="_modules/vis/workflow.html#WorkflowManager.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#vis.workflow.WorkflowManager.run" title="Permalink to this definition">¶</a></dt>
-<dd><p>Run an experiment&#8217;s workflow.</p>
+<dd><p>Run an experiment&#8217;s workflow. Remember to call <a class="reference internal" href="#vis.workflow.WorkflowManager.load" title="vis.workflow.WorkflowManager.load"><tt class="xref py py-meth docutils literal"><span class="pre">load()</span></tt></a> before this method.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -358,6 +363,8 @@ default is <tt class="docutils literal"><span class="pre">None</span></tt>.</li>
 </tr>
 <tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><tt class="xref py py-exc docutils literal"><span class="pre">RuntimeError</span></tt> if the <tt class="docutils literal"><span class="pre">instruction</span></tt> is not valid for this
 <a class="reference internal" href="#vis.workflow.WorkflowManager" title="vis.workflow.WorkflowManager"><tt class="xref py py-class docutils literal"><span class="pre">WorkflowManager</span></tt></a>.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><tt class="xref py py-exc docutils literal"><span class="pre">RuntimeError</span></tt> if you have not called <a class="reference internal" href="#vis.workflow.WorkflowManager.load" title="vis.workflow.WorkflowManager.load"><tt class="xref py py-meth docutils literal"><span class="pre">load()</span></tt></a>.</td>
 </tr>
 </tbody>
 </table>
@@ -463,7 +470,7 @@ it can be anything.</p>
     </div>
     <div class="footer">
         &copy; Copyright 2013 Christopher Antila, CC-BY-SA.
-      Last updated on 26 Nov 2013.
+      Last updated on 04 Dec 2013.
       Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2b2.
     </div>
   </body>
