@@ -162,20 +162,26 @@ duplicate entries.</p>
 <dl class="method">
 <dt id="vis.models.aggregated_pieces.AggregatedPieces.get_data">
 <tt class="descclassname">AggregatedPieces.</tt><tt class="descname">get_data</tt><big>(</big><em>aggregated_experiments</em>, <em>independent_analyzers</em>, <em>settings=None</em>, <em>data=None</em><big>)</big><a class="reference internal" href="_modules/vis/models/aggregated_pieces.html#AggregatedPieces.get_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#vis.models.aggregated_pieces.AggregatedPieces.get_data" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get the results of an Experimenter run on all the IndexedPieces. You must specify all
-indexers and experimenters to be run to get the results you want.</p>
+<dd><p>Get the results of an <tt class="xref py py-class docutils literal"><span class="pre">Experimenter</span></tt> run on all the <tt class="xref py py-class docutils literal"><span class="pre">IndexedPiece</span></tt> objects.
+You must specify all indexers and experimenters to be run to get the results you want.</p>
 <p>The same settings dict will be given to all experiments and indexers.</p>
-<p>If you want the results from all IndexedPieces separately, provide an empty list as the
-<tt class="docutils literal"><span class="pre">aggregated_experiments</span></tt> argument.</p>
-<p>The first analyzer in <tt class="docutils literal"><span class="pre">independent_analyzers</span></tt> should use a <a class="reference external" href="http://web.mit.edu/music21/doc/moduleReference/moduleStream.html#music21.stream.Score" title="(in music21 v1.7.1)"><tt class="xref py py-class docutils literal"><span class="pre">music21.stream.Score</span></tt></a>.</p>
-<p><strong>Examples:</strong></p>
+<p>If you want the results from all <tt class="xref py py-class docutils literal"><span class="pre">IndexedPiece</span></tt> objects separately, provide an empty
+list as the <tt class="docutils literal"><span class="pre">aggregated_experiments</span></tt> argument.</p>
+<p>Either the first analyzer in <tt class="docutils literal"><span class="pre">independent_analyzers</span></tt> should use a
+<a class="reference external" href="http://web.mit.edu/music21/doc/moduleReference/moduleStream.html#music21.stream.Score" title="(in music21 v1.7.1)"><tt class="xref py py-class docutils literal"><span class="pre">music21.stream.Score</span></tt></a> or you must provide an argument for <tt class="docutils literal"><span class="pre">data</span></tt> that is the
+output from a previous call to this instance&#8217;s <a class="reference internal" href="#vis.models.aggregated_pieces.AggregatedPieces.get_data" title="vis.models.aggregated_pieces.AggregatedPieces.get_data"><tt class="xref py py-meth docutils literal"><span class="pre">get_data()</span></tt></a> method.</p>
+<p><strong>Examples</strong></p>
 <p>Run analyzer C then D on each piece individually, then provide a list of those results to
-Experimenter A, and pass its output to Experimenter B.</p>
+Experimenter A then B.</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">pieces</span><span class="o">.</span><span class="n">get_data</span><span class="p">([</span><span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">],</span> <span class="p">[</span><span class="n">C</span><span class="p">,</span> <span class="n">D</span><span class="p">])</span>
 </pre></div>
 </div>
 <p>Run analyzer C then D on each piece individually, then return a list of those results.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">pieces</span><span class="o">.</span><span class="n">get_data</span><span class="p">([</span><span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">],</span> <span class="p">[</span><span class="n">C</span><span class="p">,</span> <span class="n">D</span><span class="p">])</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">pieces</span><span class="o">.</span><span class="n">get_data</span><span class="p">([],</span> <span class="p">[</span><span class="n">C</span><span class="p">,</span> <span class="n">D</span><span class="p">])</span>
+</pre></div>
+</div>
+<p>Run analyzer A then B on the results of a previous <a class="reference internal" href="#vis.models.aggregated_pieces.AggregatedPieces.get_data" title="vis.models.aggregated_pieces.AggregatedPieces.get_data"><tt class="xref py py-meth docutils literal"><span class="pre">get_data()</span></tt></a> call.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">piece</span><span class="o">.</span><span class="n">get_data</span><span class="p">([</span><span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">],</span> <span class="p">[],</span> <span class="n">data</span><span class="o">=</span><span class="n">previous_results</span><span class="p">)</span>
 </pre></div>
 </div>
 <table class="docutils field-list" frame="void" rules="none">
@@ -186,9 +192,10 @@ Experimenter A, and pass its output to Experimenter B.</p>
 <li><strong>aggregated_experiments</strong> (<em>list of types</em>) &#8211; The Experimenters to run on aggregated data of all pieces,
 in the order you want to run them.</li>
 <li><strong>independent_analyzers</strong> (<em>list of types</em>) &#8211; The analyzers to run on each piece before aggregation, in the
-order you want to run them.</li>
+order you want to run them. For no independent analyzers, use <tt class="docutils literal"><span class="pre">[]</span></tt> or <tt class="docutils literal"><span class="pre">None</span></tt>.</li>
 <li><strong>settings</strong> (<a class="reference external" href="http://docs.python.org/2.7/library/stdtypes.html#dict" title="(in Python v2.7)"><em>dict</em></a>) &#8211; Settings to be used with the analyzers.</li>
-<li><strong>data</strong> (list of <tt class="xref py py-class docutils literal"><span class="pre">pandas.Series</span></tt> or <tt class="xref py py-class docutils literal"><span class="pre">pandas.DataFrame</span></tt>) &#8211; Input data for the first analyzer to run. This is for internal use only.</li>
+<li><strong>data</strong> (list of <tt class="xref py py-class docutils literal"><span class="pre">pandas.Series</span></tt> or <tt class="xref py py-class docutils literal"><span class="pre">pandas.DataFrame</span></tt>) &#8211; Input data for the first analyzer to run. If this argument is not <tt class="docutils literal"><span class="pre">None</span></tt>,
+you must provide the output from a previous call to <a class="reference internal" href="#vis.models.aggregated_pieces.AggregatedPieces.get_data" title="vis.models.aggregated_pieces.AggregatedPieces.get_data"><tt class="xref py py-meth docutils literal"><span class="pre">get_data()</span></tt></a> of this instance.</li>
 </ul>
 </td>
 </tr>
@@ -198,8 +205,8 @@ order you want to run them.</li>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Either one DataFrame with all experimental results or a list of DataFrames, each
-with the experimental results for one piece.</td>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Either one <tt class="xref py py-class docutils literal"><span class="pre">DataFrame</span></tt> with all experimental results or a list of
+<tt class="xref py py-class docutils literal"><span class="pre">DataFrame</span></tt> objects, each with the experimental results for one piece.</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><tt class="xref py py-class docutils literal"><span class="pre">pandas.DataFrame</span></tt> or list of <tt class="xref py py-class docutils literal"><span class="pre">pandas.Series</span></tt> or             <tt class="xref py py-class docutils literal"><span class="pre">pandas.DataFrame</span></tt></td>
 </tr>
@@ -503,7 +510,7 @@ is <tt class="docutils literal"><span class="pre">True</span></tt> but the file 
     </div>
     <div class="footer">
         &copy; Copyright 2013 Christopher Antila, CC-BY-SA.
-      Last updated on 04 Dec 2013.
+      Last updated on 10 Dec 2013.
       Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2b2.
     </div>
   </body>
