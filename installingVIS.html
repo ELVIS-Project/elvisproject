@@ -77,7 +77,7 @@
 <h5> run 'pip install -r requirements'</h5>
 <img src="img/installingVIS/runpip.png" alt="Run pip install">
 <p></p>
-<p> Pip is a tool for installing and managing python packages.  Running 'pip install requirements' makes pip go and fetch the packages VIS needs to work, and puts them in a place that VIS can find them.</p>
+<p> Pip is a tool for installing and managing python packages.  Running 'pip install -r requirements' makes pip go and fetch the packages VIS needs to work, and puts them in a place that VIS can find them.</p>
 <p> In the previous example, pip found that I already had all of the packages needed (e.g. music21, pandas, mock), so it did nothing.  If this is your first time installing VIS, it may take a while for pip to download all of these packages.  In this case, you will likely see a verbosity of activity, which after a minute or so will end with 'Cleaning up...'</p>
 <p> Indeed, if this is your first time using pip, it may not be installed.  You will have to do this first.  Search google for '<a href="https://www.google.com/search?q=how+to+install+pip&oq=how+to+install+pip">how to install pip</a>', and follow the instructions there.
  
@@ -86,20 +86,56 @@
 
 <h2> Example Code to Get You Started  </h2>
 
-<p>Now that you have installed VIS, you can start to use it.  Let's begin by downloading some pieces to do analysis on.  For this example, I'm going to use three pieces by the composer Guillaume Dufay, an extremely influential Netherlandish composer active in the early renaissance. The three pieces I will use are</p>
+<p>Now that you have installed VIS, you can start to use it.  Let's begin by downloading some pieces to do analysis on.  For this example, I'm going to use three pieces by the composer Guillaume Dufay, an extremely influential Netherlandish composer active in the early renaissance. The three pieces I will use are:</p>
 <ol>
 	<li> Alma redemptoris mater </li>
 	<li> Anima mea liquefacta est </li>
 	<li> Ave maris stella </li>
 </ol>
-<p> You can download those files <a href="resources/dufay.zip">here</a>.  They were downloaded from our <a href="http://elvis.music.mcgill.ca/">symbolic music database</a>, .</p>  
-	<footer>
+<p> To help you get started, I've put them in a .zip file on our site. You can download those files <a href="resources/dufay.zip">here</a>.  This music and more are available on our <a href="http://elvis.music.mcgill.ca/">symbolic music database</a>.</p> 
+
+<p>For this example, put the three pieces in a folder called "dufay," and put that folder in the same directory as VIS. I put both into a directory I called 'VIS-Tests':</p> 
+<img src="img/installingVIS/vistests.png" alt="in the same folder">
+
+<h4> Write some code </h4>
+
+<p>Now that everything is in the right place, we can write some code for contrapuntal analysis.  This code is unique to VIS, and will count the number and quality of intervals in the three pieces.  That code is written below, but for the sake of simplicity, you can download it <a href="resources/test.py">here</a>.</p>
+
+<pre>from vis.workflow import WorkflowManager
+	
+import os
+cwd=os.getcwd()
+fileDir=cwd+'/dufay/'
+files=os.listdir(fileDir)
+
+wm = WorkflowManager([fileDir+x for x in files])
+wm.load('pieces')
+wm.run('intervals')
+wm.export('CSV','results')
+</pre>
+
+<p>That code should be saved into a file, and put into the same directory as VIS, but not in the VIS folder itself.  For this example, I've saved my code as 'test.py' and put it into a folder called 'VIS-Tests' which contains the 'VIS' folder and the 'Dufay' folder which you just downloaded. </p> 
+
+<img src="img/installingVIS/testabove.png" alt="test.py is above VIS">
+<p></p>	
+<p>In MacOSX, python is built into Terminal, so to run the code I meerly type 'python test.py', and the results are saved into a file called results.csv in that directory. CSV is a commonly used data type, and can be easily read my many programs including Excel.</p>
+
+<img src="img/installingVIS/results.png" alt="results are in .csv format">
+<p></p>
+<p>The results list all extracted intervals in order from most common to least common. The third is the most common with 453 occurrences.  The 5th is the second most common with 405 occurrences, etc.</p>
+<h4> Congrats, you've written your first VIS code! </h4>
+</br>
+<h2> Getting more help </h2>
+<p> For much more detailed documentation, you can read the <a href="api/index.html">API</a> documentation.  There are a variety of settings you can choose from to do more advanced work (e.g. see <a href="https://github.com/ELVIS-Project/vis/wiki/Extracting-Intervals-by-Quality">how to extract intervals by quality</a>).  <a href="mailto:contact@elvisproject.ca?subject=VIS Question...">Contact us</a> with any use questions, and we will give you an answer!  </p> 
+
+
+<footer>
         <p>Copyright &copy; 2013 Christopher Antila, <a href="https://creativecommons.org/licenses/by-sa/3.0/">CC-BY-SA 3.0</a></p>
       </footer>
     </div> <!-- /container -->        <script src="js/vendor/jquery-1.10.1.min.js"></script>
         <!--<script>window.jQuery || document.write('<script src="js/vendor/jquery-1.10.1.min.js"><\/script>')</script>-->
 
-        <script src="js/vendor/bootstrap.min.js"></script>
+	<script src="js/vendor/bootstrap.min.js"></script>
 
         <script src="js/main.js"></script>
     </body>
