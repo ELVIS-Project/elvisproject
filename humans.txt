@@ -4,6 +4,7 @@
 # TEAM
 
     Christopher Antila -- Programmer
+    R. Mike Winters -- Programmer
 
 # THANKS
 
