@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html class="loaded" dir="ltr" lang="en-US">
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<link rel="stylesheet" media="screen,projection,tv" href="new_index_files/responsive-min.css">
+<link rel="stylesheet" media="screen,projection,tv" href="new_index_files/home-min.css">
+
+    <section id="firefox-promo" class="billboard">
+        <div class="container">
+            <h3>
+                <!-- <img src="new_index_files/firefox-sm.png" width="105" alt="" height="108"> -->
+                <b>ELVIS</b> Computer Music Analysis
+            </h3>
+            <!-- <p>Maybe there's a description with a link?</p> -->
+        </div>
+    </section>
+    <!--<section class="extra">
+        <div class="container">
+            <h2>Aich Two</h2>
+            <p>Y'arr!</p>
+        </div>
+    </section>-->
+
+    <footer id="colophon" class="">
+        <div class="row">
+            <div class="footer-logo">
+                Small logo here!
+            </div>
+
+            <div class="footer-license">
+                <p>
+                    Copyright &copy; 2013<br /><a href="colophon.html">ELVIS Contributors</a>
+                </p>
+            </div>
+            <!-- NOTE: you can put at least three <ul class="footer-nav"> lists here -->
+            <!--
+            <ul class="footer-nav">
+                <li>List o' links here, y'all!</li>
+            </ul>
+            <ul class="footer-nav">
+                <li>List o' more links here, y'all!</li>
+            </ul>
+            <ul class="footer-nav">
+                <li>We can just keep linkin' stuff all up in here, up in here.</li>
+                </ul>
+            -->
+        </div>
+    </footer>
+</html>
