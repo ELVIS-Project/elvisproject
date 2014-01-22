@@ -23,7 +23,7 @@
     <footer id="colophon" class="">
         <div class="row">
             <div class="footer-logo">
-                Small logo here!
+                <img src="img/ELVIS_logo_swoosh.png" alt="ELVIS logo swoosh" height="40px" />
             </div>
 
             <div class="footer-license">
