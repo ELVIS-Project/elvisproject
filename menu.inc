@@ -27,10 +27,10 @@ top.location = newLocation;
     </div>
     <div class="navbar-collapse collapse">
         <ul class="nav navbar-nav">
-        <li><a href="#" onclick="loadUrl('')">Framework</a></li>
-        <li><a href="#" onclick="loadUrl('')">Web App</a></li>
-        <li><a href="#" onclick="loadUrl('')">Database</a></li>
-        <li><a href="#" onclick="loadUrl('')">Research</a></li>
+        <li><a href="#" onclick="loadUrl('api/index.html')">Framework</a></li>
+        <li><a href="#" onclick="loadUrl('http://counterpoint.elvisproject.ca/')">Web App</a></li>
+        <li><a href="#" onclick="loadUrl('http://elvis.music.mcgill.ca/')">Database</a></li>
+        <li><a href="#" onclick="loadUrl('about.html')">Research</a></li>
         </ul>
     </div><!--/.navbar-collapse -->
     </div>
