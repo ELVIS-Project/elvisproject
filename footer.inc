@@ -4,6 +4,13 @@
 <link rel="stylesheet" media="screen,projection,tv" href="new_index_files/responsive-min.css">
 <link rel="stylesheet" media="screen,projection,tv" href="new_index_files/home-min.css">
 
+<script type="text/javascript">
+function loadUrl(newLocation)
+{
+top.location = newLocation;
+}
+</script>
+
     <section id="firefox-promo" class="billboard">
         <div class="container">
             <h3>
@@ -28,7 +35,7 @@
 
             <div class="footer-license">
                 <p>
-                    Copyright &copy; 2013<br /><a href="colophon.html">ELVIS Contributors</a>
+                    Copyright &copy; 2013<br /><a href="#" onclick="loadUrl('colophon.html')">ELVIS Contributors</a>
                 </p>
             </div>
             <!-- NOTE: you can put at least three <ul class="footer-nav"> lists here -->
