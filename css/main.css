@@ -23,6 +23,7 @@ iframe.footer {
 /* Settings for the new home page */
 header.mission {
     /* space on top of the logo */
+    padding: 0px;
     padding-top: 15px;
 }
 div.div-outer-wrapper {
@@ -30,6 +31,9 @@ div.div-outer-wrapper {
     position: relative;
     top: -6px;
 }
+body.new-home { background-color: rgb(248, 237, 223); }
+section.pillars { background-color: rgb(248, 237, 223); }
+main.main-content { background-color: rgb(248, 237, 223); }
 
 /* Settings for the other pages */
 div.jumbotron {
