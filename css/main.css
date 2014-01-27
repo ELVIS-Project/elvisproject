@@ -2,13 +2,15 @@
    Author's custom styles
    ========================================================================== */
 
-footer p {font-size: 80%;}
+/* footer p {font-size: 80%;} */
 
 /* Settings for the iframe that holds the site's main menu */
 iframe.topmenu {
     border: 0px;
     width: 100%;
     height: 51px;
+    padding: 0px;
+    margin: 0px;
 }
 
 /* Settings for the iframe that holds the site's footer */
@@ -16,4 +18,14 @@ iframe.footer {
     border: 0px;
     width: 100%;
     height: 230px;
+}
+
+/* Settings for the home page */
+header.mission {
+    padding-top: 15px;
+}
+
+div.div-outer-wrapper {
+    position: relative;
+    top: -6px;
 }
