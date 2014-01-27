@@ -20,12 +20,20 @@ iframe.footer {
     height: 230px;
 }
 
-/* Settings for the home page */
+/* Settings for the new home page */
 header.mission {
+    /* space on top of the logo */
     padding-top: 15px;
 }
-
 div.div-outer-wrapper {
+    /* (try to) eliminate white space below the menu */
     position: relative;
     top: -6px;
+}
+
+/* Settings for the other pages */
+div.jumbotron {
+    /* eliminate white space below the menu */
+    position: relative;
+    top: -5px;
 }
