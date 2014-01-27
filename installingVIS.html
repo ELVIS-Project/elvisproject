@@ -48,24 +48,116 @@
     <div class="jumbotron">
       <div class="container">
         <img src="img/ELVIS_logo-framework.png" width="100%" alt="ELVIS Project logo" />
-        Helping you get started using VIS, the ELVIS Project API.
+        Helping you get started using our python-based software VIS, the ELVIS Project API.
       </div>
     </div>
 
     <div class="container">
 
-<h1> Getting Started with VIS </h1>
+<h1> What is VIS? </h1>
+<p>VIS is the name of our python library for contrapuntal music analysis.  It is running "behind the scenes" of our <a href=http://counterpoint.elvisproject.ca>web application</a>.  The goal of the web application is to provide an <i>accessible</i> tool for music researchers, but you may have questions that our web application can't answer.  In this case, the flexiblity offered by VIS may be right for you. </p>
 
-<p>The VIS API is a python library for contrapuntal music analysis.  Though words like 'phython' and 'API' may seem scary, if you have learned 'contrapuntal music analysis' than there is nothing to fear. This document will walk you through installing VIS and running your first bit of code.  </p>
+<p>Though words like 'python library' may seem scary, if you have learned 'contrapuntal music analysis' than there is nothing to fear. This document will walk you through the steps to installing VIS and running your first bit of code.  If you are a developer, you can get more information on the code by going straight to our <a href="api/index.html">documentation</a>.</p>  
+
+<h2> Installing VIS  </h2>
+
+<p> Installing VIS is a two step process. First, you download the folder which includes all of our code, then you install the packages that our code needs to run. The first step is easy, but the second will require some familiarity with your <a href="http://mac.appstorm.net/how-to/utilities-how-to/how-to-use-terminal-the-basics/">consol/terminal</a> window.</p>
+
+<h4> Downloading Source Code</h4>
+<p>You can get the source code in one of two ways:</p>
+<ol>
+	<li>Download this direct <a href="https://github.com/ELVIS-Project/vis/archive/master.zip">link</a>, unpack the .zip file, and change the name from 'VIS-Master' to 'vis'.</li> OR
+	<li>Run <code>git clone git@github.com:ELVIS-Project/vis.git</code> in Terminal.</li>
+</ol>
+<p>For the rest of the tutorial, we will assume you did the first option, and that if you did the second option, you can follow along.</p>
+<h4> Installing required packages </h4>
+
+<p> This is the tricky step, and will require a little knowledge of your terminal/consol window. The following steps will work for MacOSX, assuming your 'vis' folder is in your 'Downloads' folder. </p>
+
+<h5> Step 1: Open your terminal window <h5>
+<img src="img/installingVIS/Terminal.png" alt="Opening Terminal">
+
+<h5> Step 2: Type 'cd Downloads/vis' and press 'enter'.</h5>
+<!--<p>(running 'ls' shows everything inside the folder)</p>-->
+<img src="img/installingVIS/cdinto.png" alt="cdintothefolder">
+<p> This step assumes 'vis' is in your 'Downloads' folder.  If it isn't, you should move it there and try again, or 'cd' into the folder which 'vis' is in.</p>
+<h5> Step 3: Type 'pip install -r requirements.txt' and press 'enter'.</h5>
+<img src="img/installingVIS/runpip.png" alt="Run pip install">
+<p></p>
+<p> Pip is a tool for installing and managing python packages.  Running 'pip install -r requirements' makes pip go and fetch the packages VIS needs to work, and puts them in a place that VIS can find them.</p>
+<p> In the previous example, pip found that I already had all of the packages needed (e.g. music21, pandas, mock), so it did nothing.  If this is your first time installing VIS, it may take a while for pip to download all of these packages.  In this case, you will likely see a verbosity of activity, which after a minute or so will end with 'Cleaning up...'</p>
+<p> Indeed, if this is your first time using pip, it may not be installed.  You will have to do this first.  You can test to see if it is installed by typing 'man pip' in terminal. If after pressing 'enter' you see 'No manual entry for pip', it is not installed. Search google for '<a href="https://www.google.com/search?q=how+to+install+pip&oq=how+to+install+pip">how to install pip</a>', install it, and do step 3 again. </p>
+ 
+<h4> You're done! VIS has been installed. </h4>
+</br>
+
+<h2> Example Code to Get You Started  </h2>
+<p>Now that you have installed VIS, you will need some music to analyze. After downloading it, and putting it in the right place, we will use VIS to count the number of intervals across all pieces.</p>
+
+<h4> Download music to analyze </h4>
+<p>For this example, I'm going to use three pieces by the composer Guillaume Dufay, an extremely influential Netherlandish composer active in the early renaissance. The three pieces I will use are:</p>
+<ol>
+	<li> Alma redemptoris mater </li>
+	<li> Anima mea liquefacta est </li>
+	<li> Ave maris stella </li>
+</ol>
+<p> To help you get started, I've put them in a <a href="resources/dufay.zip">.zip file</a> on our site. This music and more are available on our <a href="http://elvis.music.mcgill.ca/">symbolic music database</a>.</p> 
+
+<h4> Put the music in the correct place </h4>
+<p>After downloading the .zip file, and unpacking it, you should put the 'dufay' folder in the same place as the 'vis' folder. For the sake of simplicity, I have put both into a folder called 'VIS-Tests' that is on my desktop.</p>
+<img src="img/installingVIS/vistests.png" alt="in the same folder">
+
+<h4> Use VIS to Count Intervals</h4>
+
+<p>Now that everything is in the right place, we can write some code for contrapuntal analysis.  This code is unique to VIS, and will count the number and size of intervals in the three pieces.  </p>
+
+<pre>from vis.workflow import WorkflowManager
+	
+import os
+cwd=os.getcwd()
+fileDir=cwd+'/dufay/'
+files=os.listdir(fileDir)
+
+wm = WorkflowManager([fileDir+x for x in files])
+wm.load('pieces')
+wm.run('intervals')
+wm.export('CSV','results')
+</pre>
+
+<p>Save that code as '<a href="resources/test.py">test.py</a>' and put it into our 'VIS-Tests' folder. </p> 
+
+<img src="img/installingVIS/testabove.png" alt="test.py is above VIS">
+<p></p>	
+<p>In MacOSX, python is built into Terminal, so to run the code I meerly type 'python test.py'.</p>
+
+<img src="img/installingVIS/results.png" alt="results are in .csv format">
+<p></p>
+<p>The results are put into a file called 'results.csv' in the 'VIS-Tests' folder.  It lists all extracted intervals in order from most common to least common. The third is the most common with 453 occurrences.  The 5th is the second most common with 405 occurrences, etc.</p>
+<pre>
+ ,data
+3,453.0
+5,405.0
+6,384.0
+8,349.0
+4,266.0
+10,247.0
+12,130.0
+etc..
+</pre>
+
+<h4> Congrats, you've written your first VIS code! </h4>
+</br>
+<h2> Getting more help </h2>
+<p> For much more detailed documentation, you can read the <a href="api/index.html">API</a> documentation.  There are a variety of settings you can choose from to do more advanced work (e.g. see <a href="https://github.com/ELVIS-Project/vis/wiki/Extracting-Intervals-by-Quality">how to extract intervals by quality</a>).  <a href="mailto:contact@elvisproject.ca?subject=VIS Question...">Contact us</a> with any use questions, and we will give you an answer!  </p> 
 
 
-      <footer>
-        <p>Copyright &copy; 2013 Mike Winters, <a href="https://creativecommons.org/licenses/by-sa/3.0/">CC-BY-SA 3.0</a></p>
+<footer>
+        <p>Copyright &copy; 2013 Christopher Antila, <a href="https://creativecommons.org/licenses/by-sa/3.0/">CC-BY-SA 3.0</a></p>
       </footer>
     </div> <!-- /container -->        <script src="js/vendor/jquery-1.10.1.min.js"></script>
         <!--<script>window.jQuery || document.write('<script src="js/vendor/jquery-1.10.1.min.js"><\/script>')</script>-->
 
-        <script src="js/vendor/bootstrap.min.js"></script>
+	<script src="js/vendor/bootstrap.min.js"></script>
 
         <script src="js/main.js"></script>
     </body>
