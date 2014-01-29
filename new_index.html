@@ -1,112 +1,109 @@
 <!DOCTYPE html>
-<html class="linux js loaded" dir="ltr" lang="en-US"><head>
-<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<html class="linux js loaded" dir="ltr" lang="en-US">
+    <head>
+        <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+        <title>ELVIS Project</title>
+        <meta name="description" content="">
+        <meta property="og:type" content="website">
+        <meta property="og:site_name" content="ELVIS">
+        <meta property="og:locale" content="en_US">
+        <meta property="og:url" content="http://elvisproject.ca/">
+        <meta property="og:image" content="img/ELVIS_logo.png">
+        <meta property="og:title" content="ELVIS Project">
+        <meta property="og:description" content="">
+        <link rel="shortcut icon" href="img/favicon.ico">
+        <link rel="canonical" hreflang="en-US" href="http://elvisproject.ca/">
+        <link rel="stylesheet" media="screen,projection,tv" href="new_index_files/responsive-min.css">
+        <link rel="stylesheet" media="screen,projection,tv" href="new_index_files/home-min.css">
+        <!-- This is our ELVIS stylesheet -->
+        <link rel="stylesheet" href="css/main.css">
+        <!--[if IE 9]>
+        <link rel="stylesheet" media="screen,projection,tv" href="new_index_files/home-ie9-min.css" />
+        <![endif]-->
+        <!--[if IE 8]>
+        <link rel="stylesheet" media="screen,projection,tv" href="new_index_files/home-ie8-min.css" />
+        <![endif]-->
+        <!--[if lt IE 8]>
+        <link rel="stylesheet" media="screen,projection,tv" href="new_index_files/home-ie-min.css" />
+        <![endif]-->
+        <script src="new_index_files/site-min.js"></script>
+    </head>
 
-    <title>ELVIS Project</title>
-    <meta name="description" content="">
-    <meta property="og:type" content="website">
-    <meta property="og:site_name" content="ELVIS">
-    <meta property="og:locale" content="en_US">
-    <meta property="og:url" content="http://elvisproject.ca/">
-    <meta property="og:image" content="img/ELVIS_logo.png">
-    <meta property="og:title" content="ELVIS Project">
-    <meta property="og:description" content="">
-    <link rel="shortcut icon" href="img/favicon.ico">
-	<link rel="canonical" hreflang="en-US" href="http://elvisproject.ca/">
-	<link rel="stylesheet" media="screen,projection,tv" href="new_index_files/responsive-min.css">
-	<link rel="stylesheet" media="screen,projection,tv" href="new_index_files/home-min.css">
-	<!-- This is our stylesheet -->
-	<link rel="stylesheet" href="css/main.css">
-<!--[if IE 9]>
-  <link rel="stylesheet" media="screen,projection,tv" href="new_index_files/home-ie9-min.css" />
-<![endif]-->
-<!--[if IE 8]>
-  <link rel="stylesheet" media="screen,projection,tv" href="new_index_files/home-ie8-min.css" />
-<![endif]-->
-<!--[if lt IE 8]>
-  <link rel="stylesheet" media="screen,projection,tv" href="new_index_files/home-ie-min.css" />
-<![endif]-->
+    <!-- was:  <body id="home" class="html-ltr sand lang-en-US wide"> -->
+    <body id="home" class="new-home">
+        <iframe src="menu.html" class="topmenu"></iframe>
+        <div id="outer-wrapper" class="div-outer-wrapper">
+            <main id="main-content" role="main" class="main-content">
+                <header class="mission">
+                    <img src="img/ELVIS_logo_wordmark.png" alt="ELVIS Project Logo" height="200px" />
+                </header>
 
-    <script src="new_index_files/site-min.js"></script>
-</head>
+                <section class="pillars">
+                    <ul class="accordion">
+                        <li style="width: 25%; overflow: hidden;" id="panel-lightbeam" class="panel" tabindex="0">
+                            <h2 style="display: block;" class="panel-title">Music Analysis Framework</h2>
+                            <div class="panel-inner">
+                                <div style="display: none;" class="panel-content">
+                                    <a href="api/index.html">
+                                        <h3>Build New Analysis Programs</h3>
+                                        <p>Use our music21-based API as the basis for your next music analysis project!</p>
+                                        <p class="go">Get Started Now</p>
+                                    </a>
+                                </div>
+                            </div>
+                        </li>
 
-<!--   <body id="home" class="html-ltr sand lang-en-US wide"> -->
-  <body id="home" class="new-home">
-  <iframe src="menu.html" class="topmenu"></iframe>
-  <div id="outer-wrapper" class="div-outer-wrapper">
-  <main id="main-content" role="main" class="main-content">
+                        <li style="width: 25%; overflow: hidden;" id="panel-vans" class="panel" tabindex="0">
+                            <h2 style="display: block;" class="panel-title">Counterpoint Web App</h2>
+                            <div class="panel-inner">
+                                <div class="panel-content">
+                                    <a href="http://counterpoint.elvisproject.ca/" hreflang="en-US">
+                                        <div class="angle">
+                                            <div class="content">
+                                                <h3>Find Repeated Patterns</h3>
+                                                <p>Use our one-of-a-kind Web app to find repeated contrapuntal patterns.</p>
+                                                <p class="go">Start the App</p>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                        </li>
 
-  <header class="mission">
-    <img src="img/ELVIS_logo_wordmark.png" alt="ELVIS Project Logo" height="200px" />
-  </header>
+                        <li style="width: 25%; overflow: hidden;" id="panel-mdn" class="panel" tabindex="0">
+                            <h2 style="display: block;" class="panel-title">Database of Symbolic Music</h2>
+                            <div class="panel-inner">
+                                <div class="panel-content">
+                                    <a href="http://elvis.music.mcgill.ca/">
+                                        <h3>Download What You Need</h3>
+                                        <p>Consult our extensive database with centuries of music. It's so complete, you'll want to flip out!</p>
+                                        <p class="go">Browse the Database</p>
+                                    </a>
+                                </div>
+                            </div>
+                        </li>
 
-  <section class="pillars">
-    <ul class="accordion">
+                        <li style="width: 25%; overflow: hidden;" id="panel-donate" class="panel" tabindex="0">
+                            <h2 style="display: block;" class="panel-title">Research Activities</h2>
+                            <div class="panel-inner">
+                                <div class="panel-content">
+                                    <a href="about.html">
+                                        <h3>What We Do</h3>
+                                        <p>Learn about our project and the research we produce.</p>
+                                        <p class="go">With a link to where we keep it.</p>
+                                    </a>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </section>
+            </main>
+        </div><!-- close #outer-wrapper -->
 
-          <li style="width: 25%; overflow: hidden;" id="panel-lightbeam" class="panel" tabindex="0">
-                <h2 style="display: block;" class="panel-title">Music Analysis Framework</h2>
-        <div class="panel-inner">
-          <div style="display: none;" class="panel-content">
-            <a href="api/index.html">
-              <h3>Build New Analysis Programs</h3>
-              <p>Use our music21-based API as the basis for your next music analysis project!</p>
-              <p class="go">Get Started Now</p>
-            </a>
-          </div>
-        </div>
-      </li>
+        <iframe src="footer.html" class="footer"></iframe>
 
-          <li style="width: 25%; overflow: hidden;" id="panel-vans" class="panel" tabindex="0">
-                <h2 style="display: block;" class="panel-title">Counterpoint Web App</h2>
-        <div class="panel-inner">
-          <div class="panel-content">
-                        <a href="http://counterpoint.elvisproject.ca/" hreflang="en-US">
-                          <div class="angle">
-                <div class="content">
-                  <h3>Find Repeated Patterns</h3>
-                  <p>Use our one-of-a-kind Web app to find repeated contrapuntal patterns.</p>
-                  <p class="go">Start the App</p>
-                </div>
-              </div>
-            </a>
-          </div>
-        </div>
-      </li>
-
-              <li style="width: 25%; overflow: hidden;" id="panel-mdn" class="panel" tabindex="0">
-                <h2 style="display: block;" class="panel-title">Database of Symbolic Music</h2>
-        <div class="panel-inner">
-          <div class="panel-content">
-            <a href="http://elvis.music.mcgill.ca/">
-                            <h3>Download What You Need</h3>
-              <p>Consult our extensive database with centuries of music. It's so complete, you'll want to flip out!</p>
-              <p class="go">Browse the Database</p>
-            </a>
-          </div>
-        </div>
-      </li>
-
-          <li style="width: 25%; overflow: hidden;" id="panel-donate" class="panel" tabindex="0">
-                <h2 style="display: block;" class="panel-title">Research Activities</h2>
-        <div class="panel-inner">
-          <div class="panel-content">
-            <a href="about.html">
-            <h3>What We Do</h3>
-            <p>
-              Learn about our project and the research we produce.
-            </p>
-            <p class="go">With a link to where we keep it.</p>
-            </a>
-          </div>
-        </div>
-      </li>
-        </ul>
-  </section></main>
-  </div><!-- close #outer-wrapper -->
-  <iframe src="footer.html" class="footer"></iframe>
-
-    <!-- These make the "pillars" thing work -->
-    <script src="new_index_files/mozorg-resp-min.js"></script>
-    <script src="new_index_files/home-min.js"></script>
-
-</body></html>
+        <!-- These make the "pillars" thing work -->
+        <script src="new_index_files/mozorg-resp-min.js"></script>
+        <script src="new_index_files/home-min.js"></script>
+    </body>
+</html>
