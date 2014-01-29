@@ -41,3 +41,8 @@ div.jumbotron {
     position: relative;
     top: -5px;
 }
+img.jumbotron-logo {
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+}
