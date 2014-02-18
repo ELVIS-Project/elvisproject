@@ -1,16 +1,75 @@
-.form-field-error{border-color:#af3232;-webkit-box-shadow:0 0 0 2px rgba(175,50,50,0.4);-moz-box-shadow:0 0 0 2px rgba(175,50,50,0.4);box-shadow:0 0 0 2px rgba(175,50,50,0.4)}.image-replaced{text-indent:110%;white-space:nowrap;overflow:hidden}#tabzilla:after{animation-name:bounce;animation-delay:1s;animation-duration:.5s;animation-iteration-count:3;animation-timing-function:ease-in-out}@keyframes bounce{50%{top:14px}}.go:after{content:' »';white-space:nowrap}.no-js img.js,.no-js .panel-title{display:none}#wrapper,#main-content,.billboard{width:100%;padding:0}#masthead,.container,.newsletter-form{width:960px;zoom:1;margin-left:auto;margin-right:auto;padding:0}#masthead:after,.container:after,.newsletter-form:after{display:block;visibility:hidden;height:0;clear:both;content:"."}.mission,.pillars{width:960px}#colophon{margin-top:0}.mission{font-family:'Open Sans Light','Droid Arabic Naskh',sans-serif;font-weight:normal;line-height:1.1;margin:0 auto 40px;position:relative;text-align:center}.mission h1{color:#c13832;font-size:84px;font-weight:bold;letter-spacing:-0.05em;margin:0 0 .05em}.mission h1 img{margin-bottom:-4px}.mission .tagline{font-size:55px;letter-spacing:-0.025em;margin:0}.lang-bg .mission .tagline,.lang-de .mission .tagline,.lang-el .mission .tagline,.lang-es-ES .mission .tagline,.lang-fr .mission .tagline,.lang-it .mission .tagline,.lang-mk .mission .tagline{font-size:42px}.engage{display:none;margin:0}.engage .button{border-radius:6px;font-size:16px;padding:10px 20px;text-transform:uppercase}.pillars{background:url(box-shadow-960.png) center bottom no-repeat;padding:0 0 40px;position:relative;margin:0 auto 20px}.wide .pillars{height:380px}.accordion{list-style:none;position:relative;left:-0.5%;top:0;width:102%;margin:0}.js .accordion{overflow:hidden}.panel{background-color:#777;display:block;margin:0;position:relative;-webkit-transition:background-position .5s ease-in-out;-moz-transition:background-position .5s ease-in-out;-o-transition:background-position .5s ease-in-out;-ms-transition:background-position .5s ease-in-out;transition:background-position .5s ease-in-out}.panel:focus{outline:0}.panel.expanded,.panel.compressed{-webkit-transition:background-position .5s ease-in-out;-moz-transition:background-position .5s ease-in-out;-o-transition:background-position .5s ease-in-out;-ms-transition:background-position .5s ease-in-out;transition:background-position .5s ease-in-out}.wide .panel{margin:0 0 0 -2px;padding:0;float:left;width:25%;height:380px;min-height:0;overflow:hidden;box-shadow:-6px 0 10px -4px rgba(0,0,0,0.5)}.wide .panel:first-child{box-shadow:none}.no-js .panel{min-height:16em}
-/* CRA: I don't know what this does */
-/*.no-js #panel-webapp{overflow:hidden}*/
-.panel-title{color:#fff;font-size:18px;line-height:1.2;font-weight:bold;letter-spacing:-0.025em;text-align:center;text-shadow:0 1px 0 rgba(0,0,0,0.15);text-transform:uppercase;margin:0;padding:40px 15px 0;position:absolute;bottom:0;left:0;width:215px;height:80px}.panel-title i{font-style:normal}.panel-title:after{content:' »';white-space:nowrap}.panel-inner{background-color:rgba(0,0,0,0.1);position:absolute;top:0;right:0;width:100%;height:100%;-webkit-transition:background-color .5s ease-in-out;-moz-transition:background-color .5s ease-in-out;-o-transition:background-color .5s ease-in-out;-ms-transition:background-color .5s ease-in-out;transition:background-color .5s ease-in-out}.expanded .panel-inner{background-color:transparent;-webkit-transition:background-color .5s ease-in-out;-moz-transition:background-color .5s ease-in-out;-o-transition:background-color .5s ease-in-out;-ms-transition:background-color .5s ease-in-out;transition:background-color .5s ease-in-out}.compressed .panel-inner{background-color:rgba(0,0,0,0.25)}.panel-content{font-family:'Open Sans Light','Droid Arabic Naskh',sans-serif;font-weight:normal;color:#fff;font-size:20px;line-height:1.3;position:relative;text-shadow:0 1px 0 rgba(0,0,0,0.15)}.panel-content h3{font-weight:bold;font-size:100%;color:inherit;letter-spacing:-0.03em;margin:0 0 .25em;text-shadow:0 1px 0 rgba(0,0,0,0.15);text-transform:uppercase}.panel-content .go{font-size:90%;font-weight:bold;letter-spacing:-0.025em}.panel-content .go:after{content:' »';white-space:nowrap}.panel-content>a{position:absolute;top:0;right:0;bottom:0;left:0;padding:20px 20px 20px 300px}.panel-content a:link,.panel-content a:visited{color:inherit}.panel-content a:hover,.panel-content a:focus,.panel-content a:active{color:inherit;text-decoration:none;outline:0}.panel-content a:focus .go,.panel-content a:active .go,.panel-content .go:hover{text-decoration:underline}.wide .panel-content{height:300px;min-height:0;width:290px;padding:40px 40px 40px 300px;position:absolute;top:0;left:0}.wide .panel-content>a{padding:40px 40px 40px 300px}.js .panel-content{display:none}.no-js .panel-content{min-height:9.5em;padding:1em 40px 1em 300px}.extra{background:#c1423d;padding:40px 0;margin-bottom:0;color:#fff;text-shadow:0 1px 0 rgba(0,0,0,0.1)}.extra h2{font-size:34px;margin:0 0 .75em;color:#fff;text-shadow:0 1px 0 rgba(0,0,0,0.1)}.newsletter-form{float:left;width:300px;margin:0 10px;float:right;background:transparent;padding:0;border:0;box-shadow:none}
+.form-field-error{border-color:#af3232;-webkit-box-shadow:0 0 0 2px rgba(175,50,50,0.4);-moz-box-shadow:0 0 0 2px rgba(175,50,50,0.4);box-shadow:0 0 0 2px rgba(175,50,50,0.4)}
+.image-replaced{text-indent:110%;white-space:nowrap;overflow:hidden}
+#tabzilla:after{animation-name:bounce;animation-delay:1s;animation-duration:.5s;animation-iteration-count:3;animation-timing-function:ease-in-out}@keyframes bounce{50%{top:14px}}
+.go:after{content:' »';white-space:nowrap}
+.no-js img.js,.no-js .panel-title{display:none}
+#wrapper,#main-content,.billboard{width:100%;padding:0}
+#masthead,.container,.newsletter-form{width:960px;zoom:1;margin-left:auto;margin-right:auto;padding:0}
+#masthead:after,.container:after,.newsletter-form:after{display:block;visibility:hidden;height:0;clear:both;content:"."}
+.mission,.pillars{width:960px}
+#colophon{margin-top:0}.mission{font-family:'Open Sans Light','Droid Arabic Naskh',sans-serif;font-weight:normal;line-height:1.1;margin:0 auto 40px;position:relative;text-align:center}.mission h1{color:#c13832;font-size:84px;font-weight:bold;letter-spacing:-0.05em;margin:0 0 .05em}
+.mission h1 img{margin-bottom:-4px}
+.mission .tagline{font-size:55px;letter-spacing:-0.025em;margin:0}
+.lang-bg .mission .tagline,.lang-de .mission .tagline,.lang-el .mission .tagline,.lang-es-ES .mission .tagline,.lang-fr .mission .tagline,.lang-it .mission .tagline,.lang-mk .mission .tagline{font-size:42px}
+.engage{display:none;margin:0}
+.engage .button{border-radius:6px;font-size:16px;padding:10px 20px;text-transform:uppercase}
+.pillars{background:url(box-shadow-960.png) center bottom no-repeat;padding:0 0 40px;position:relative;margin:0 auto 20px}
+.wide .pillars{height:380px}
+.accordion{list-style:none;position:relative;left:-0.5%;top:0;width:102%;margin:0}
+.js .accordion{overflow:hidden}
+.panel{background-color:#777;display:block;margin:0;position:relative;-webkit-transition:background-position .5s ease-in-out;-moz-transition:background-position .5s ease-in-out;-o-transition:background-position .5s ease-in-out;-ms-transition:background-position .5s ease-in-out;transition:background-position .5s ease-in-out}
+.panel:focus{outline:0}
+.panel.expanded,.panel.compressed{-webkit-transition:background-position .5s ease-in-out;-moz-transition:background-position .5s ease-in-out;-o-transition:background-position .5s ease-in-out;-ms-transition:background-position .5s ease-in-out;transition:background-position .5s ease-in-out}
+.wide .panel{margin:0 0 0 -2px;padding:0;float:left;width:25%;height:380px;min-height:0;overflow:hidden;box-shadow:-6px 0 10px -4px rgba(0,0,0,0.5)}
+.wide .panel:first-child{box-shadow:none}
+.no-js .panel{min-height:16em}
+.panel-title{color:#fff;font-size:18px;line-height:1.2;font-weight:bold;letter-spacing:-0.025em;text-align:center;text-shadow:0 1px 0 rgba(0,0,0,0.15);text-transform:uppercase;margin:0;padding:40px 15px 0;position:absolute;bottom:0;left:0;width:215px;height:80px}
+.panel-title i{font-style:normal}
+.panel-title:after{content:' »';white-space:nowrap}
+.panel-inner{background-color:rgba(0,0,0,0.1);position:absolute;top:0;right:0;width:100%;height:100%;-webkit-transition:background-color .5s ease-in-out;-moz-transition:background-color .5s ease-in-out;-o-transition:background-color .5s ease-in-out;-ms-transition:background-color .5s ease-in-out;transition:background-color .5s ease-in-out}
+.expanded .panel-inner{background-color:transparent;-webkit-transition:background-color .5s ease-in-out;-moz-transition:background-color .5s ease-in-out;-o-transition:background-color .5s ease-in-out;-ms-transition:background-color .5s ease-in-out;transition:background-color .5s ease-in-out}
+.compressed .panel-inner{background-color:rgba(0,0,0,0.25)}
+.panel-content{font-family:'Open Sans Light','Droid Arabic Naskh',sans-serif;font-weight:normal;color:#fff;font-size:20px;line-height:1.3;position:relative;text-shadow:0 1px 0 rgba(0,0,0,0.15)}
+.panel-content h3{font-weight:bold;font-size:100%;color:inherit;letter-spacing:-0.03em;margin:0 0 .25em;text-shadow:0 1px 0 rgba(0,0,0,0.15);text-transform:uppercase}.panel-content .go{font-size:90%;font-weight:bold;letter-spacing:-0.025em}
+.panel-content .go:after{content:' »';white-space:nowrap}
+.panel-content>a{position:absolute;top:0;right:0;bottom:0;left:0;padding:20px 20px 20px 300px}
+.panel-content a:link,.panel-content a:visited{color:inherit}
+.panel-content a:hover,.panel-content a:focus,.panel-content a:active{color:inherit;text-decoration:none;outline:0}
+.panel-content a:focus .go,.panel-content a:active .go,.panel-content .go:hover{text-decoration:underline}
+.wide .panel-content{height:300px;min-height:0;width:290px;padding:40px 40px 40px 300px;position:absolute;top:0;left:0}
+.wide .panel-content>a{padding:40px 40px 40px 300px}
+.js .panel-content{display:none}
+.no-js .panel-content{min-height:9.5em;padding:1em 40px 1em 300px}
+.extra{background:#c1423d;padding:40px 0;margin-bottom:0;color:#fff;text-shadow:0 1px 0 rgba(0,0,0,0.1)}
+.extra h2{font-size:34px;margin:0 0 .75em;color:#fff;text-shadow:0 1px 0 rgba(0,0,0,0.1)}
+.newsletter-form{float:left;width:300px;margin:0 10px;float:right;background:transparent;padding:0;border:0;box-shadow:none}
 
 #footer-email-form h3{font-size:34px;margin:0 0 .75em;color:#fff;text-shadow:0 1px 0 rgba(0,0,0,0.1)}#footer-email-form .form-contents,#footer-email-form .form-submit{width:auto;float:none;margin:0 0 20px}#footer-email-form .field-email input{width:80%;padding:10px 5%;border-radius:.5em}#footer-email-form a:link,#footer-email-form a:visited{color:#fff}#footer-email-form .button{width:90%;padding:10px 5%}#firefox-promo{padding-top:10px;padding-bottom:0;margin:0;position:relative}#firefox-promo .container{width:960px;padding-top:40px;padding-bottom:10px;margin:0 auto}#firefox-promo h3{font-size:40px;letter-spacing:-0.05em;margin:-35px 0 0;padding:40px 0 0;width:70%;color:#999;float:left}#firefox-promo h3 b{font-family:'Open Sans','Droid Arabic Naskh',sans-serif;border-right:1px dotted #d6d6d6;color:#484848;font-weight:normal;margin-right:10px;padding-right:20px}#firefox-promo img{float:left;margin:-30px 20px -5px 0}#firefox-promo #firefox-promo-link{margin:0;position:static}#firefox-promo #firefox-promo-link:hover,#firefox-promo #firefox-promo-link:focus,#firefox-promo #firefox-promo-link:active{text-decoration:none}#firefox-promo .download-button{margin-top:-5px;float:right;max-width:40%;padding-bottom:6px}#firefox-promo .download-link{width:280px}#firefox-promo .download-content{padding:15px 20px 15px 65px;background-position:20px 24px}#firefox-promo .download-title{display:none}#firefox-promo .download-subtitle{color:#fff;text-transform:uppercase;font-weight:bold;display:block;font-size:18px;line-height:1.1;letter-spacing:-0.05em;position:static;width:auto;text-align:left}#firefox-promo .download-lang,#firefox-promo .download-platform{font-family:'Open Sans Light','Droid Arabic Naskh',sans-serif;font-weight:normal;color:#360;display:inline;font-size:11px;font-weight:bold;text-shadow:0 1px #9c6}#firefox-promo .download-lang{position:static;text-align:left;width:auto}#firefox-promo .download-platform:before{content:'• '}.html-rtl #firefox-promo h3{float:right}.html-rtl #firefox-promo h3 b{border-right:0;border-left:1px dotted #d6d6d6;margin-right:0;margin-left:10px;padding-right:0;padding-left:20px}.html-rtl #firefox-promo img{float:right;margin:-30px 0 -5px 20px}.html-rtl #firefox-promo .download-button{float:left}.extra-news{float:left;width:540px;margin:0 10px}.extra-news .hfeed{list-style:none;margin:0 0 .5em}.extra-news .hentry{margin:0}.extra-news .entry-title{font-size:20px;line-height:1.2;font-family:'Open Sans','Droid Arabic Naskh',sans-serif}.js .extra-news .hentry{height:6em}.news-buttons{border-right:1px solid #ccc;margin-right:10px}.news-buttons button{background:transparent url(/media/img/home/control-arrows.png) no-repeat;border:0;cursor:pointer;display:inline-block;height:25px;margin:0 10px 0 0;overflow:hidden;padding:0;text-indent:-99em;width:25px}.news-buttons .btn-next{background-position:-30px 0}.news-buttons .btn-prev{background-position:0 0}.news-buttons .disabled{opacity:.5}.news-buttons .disabled:hover,.news-buttons .disabled:focus{opacity:.8}.extra-contribute{float:left;width:540px;margin:0 10px}.extra-contribute p{font-family:'Open Sans Light','Droid Arabic Naskh',sans-serif;font-weight:normal;font-size:20px}.extra-news a:link,.extra-news a:visited,.extra-contribute a:link,.extra-contribute a:visited{color:#fff;text-shadow:0 1px 0 rgba(0,0,0,0.1)}.extra-contribute a{font-weight:bold}.news-buttons button{background-image:url(/media/img/home/control-arrows-lt.png)}
 
-@media only screen and (min-width:760px) and (max-width:1000px){#masthead,.container,.newsletter-form,.mission,.pillars{width:720px}.mission .tagline{font-size:42px}.pillars{background-image:url(/media/img/home/box-shadow-760.png);padding-bottom:32px}.panel-title{font-size:16px;width:152px}.wide .panel-content{font-size:16px;height:280px;width:250px;padding:80px 20px 20px 200px}.wide .panel-content .panel-logo{left:200px;top:30px}.wide .panel-content .go{font-size:16px}.wide .panel-content>a{padding:80px 20px 20px 200px}.extra-news,.extra-contribute{float:left;width:400px;margin:0 10px}.js .extra-news .hentry{height:7.2em}.extra-download{float:left;width:280px;margin:0 10px;float:right}.extra-download .download-button{margin:0 auto}.extra .newsletter-form{float:left;width:280px;margin:0 10px;float:right}#firefox-promo .container{width:720px}#firefox-promo h3{width:60%;font-size:28px}#firefox-promo h3 b{border:0;display:block;font-size:32px;margin:0 0 .15em;padding:0}}
+@media only screen and (min-width:760px) and (max-width:1000px) {#masthead,.container,.newsletter-form,.mission,.pillars{width:720px}.mission .tagline{font-size:42px}.pillars{background-image:url(/media/img/home/box-shadow-760.png);padding-bottom:32px}.panel-title{font-size:16px;width:152px}.wide .panel-content{font-size:16px;height:280px;width:250px;padding:80px 20px 20px 200px}.wide .panel-content .panel-logo{left:200px;top:30px}.wide .panel-content .go{font-size:16px}.wide .panel-content>a{padding:80px 20px 20px 200px}.extra-news,.extra-contribute{float:left;width:400px;margin:0 10px}.js .extra-news .hentry{height:7.2em}.extra-download{float:left;width:280px;margin:0 10px;float:right}.extra-download .download-button{margin:0 auto}.extra .newsletter-form{float:left;width:280px;margin:0 10px;float:right}#firefox-promo .container{width:720px}#firefox-promo h3{width:60%;font-size:28px}#firefox-promo h3 b{border:0;display:block;font-size:32px;margin:0 0 .15em;padding:0}}
 
-@media only screen and (max-width:760px){#masthead,.container,.newsletter-form,.pillars{width:300px}.mission{width:260px;margin:20px auto}.mission{width:260px;margin:20px auto}.mission h1{font-weight:normal;font-size:36px;text-align:left}.mission h1 img{display:block;margin:-0.125em auto 0}.mission .tagline{font-size:30px}.lang-bg .mission .tagline,.lang-it .mission .tagline,.lang-fr .mission .tagline,.lang-de .mission .tagline,.lang-el .mission .tagline,.lang-es-ES .mission .tagline,.lang-es-MX .mission .tagline,.lang-es-CL .mission .tagline,.lang-es-AR .mission .tagline{font-size:24px}.pillars{padding-bottom:13px;background-image:url(/media/img/home/box-shadow-320.png)}.accordion{width:auto;padding:0;position:relative;left:0;overflow:visible;margin:0}.panel{float:none;width:100%;height:4.5em;margin:0;overflow:hidden;position:relative;box-shadow:inset 0 4px 10px -5px rgba(0,0,0,0.75)}.panel:first-child{box-shadow:none}.panel-inner{background:transparent}.panel-title{position:static;width:auto;height:auto;padding:.75em 20px .75em 40%;min-height:3em;text-align:left;font-size:16px}.panel-title:after{content:'\25bc';position:absolute;right:25px;top:35%}.panel-content{font-size:16px;line-height:1.2;width:100%;height:100%}.panel-content>a{padding:20px 20px 20px 40%}.panel-content .panel-logo{position:static;display:block;margin-bottom:10px}.no-js .panel{height:auto;min-height:20em;padding:0}.no-js .panel .panel-content{padding:0}.extra-news,.extra-contribute{width:auto;float:none;margin:0 10px 20px}.js .extra-news .hentry{height:8em}.extra .newsletter-form{width:auto;float:none;margin:0 10px 20px}#firefox-promo .container{width:280px}#firefox-promo h3{float:none;font-size:24px;min-height:100px;padding:15px 0;white-space:normal;width:auto}#firefox-promo h3 img{margin-top:0}#firefox-promo h3 b{border:0;display:block;font-size:30px;margin:10px 0 .15em;padding:0}#firefox-promo .download-button{width:auto;max-width:100%;float:none;display:block;margin:10px}#firefox-promo .download-button .download-link{width:100%}.html-rtl #firefox-promo h3 img{float:right}.html-rtl #firefox-promo h3 b{border:0}}
+@media only screen and (max-width:760px) {#masthead,.container,.newsletter-form,.pillars{width:300px}.mission{width:260px;margin:20px auto}.mission{width:260px;margin:20px auto}.mission h1{font-weight:normal;font-size:36px;text-align:left}.mission h1 img{display:block;margin:-0.125em auto 0}.mission .tagline{font-size:30px}.lang-bg .mission .tagline,.lang-it .mission .tagline,.lang-fr .mission .tagline,.lang-de .mission .tagline,.lang-el .mission .tagline,.lang-es-ES .mission .tagline,.lang-es-MX .mission .tagline,.lang-es-CL .mission .tagline,.lang-es-AR .mission .tagline{font-size:24px}.pillars{padding-bottom:13px;background-image:url(/media/img/home/box-shadow-320.png)}.accordion{width:auto;padding:0;position:relative;left:0;overflow:visible;margin:0}.panel{float:none;width:100%;height:4.5em;margin:0;overflow:hidden;position:relative;box-shadow:inset 0 4px 10px -5px rgba(0,0,0,0.75)}.panel:first-child{box-shadow:none}.panel-inner{background:transparent}.panel-title{position:static;width:auto;height:auto;padding:.75em 20px .75em 40%;min-height:3em;text-align:left;font-size:16px}.panel-title:after{content:'\25bc';position:absolute;right:25px;top:35%}.panel-content{font-size:16px;line-height:1.2;width:100%;height:100%}.panel-content>a{padding:20px 20px 20px 40%}.panel-content .panel-logo{position:static;display:block;margin-bottom:10px}.no-js .panel{height:auto;min-height:20em;padding:0}.no-js .panel .panel-content{padding:0}.extra-news,.extra-contribute{width:auto;float:none;margin:0 10px 20px}.js .extra-news .hentry{height:8em}.extra .newsletter-form{width:auto;float:none;margin:0 10px 20px}#firefox-promo .container{width:280px}#firefox-promo h3{float:none;font-size:24px;min-height:100px;padding:15px 0;white-space:normal;width:auto}#firefox-promo h3 img{margin-top:0}#firefox-promo h3 b{border:0;display:block;font-size:30px;margin:10px 0 .15em;padding:0}#firefox-promo .download-button{width:auto;max-width:100%;float:none;display:block;margin:10px}#firefox-promo .download-button .download-link{width:100%}.html-rtl #firefox-promo h3 img{float:right}.html-rtl #firefox-promo h3 b{border:0}}
 
-@media only screen and (min-width:480px) and (max-width:760px){.pillars{background-image:url(/media/img/home/box-shadow-440.png);padding-bottom:18px}#masthead,.container,.pillars{width:420px}.js .extra-news .hentry{height:7em}}.form-field-error{border-color:#af3232;-webkit-box-shadow:0 0 0 2px rgba(175,50,50,0.4);-moz-box-shadow:0 0 0 2px rgba(175,50,50,0.4);box-shadow:0 0 0 2px rgba(175,50,50,0.4)}.image-replaced{text-indent:110%;white-space:nowrap;overflow:hidden}
+@media only screen and (min-width:480px) and (max-width:760px) {
+    .pillars{
+        background-image:url(/media/img/home/box-shadow-440.png);
+        padding-bottom:18px
+    }
+    #masthead, .container, .pillars { width:420px; }
+        .js .extra-news .hentry { height:7em; }
 
+}
+.form-field-error {
+    border-color:#af3232;
+    -webkit-box-shadow: 0 0 0 2px rgba(175,50,50,0.4);
+    -moz-box-shadow: 0 0 0 2px rgba(175,50,50,0.4);
+    box-shadow:0 0 0 2px rgba(175,50,50,0.4)
+}
+.image-replaced{ text-indent: 110%; white-space: nowrap; overflow: hidden; }
+
+/****************************/
+/* This is the default size */
+/****************************/
 /********************************/
 /* left-most panel, large-size  */
 /* Set background image and default position, then the colour behind it */
@@ -106,257 +165,148 @@
     background:-o-linear-gradient(bottom,rgba(168,31,25,0.8) 50%,rgba(168,31,25,0.8) 65%,rgba(168,31,25,0) 100%);
     background:linear-gradient(bottom,rgba(168,31,25,0.8) 50%,rgba(168,31,25,0.8) 65%,rgba(168,31,25,0) 100%);
 }
-
-
-
-#panel-mozfest{background:#ced3d3 url(/media/img/home/panel/mozfest/logo-mozfest-big.png) -110px -15px no-repeat;background:url(/media/img/home/panel/mozfest/logo-mozfest-big.png) -110px -15px no-repeat,#04364b url(/media/img/home/panel/mozfest/bg-mosaic.jpg)}
-#panel-mozfest .panel-title{color:#04364b;text-shadow:0 1px 0 #fff}
-#panel-mozfest .panel-title i{display:block;color:#cb1b1d}
-#panel-mozfest .panel-content{color:#fff;background:transparent url(/media/img/home/panel/mozfest/bg-content.png?04-11-13) 230px 0 no-repeat}
-#panel-mozfest .panel-content h3{color:#ff3946}
-#panel-mozfest .panel-content .go{color:#21aed9}
-#panel-mozfest.expanded{background-position:-80px -15px;background-position:-80px -15px,0 0}
-#panel-mozfest.compressed{background-position:-170px -15px;background-position:-170px -15px,0 0}.wide
-#panel-mozfest .panel-title{background:#ced3d3;background:rgba(206,211,211,0.8);background:-webkit-linear-gradient(bottom,rgba(206,211,211,0.95) 50%,rgba(206,211,211,0.85) 65%,rgba(206,211,211,0) 100%);background:-moz-linear-gradient(bottom,rgba(206,211,211,0.95) 50%,rgba(206,211,211,0.85) 65%,rgba(206,211,211,0) 100%);background:-o-linear-gradient(bottom,rgba(206,211,211,0.95) 50%,rgba(206,211,211,0.85) 65%,rgba(206,211,211,0) 100%);background:linear-gradient(bottom,rgba(206,211,211,0.95) 50%,rgba(206,211,211,0.85) 65%,rgba(206,211,211,0) 100%)}
-
-#panel-webmaker{background:#e1ebed url(/media/img/home/panel/webmaker/logo-webmaker.png) -95px 15px no-repeat}
-#panel-webmaker .panel-title{color:#c93833}
-#panel-webmaker .panel-content{color:#12ab86}
-#panel-webmaker .panel-content h3{color:#c93833}
-#panel-webmaker .panel-content .go{color:#0090bc}
-#panel-webmaker.expanded{background-position:-40px 15px}
-#panel-webmaker.compressed{background-position:-150px 15px}.wide
-#panel-webmaker .panel-title{background:#e1ebed;background:rgba(225,235,237,0.8);background:-webkit-linear-gradient(bottom,rgba(225,235,237,0.8) 65%,rgba(225,235,237,0) 100%);background:-moz-linear-gradient(bottom,rgba(225,235,237,0.8) 65%,rgba(225,235,237,0) 100%);background:-o-linear-gradient(bottom,rgba(225,235,237,0.8) 65%,rgba(225,235,237,0) 100%);background:linear-gradient(bottom,rgba(225,235,237,0.8) 65%,rgba(225,235,237,0) 100%)}@media(-webkit-min-device-pixel-ratio:1.5),(min-resolution:1.5dppx),(min-resolution:144dpi){
-#panel-framework{background-image:url(logo-lightbeam-hires.png);background-image:url(logo-lightbeam-hires.png),url(/bg-lightbeam.jpg);background-size:340px 340px;background-size:340px 340px,auto auto}
-#panel-fxos{background-image:url(/media/img/home/panel/firefoxos/firefoxos-fox-hires.png);background-size:335px 468px}
-#panel-database{background-image:url(bg-logo-mdn-hires.png);background-image:url(bg-logo-mdn-hires.png),url(/media/img/home/panel/mdn/bg-grid.png);background-size:300px 335px;background-size:300px 335px,auto auto}
-
-#panel-mozfest{background-image:url(/media/img/home/panel/mozfest/logo-mozfest-big-hires.png);background-image:url(/media/img/home/panel/mozfest/logo-mozfest-big-hires.png),url(/media/img/home/panel/mozfest/bg-mosaic.jpg);background-size:360px 360px;background-size:360px 360px,auto auto}}@media only screen and (min-width:760px) and (max-width:1000px){
-#panel-mission{background-position:-80px -50px;background-position:-80px -50px,0 0}
-#panel-mission.expanded,
-#panel-mission.compressed{background-position:-120px -50px;background-position:-120px -50px,0 0}
-
-/*********************************/
-/* Left-most panel, medium-size  */
-#panel-framework { background-position: -110px -90px, 0 0; }
-/* When it's mouse-over */
-#panel-framework.expanded{ background-position: -65px -5px, 0 0; }
-/* When another panel is mouse-over */
-#panel-framework.compressed{ background-position: -130px -90px, 0 0; }
-
-/**********************************/
-/* middle-left panel, medium-size */
-#panel-webapp { background-position: -115px 0px, 0 0; }
-/* When it's mouse-over */
-#panel-webapp.expanded{ background-position: -50px -100px, 0 0; }
-/* When another panel is mouse-over */
-#panel-webapp.compressed{ background-position: -160px 0px, 0 0; }
-
-/***********************************/
-/* middle-right panel, medium-size */
-#panel-database { background-position: -215px -25px, 0 0; }
-/* When it's mouse-over */
-#panel-database.expanded{ background-position: -215px -35px, 0 0; }
-/* When another panel is mouse-over */
-#panel-database.compressed{ background-position: -280px -25px, 0 0; }
-
-/*********************************/
-/* right-most panel, medium-size */
-#panel-research {
-    /* Throughout here, the first of each property is for the foreground (n-gram box), and the
-     * second is for the background (score). */
-    background-size: 258.5px 211px, 500px 358.5px;
-    background-position: 135px -211px, -120px -30px;
-}
-/* Position of the background image in mouse-over */
-#panel-research.expanded {
-    background-size: 258.5px 211px, 500px 358.5px;
-    background-position: 210px 150px, 20px 50px;
-}
-/* When another panel is mouse-over */
-#panel-research.compressed {
-    background-size: 258.5px 211px, 500px 358.5px;
-    background-position: 210px -211px, -80px -30px;
-}
-
-
-#panel-fxos{background-image:url(/media/img/home/panel/firefoxos/firefoxos-fox-md.png?04-11-13);background-position:-115px -70px}
-#panel-fxos.expanded{background-position:-95px -70px}
-#panel-fxos.compressed{background-position:-135px -70px}
-
-#panel-addons{background-image:url(/media/img/home/panel/addons/bg-addons-en-md.png);background-image:url(/media/img/home/panel/addons/bg-addons-en-md.png),url(/media/img/home/panel/addons/bg-addons-puzzle.png);background-position:0 0;background-position:0 0,right bottom}
-#panel-addons .panel-content>a{padding-left:240px}.lang-es-AR
-#panel-addons,.lang-es-CL
-#panel-addons,.lang-es-ES
-#panel-addons,.lang-es-MX
-#panel-addons{background-image:url(/media/img/home/panel/addons/bg-addons-es-md.png);background-image:url(/media/img/home/panel/addons/bg-addons-es-md.png),url(/media/img/home/panel/addons/bg-addons-puzzle.png)}
-/* #panel-research{background-position:-50px 20px;background-position:-50px 20px,0 0} */
-/* #panel-research.expanded{background-position:-110px 20px;background-position:-110px 20px,0 0} */
-/* #panel-research .panel-content{font-size:16px} */
-/* #panel-research .panel-content h3{font-size:20px} */
-/* #panel-research .panel-content label{font-size:16px} */
-/* #panel-research .panel-content .button{font-size:16px} */
-#panel-mozfest .panel-content{background-position:140px 0}
-#panel-webmaker{background-image:url(/media/img/home/panel/webmaker/logo-webmaker-md.png);background-position:-80px 25px}
-#panel-webmaker.expanded{background-position:-100px 25px}
-#panel-webmaker.compressed{background-position:-130px 25px}}@media only screen and (min-width:760px) and (max-width:1000px) and (-webkit-min-device-pixel-ratio:1.5),only screen and (min-width:760px) and (max-width:1000px) and (min-resolution:1.5dppx),only screen and (min-width:760px) and (max-width:1000px) and (min-resolution:144dpi){
-#panel-fxos{background-image:url(/media/img/home/panel/firefoxos/firefoxos-fox-md-hires.png);background-size:290px 390px}
-#panel-framework{background-image:url(logo-lightbeam-md-hires.png);background-image:url(logo-lightbeam-md-hires.png),url(bg-lightbeam.jpg);background-size:275px 275px;background-size:275px 275px,auto auto}}@media only screen and (max-width:760px){
-#panel-mission{background-image:url(/media/img/home/panel/mission/bg-mission-mosaic-sm.png);background-image:url(/media/img/home/panel/mission/bg-mission-mosaic-sm.png),url(/media/img/home/panel/mission/bg-mission-cubes.png);background-position:-122px -45px;background-position:-122px -45px,0 0}
-#panel-mission.expanded{background-position:-122px -20px;background-position:-122px -20px,0 0}
-#panel-framework{background-image:url(logo-lightbeam-sm.png);background-image:url(logo-lightbeam-sm.png),url(bg-lightbeam.jpg);background-position:-50px -50px;background-position:-50px -50px,0 0}
-#panel-framework.expanded{background-position:-50px 20px;background-position:-50px 20px,0 0}
-#panel-framework.compressed{background-position:-50px -65px;background-position:-50px -65px,0 0}
-#panel-fxos{background-image:url(/media/img/home/panel/firefoxos/firefoxos-fox-sm.png?04-11-13);background-position:-85px -95px}
-#panel-fxos.expanded{background-position:-85px -30px}
-#panel-fxos.compressed{background-position:-85px -110px}.accordion
-/* CRA: what's this? */
-/*#panel-webapp{background-image:url(../img/bg-green.png);background-position:-50px -145px}.accordion
-#panel-webapp .angle{background:transparent;margin:0;padding:0;width:auto;height:auto;-webkit-transform:none;-moz-transform:none;-o-transform:none;-ms-transform:none;transform:none}.accordion
-#panel-webapp .angle .content{-webkit-transform:none;-moz-transform:none;-o-transform:none;-ms-transform:none;transform:none}.accordion
-#panel-webapp.expanded{background-position:-50px -60px}.accordion
-#panel-webapp.compressed{background-position:-50px -160px}*/
-/* #panel-database{background-image:url(bg-logo-mdn-sm.png);background-image:url(bg-logo-mdn-sm.png),url(/media/img/home/panel/mdn/bg-grid.png);background-position:-25px -10px} */
-/* #panel-database.expanded{background-position:-25px 25px} */
-/* #panel-database.compressed{background-position:-25px -15px} */
-/* #panel-database .panel-title i{color:inherit} */
-#panel-addons{background-image:url(/media/img/home/panel/addons/bg-addons-en-sm.png);background-image:url(/media/img/home/panel/addons/bg-addons-en-sm.png),url(/media/img/home/panel/addons/bg-addons-puzzle-sm.png);background-position:-20px -30px;background-position:-20px -30px,right bottom}
-#panel-addons.expanded{background-position:-20px 0;background-position:-20px 0,right bottom}
-#panel-addons.compressed{background-position:-20px -40px;background-position:-20px -40px,right bottom}.lang-es-AR
-#panel-addons,.lang-es-CL
-#panel-addons,.lang-es-ES
-#panel-addons,.lang-es-MX
-#panel-addons{background-image:url(/media/img/home/panel/addons/bg-addons-es-sm.png);background-image:url(/media/img/home/panel/addons/bg-addons-es-sm.png),url(/media/img/home/panel/addons/bg-addons-puzzle-sm.png)}
-/* #panel-research{background-image:url(/media/img/home/panel/donate/bg-donate-sm.png);background-image:url(/media/img/home/panel/donate/bg-donate-sm.png),-webkit-linear-gradient(top,rgba(0,0,0,0) 100%,rgba(0,0,0,0.1) 70%,rgba(0,0,0,0.15) 80%,rgba(0,0,0,0.1) 92%,rgba(0,0,0,0) 100%);background-image:url(/media/img/home/panel/donate/bg-donate-sm.png),-moz-linear-gradient(top,rgba(0,0,0,0) 100%,rgba(0,0,0,0.1) 70%,rgba(0,0,0,0.15) 80%,rgba(0,0,0,0.1) 92%,rgba(0,0,0,0) 100%);background-image:url(/media/img/home/panel/donate/bg-donate-sm.png),-o-linear-gradient(top,rgba(0,0,0,0) 100%,rgba(0,0,0,0.1) 70%,rgba(0,0,0,0.15) 80%,rgba(0,0,0,0.1) 92%,rgba(0,0,0,0) 100%);background-image:url(/media/img/home/panel/donate/bg-donate-sm.png),linear-gradient(top,rgba(0,0,0,0) 100%,rgba(0,0,0,0.1) 70%,rgba(0,0,0,0.15) 80%,rgba(0,0,0,0.1) 92%,rgba(0,0,0,0) 100%);background-position:-24px -6px;background-position:-24px -6px,0 0;background-size:136px 114px;background-size:136px 114px,auto auto} */
-/* #panel-research.expanded{background-image:url(/media/img/home/panel/donate/bg-donate-sm.png);background-image:url(/media/img/home/panel/donate/bg-donate-sm.png),-webkit-linear-gradient(top,rgba(0,0,0,0) 0,rgba(0,0,0,0.1) 70%,rgba(0,0,0,0.15) 80%,rgba(0,0,0,0.1) 92%,rgba(0,0,0,0) 100%);background-image:url(/media/img/home/panel/donate/bg-donate-sm.png),-moz-linear-gradient(top,rgba(0,0,0,0) 0,rgba(0,0,0,0.1) 70%,rgba(0,0,0,0.15) 80%,rgba(0,0,0,0.1) 92%,rgba(0,0,0,0) 100%);background-image:url(/media/img/home/panel/donate/bg-donate-sm.png),-o-linear-gradient(top,rgba(0,0,0,0) 0,rgba(0,0,0,0.1) 70%,rgba(0,0,0,0.15) 80%,rgba(0,0,0,0.1) 92%,rgba(0,0,0,0) 100%);background-image:url(/media/img/home/panel/donate/bg-donate-sm.png),linear-gradient(top,rgba(0,0,0,0) 0,rgba(0,0,0,0.1) 70%,rgba(0,0,0,0.15) 80%,rgba(0,0,0,0.1) 92%,rgba(0,0,0,0) 100%);background-position:-24px 10px;background-position:-24px 10px,0 0} */
-/* #panel-research.compressed{background-position:-24px -20px;background-position:-24px -20px,0 0} */
-/* #panel-research .panel-content{padding:20px 20px 20px 40%;height:auto;width:auto;font-size:16px} */
-/* #panel-research .panel-content h3{font-size:16px} */
-/* #panel-research .panel-content legend, */
-/* #panel-research .panel-content label{font-size:14px} */
-/* #panel-research .panel-content .button{font-size:14px;margin-top:12px} */
-#panel-mozfest{background-image:url(/media/img/home/panel/mozfest/logo-mozfest-sm.png);background-image:url(/media/img/home/panel/mozfest/logo-mozfest-sm.png),url(/media/img/home/panel/mozfest/bg-mosaic.jpg);background-position:-60px -35px;background-position:-60px -35px,0 0}
-#panel-mozfest .panel-content{background-position:70px 0}
-#panel-mozfest .panel-title i{color:inherit}
-#panel-mozfest.expanded{background-position:-60px 20px;background-position:-60px 20px,0 0}
-#panel-mozfest.compressed{background-position:-60px -40px;background-position:-60px -40px,0 0}
-#panel-webmaker{background-image:url(/media/img/home/panel/webmaker/logo-webmaker-sm.png);background-position:-50px -40px}
-#panel-webmaker.expanded{background-position:-50px 10px}
-#panel-webmaker.compressed{background-position:-50px -60px}}
-
-@media only screen and (min-width:480px) and (max-width:760px){
-#panel-mission{background-position:-80px -45px;background-position:-80px -45px,0 0}
-#panel-mission.expanded{background-position:-80px -20px;background-position:-80px -20px,0 0}
-
-/**************************/
-/* left-most panel, small */
-#panel-framework { background:url("../img/bg-gray-2.png") -90px -200px no-repeat, #2e3b46; }
-/* When it's mouse-over */
-#panel-framework.expanded{ background-position: -65px -5px, 0 0; }
-/* When another panel's selected */
-#panel-framework.compressed{ background-position: -90px -220px, 0 0; }
-/* CRA: NOTE this is an experiment ................................................................................ */
-#panel-framework .panel-title {
-    background: #424f5a;
-    background: rgba(66,79,90,0.8);
-    background: -webkit-linear-gradient(bottom,rgba(66,79,90,0.95) 10%,rgba(66,79,90,0.8) 40%,rgba(66,79,90,0) 100%);
-    background: -moz-linear-gradient(bottom,rgba(66,79,90,0.95) 10%,rgba(66,79,90,0.8) 40%,rgba(66,79,90,0) 100%);
-    background: -o-linear-gradient(bottom,rgba(66,79,90,0.95) 10%,rgba(66,79,90,0.8) 40%,rgba(66,79,90,0) 100%);
-    background: linear-gradient(bottom,rgba(66,79,90,0.95) 10%,rgba(66,79,90,0.8) 40%,rgba(66,79,90,0) 100%);
 }
 
 /****************************/
-/* middle-left panel, small */
- #panel-webapp { background:url("../img/bg-green-2.png") -110px 0px no-repeat, #159391; }
-/* When it's mouse-over */
-#panel-webapp.expanded{ background-position: -50px -100px, 0 0; }
-/* When another panel's selected */
-#panel-webapp.compressed{ background-position: -110px -15px, 0 0; }
-#panel-webapp .panel-title{
-    background:#159391;
-    background:rgba(21,147,145,0.8);
-    background:-webkit-linear-gradient(bottom,rgba(21,147,145,0.8) 0%,rgba(21,147,145,0.7) 30%,rgba(21,147,145,0) 100%);
-    background:-moz-linear-gradient(bottom,rgba(21,147,145,0.8) 0%,rgba(21,147,145,0.7) 30%,rgba(21,147,145,0) 100%);
-    background:-o-linear-gradient(bottom,rgba(21,147,145,0.8) 0%,rgba(21,147,145,0.7) 30%,rgba(21,147,145,0) 100%);
-    background:linear-gradient(bottom,rgba(21,147,145,0.8) 0%,rgba(21,147,145,0.7) 30%,rgba(21,147,145,0) 100%);
+/* This is the another size */
+/****************************/
+/* @media(-webkit-min-device-pixel-ratio:1.5),(min-resolution:1.5dppx),(min-resolution:144dpi) { } */
+
+/****************************/
+/* This is the another size */
+/****************************/
+@media only screen and (min-width:760px) and (max-width:1000px) {
+    /*********************************/
+    /* Left-most panel, medium-size  */
+    #panel-framework { background-position: -110px -90px, 0 0; }
+    /* When it's mouse-over */
+    #panel-framework.expanded{ background-position: -65px -5px, 0 0; }
+    /* When another panel is mouse-over */
+    #panel-framework.compressed{ background-position: -130px -90px, 0 0; }
+
+    /**********************************/
+    /* middle-left panel, medium-size */
+    #panel-webapp { background-position: -115px 0px, 0 0; }
+    /* When it's mouse-over */
+    #panel-webapp.expanded{ background-position: -50px -100px, 0 0; }
+    /* When another panel is mouse-over */
+    #panel-webapp.compressed{ background-position: -160px 0px, 0 0; }
+
+    /***********************************/
+    /* middle-right panel, medium-size */
+    #panel-database { background-position: -215px -25px, 0 0; }
+    /* When it's mouse-over */
+    #panel-database.expanded{ background-position: -215px -35px, 0 0; }
+    /* When another panel is mouse-over */
+    #panel-database.compressed{ background-position: -280px -25px, 0 0; }
+
+    /*********************************/
+    /* right-most panel, medium-size */
+    #panel-research {
+        /* Throughout here, the first of each property is for the foreground (n-gram box), and the
+        * second is for the background (score). */
+        background-size: 258.5px 211px, 500px 358.5px;
+        background-position: 135px -211px, -120px -30px;
+    }
+    /* Position of the background image in mouse-over */
+    #panel-research.expanded {
+        background-size: 258.5px 211px, 500px 358.5px;
+        background-position: 210px 150px, 20px 50px;
+    }
+    /* When another panel is mouse-over */
+    #panel-research.compressed {
+        background-size: 258.5px 211px, 500px 358.5px;
+        background-position: 210px -211px, -80px -30px;
+    }
 }
 
-/*****************************/
-/* middle-right panel, small */
-#panel-database { background:url("../img/bg-black-2.png") -230px -110px no-repeat, #1c1c1c; }
-/* When it's mouse-over */
-#panel-database.expanded{ background-position: -220px -80px, 0 0; }
-/* When another panel's selected */
-#panel-database.compressed{ background-position: -230px -110px, 0 0; }
-#panel-database .panel-title {
-    background:#000;
-    background:rgba(0,0,0,0.8);
-    background:-webkit-linear-gradient(bottom,rgba(0,0,0,0.8) 0%,rgba(0,0,0,0.5) 10%,rgba(0,0,0,0) 100%);
-    background:-moz-linear-gradient(bottom,rgba(0,0,0,0.8) 0%,rgba(0,0,0,0.5) 10%,rgba(0,0,0,0) 100%);
-    background:-o-linear-gradient(bottom,rgba(0,0,0,0.8) 0%,rgba(0,0,0,0.5) 10%,rgba(0,0,0,0) 100%);
-    background:linear-gradient(bottom,rgba(0,0,0,0.8) 0%,rgba(0,0,0,0.5) 10%,rgba(0,0,0,0) 100%);
+/****************************/
+/* This is the another size */
+/****************************/
+/* @media only screen and (min-width:760px) and (max-width:1000px) and (-webkit-min-device-pixel-ratio:1.5),only screen and (min-width:760px) and (max-width:1000px) and (min-resolution:1.5dppx),only screen and (min-width:760px) and (max-width:1000px) and (min-resolution:144dpi) { } */
+
+/****************************/
+/* This is the another size */
+/****************************/
+/* @media only screen and (max-width:760px) { } */
+
+/************************************/
+/* This is the second-smallest size */
+/************************************/
+@media only screen and (min-width:480px) and (max-width:760px) {
+    /**************************/
+    /* left-most panel, small */
+    #panel-framework { background:url("../img/bg-gray-2.png") -90px -200px no-repeat, #2e3b46; }
+    /* When it's mouse-over */
+    #panel-framework.expanded{ background-position: -65px -5px, 0 0; }
+    /* When another panel's selected */
+    #panel-framework.compressed{ background-position: -90px -220px, 0 0; }
+    #panel-framework .panel-title {
+        background: #424f5a;
+        background: rgba(66,79,90,0.8);
+        background: -webkit-linear-gradient(bottom,rgba(66,79,90,0.95) 10%,rgba(66,79,90,0.8) 40%,rgba(66,79,90,0) 100%);
+        background: -moz-linear-gradient(bottom,rgba(66,79,90,0.95) 10%,rgba(66,79,90,0.8) 40%,rgba(66,79,90,0) 100%);
+        background: -o-linear-gradient(bottom,rgba(66,79,90,0.95) 10%,rgba(66,79,90,0.8) 40%,rgba(66,79,90,0) 100%);
+        background: linear-gradient(bottom,rgba(66,79,90,0.95) 10%,rgba(66,79,90,0.8) 40%,rgba(66,79,90,0) 100%);
+    }
+
+    /****************************/
+    /* middle-left panel, small */
+    #panel-webapp { background:url("../img/bg-green-2.png") -110px 0px no-repeat, #159391; }
+    /* When it's mouse-over */
+    #panel-webapp.expanded{ background-position: -50px -100px, 0 0; }
+    /* When another panel's selected */
+    #panel-webapp.compressed{ background-position: -110px -15px, 0 0; }
+    #panel-webapp .panel-title{
+        background:#159391;
+        background:rgba(21,147,145,0.8);
+        background:-webkit-linear-gradient(bottom,rgba(21,147,145,0.8) 0%,rgba(21,147,145,0.7) 30%,rgba(21,147,145,0) 100%);
+        background:-moz-linear-gradient(bottom,rgba(21,147,145,0.8) 0%,rgba(21,147,145,0.7) 30%,rgba(21,147,145,0) 100%);
+        background:-o-linear-gradient(bottom,rgba(21,147,145,0.8) 0%,rgba(21,147,145,0.7) 30%,rgba(21,147,145,0) 100%);
+        background:linear-gradient(bottom,rgba(21,147,145,0.8) 0%,rgba(21,147,145,0.7) 30%,rgba(21,147,145,0) 100%);
+    }
+
+    /*****************************/
+    /* middle-right panel, small */
+    #panel-database { background:url("../img/bg-black-2.png") -230px -110px no-repeat, #1c1c1c; }
+    /* When it's mouse-over */
+    #panel-database.expanded{ background-position: -220px -80px, 0 0; }
+    /* When another panel's selected */
+    #panel-database.compressed{ background-position: -230px -110px, 0 0; }
+    #panel-database .panel-title {
+        background:#000;
+        background:rgba(0,0,0,0.8);
+        background:-webkit-linear-gradient(bottom,rgba(0,0,0,0.8) 0%,rgba(0,0,0,0.5) 10%,rgba(0,0,0,0) 100%);
+        background:-moz-linear-gradient(bottom,rgba(0,0,0,0.8) 0%,rgba(0,0,0,0.5) 10%,rgba(0,0,0,0) 100%);
+        background:-o-linear-gradient(bottom,rgba(0,0,0,0.8) 0%,rgba(0,0,0,0.5) 10%,rgba(0,0,0,0) 100%);
+        background:linear-gradient(bottom,rgba(0,0,0,0.8) 0%,rgba(0,0,0,0.5) 10%,rgba(0,0,0,0) 100%);
+    }
+
+    /*********************************/
+    /* right-most panel, small */
+    #panel-research {
+        /* Throughout here, the first of each property is for the foreground (n-gram box), and the
+        * second is for the background (score). */
+        background-image: url('../img/bg-red-3-box.png'), url('../img/bg-red-3.png');
+        background-size: 196.45px 160.36px, 380px 272.46px;
+        background-position: 170px -161px, 20px -73px;
+    }
+    /* Position of the background image in mouse-over */
+    #panel-research.expanded {
+        background-size: 196.45px 160.36px, 380px 272.46px;
+        background-position: 170px 101px, 20px 25px;
+    }
+    /* When another panel is mouse-over */
+    #panel-research.compressed {
+        background-size: 196.45px 160.36px, 380px 272.46px;
+        background-position: 170px -161px, 20px -85px;
+    }
+    #panel-research .panel-title {
+        background:#a81f19;
+        background:rgba(168,31,25,0.8);
+        background:-webkit-linear-gradient(bottom,rgba(168,31,25,0.8) 0%,rgba(168,31,25,0.8) 50%,rgba(168,31,25,0) 100%);
+        background:-moz-linear-gradient(bottom,rgba(168,31,25,0.8) 0%,rgba(168,31,25,0.8) 50%,rgba(168,31,25,0) 100%);
+        background:-o-linear-gradient(bottom,rgba(168,31,25,0.8) 0%,rgba(168,31,25,0.8) 50%,rgba(168,31,25,0) 100%);
+        background:linear-gradient(bottom,rgba(168,31,25,0.8) 0%,rgba(168,31,25,0.8) 50%,rgba(168,31,25,0) 100%);
+    }
 }
-
-/*********************************/
-/* right-most panel, small */
-#panel-research {
-    /* Throughout here, the first of each property is for the foreground (n-gram box), and the
-     * second is for the background (score). */
-    background-image: url('../img/bg-red-3-box.png'), url('../img/bg-red-3.png');
-    background-size: 196.45px 160.36px, 380px 272.46px;
-    background-position: 170px -161px, 20px -73px;
-}
-/* Position of the background image in mouse-over */
-#panel-research.expanded {
-    background-size: 196.45px 160.36px, 380px 272.46px;
-    background-position: 170px 101px, 20px 25px;
-}
-/* When another panel is mouse-over */
-#panel-research.compressed {
-    background-size: 196.45px 160.36px, 380px 272.46px;
-    background-position: 170px -161px, 20px -85px;
-}
-#panel-research .panel-title {
-    background:#a81f19;
-    background:rgba(168,31,25,0.8);
-/*     background:-webkit-linear-gradient(bottom,rgba(168,31,25,0.8) 0%,rgba(168,31,25,0.2) 10%,rgba(168,31,25,0) 100%); */
-    background:-moz-linear-gradient(bottom,rgba(168,31,25,0.8) 0%,rgba(168,31,25,0.8) 50%,rgba(168,31,25,0) 100%);
-/*     background:-o-linear-gradient(bottom,rgba(168,31,25,0.8) 0%,rgba(168,31,25,0.5) 10%,rgba(168,31,25,0) 100%); */
-/*     background:linear-gradient(bottom,rgba(168,31,25,0.8) 0%,rgba(168,31,25,0.5) 10%,rgba(168,31,25,0) 100%); */
-}
-
-
-
-
-#panel-fxos{background-position:-40px -95px}
-#panel-fxos.expanded{background-position:-40px -30px}
-#panel-fxos.compressed{background-position:-40px -110px}.accordion
-/* #panel-webapp{background-position:-15px -140px}.accordion */
-/* #panel-webapp.expanded{background-position:-15px -70px}.accordion */
-/* #panel-webapp.compressed{background-position:-15px -160px} */
-/* #panel-database{background-position:10px -20px;background-position:10px -20px,0 0} */
-/* #panel-database.expanded{background-position:10px 25px;background-position:10px 25px,0 0} */
-/* #panel-database.compressed{background-position:10px -25px;background-position:10px -25px,0 0} */
-#panel-addons{background-position:0 -30px;background-position:0 -30px,right bottom}
-#panel-addons.expanded{background-position:0 0;background-position:0 0,right bottom}
-#panel-addons.compressed{background-position:0 -40px;background-position:0 -40px,right bottom}
-/* #panel-research{background-position:0 0;background-position:0 0,0 0} */
-/* #panel-research.expanded{background-position:0 10px;background-position:0 10px,0 0} */
-/* #panel-research.compressed{background-position:0 -20px;background-position:0 -20px,0 0} */
-#panel-mozfest{background-position:-15px -35px;background-position:-15px -35px,0 0}
-#panel-mozfest .panel-content{background-position:110px 0}
-#panel-mozfest .panel-title i{color:inherit}
-#panel-mozfest.expanded{background-position:-15px 20px;background-position:-15px 20px,0 0}
-#panel-mozfest.compressed{background-position:-15px -40px;background-position:-15px -40px,0 0}
-#panel-webmaker{background-position:-15px -40px}
-#panel-webmaker.expanded{background-position:-15px 10px}
-#panel-webmaker.compressed{background-position:-15px -60px}}@media only screen and (max-width:760px) and (-webkit-min-device-pixel-ratio:1.5),only screen and (max-width:760px) and (min-resolution:1.5dppx),only screen and (max-width:760px) and (min-resolution:144dpi){
-#panel-framework{background-image:url(logo-lightbeam-sm-hires.png);background-image:url(logo-lightbeam-sm-hires.png),url(bg-lightbeam.jpg);background-size:158px 158px;background-size:158px 158px,auto auto}
-#panel-fxos{background-image:url(/media/img/home/panel/firefoxos/firefoxos-fox-sm-hires.png);background-size:190px 246px}
-/* #panel-database{background-image:url(bg-logo-mdn-sm-hires.png);background-image:url(bg-logo-mdn-sm-hires.png),url(/media/img/home/panel/mdn/bg-grid.png);background-size:136px 151px;background-size:136px 151px,auto auto} */
-
-/* #panel-research{background-image:url(../img/bg-red.png);background-image:url(../img/bg-red.png),-webkit-linear-gradient(top,rgba(0,0,0,0) 100%,rgba(0,0,0,0.1) 70%,rgba(0,0,0,0.15) 80%,rgba(0,0,0,0.1) 92%,rgba(0,0,0,0) 100%);background-image:url(../img/bg-red.png),-moz-linear-gradient(top,rgba(0,0,0,0) 100%,rgba(0,0,0,0.1) 70%,rgba(0,0,0,0.15) 80%,rgba(0,0,0,0.1) 92%,rgba(0,0,0,0) 100%);background-image:url(../img/bg-red.png),-o-linear-gradient(top,rgba(0,0,0,0) 100%,rgba(0,0,0,0.1) 70%,rgba(0,0,0,0.15) 80%,rgba(0,0,0,0.1) 92%,rgba(0,0,0,0) 100%);background-image:url(../img/bg-red.png),linear-gradient(top,rgba(0,0,0,0) 100%,rgba(0,0,0,0.1) 70%,rgba(0,0,0,0.15) 80%,rgba(0,0,0,0.1) 92%,rgba(0,0,0,0) 100%);background-size:117px 92px;background-size:117px 92px,auto auto} */
-
-/* #panel-research.expanded{background-image:url(../img/bg-red.png);background-image:url(../img/bg-red.png),-webkit-linear-gradient(top,rgba(0,0,0,0) 0,rgba(0,0,0,0.1) 70%,rgba(0,0,0,0.15) 80%,rgba(0,0,0,0.1) 92%,rgba(0,0,0,0) 100%);background-image:url(../img/bg-red.png),-moz-linear-gradient(top,rgba(0,0,0,0) 0,rgba(0,0,0,0.1) 70%,rgba(0,0,0,0.15) 80%,rgba(0,0,0,0.1) 92%,rgba(0,0,0,0) 100%);background-image:url(../img/bg-red.png),-o-linear-gradient(top,rgba(0,0,0,0) 0,rgba(0,0,0,0.1) 70%,rgba(0,0,0,0.15) 80%,rgba(0,0,0,0.1) 92%,rgba(0,0,0,0) 100%);background-image:url(../img/bg-red.png),linear-gradient(top,rgba(0,0,0,0) 0,rgba(0,0,0,0.1) 70%,rgba(0,0,0,0.15) 80%,rgba(0,0,0,0.1) 92%,rgba(0,0,0,0) 100%)} */
-
-#panel-mozfest{background-image:url(/media/img/home/panel/mozfest/logo-mozfest-sm-hires.png);background-image:url(/media/img/home/panel/mozfest/logo-mozfest-sm-hires.png),url(/media/img/home/panel/mozfest/bg-mosaic.jpg);background-size:170px 170px;background-size:170px 170px,auto auto}}
