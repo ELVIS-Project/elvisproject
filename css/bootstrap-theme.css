@@ -170,12 +170,8 @@
 }
 
 .navbar-inverse {
-  background-image: -webkit-gradient(linear, left 0%, left 100%, from(#3c3c3c), to(#222222));
-  background-image: -webkit-linear-gradient(top, #3c3c3c, 0%, #222222, 100%);
-  background-image: -moz-linear-gradient(top, #3c3c3c 0%, #222222 100%);
-  background-image: linear-gradient(to bottom, #3c3c3c 0%, #222222 100%);
-  background-repeat: repeat-x;
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff3c3c3c', endColorstr='#ff222222', GradientType=0);
+  background-image: url("../img/ELVIS_logo_swoosh.png");
+  background-position: right top;
 }
 
 .navbar-inverse .navbar-nav > .active > a {
@@ -184,7 +180,7 @@
 
 .navbar-inverse .navbar-brand,
 .navbar-inverse .navbar-nav > li > a {
-  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+/*   text-shadow: 0 -1px 0 rgba(237, 21, 21, 0.25); */
 }
 
 .navbar-static-top,

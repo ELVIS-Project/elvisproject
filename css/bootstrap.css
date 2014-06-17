@@ -303,8 +303,8 @@ body {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 14px;
   line-height: 1.428571429;
-  color: #333333;
-  background-color: #ffffff;
+  color: #31363b;
+  background-color: #fcfcfc;
 }
 
 input,
@@ -4490,18 +4490,21 @@ textarea.input-group-sm > .input-group-btn > .btn {
 }
 
 .navbar-inverse {
-  background-color: #222222;
-  border-color: #080808;
+  background-color: #eff0f1;
+  border-color: #e1e2e3;
 }
 
 .navbar-inverse .navbar-brand {
-  color: #999999;
+  color: #31363b;
 }
 
 .navbar-inverse .navbar-brand:hover,
 .navbar-inverse .navbar-brand:focus {
-  color: #ffffff;
-  background-color: transparent;
+  background-color: #3daee9;
+  background-image:        -webkit-gradient(linear, left 0%, left 100%, from(#eff0f1), to(#3daee9));
+  background-image: -webkit-linear-gradient(top, #eff0f1 0%, #eff0f1 90%, #3daee9 100%);
+  background-image:    -moz-linear-gradient(top, #eff0f1 0%, #eff0f1 90%, #3daee9 100%);
+  background-image:         linear-gradient(to bottom, #eff0f1 0%, #eff0f1 90%, #3daee9 100%);
 }
 
 .navbar-inverse .navbar-text {
@@ -4509,13 +4512,16 @@ textarea.input-group-sm > .input-group-btn > .btn {
 }
 
 .navbar-inverse .navbar-nav > li > a {
-  color: #999999;
+  color: #31363b;
 }
 
 .navbar-inverse .navbar-nav > li > a:hover,
 .navbar-inverse .navbar-nav > li > a:focus {
-  color: #ffffff;
-  background-color: transparent;
+  background-color: #3daee9;
+  background-image:        -webkit-gradient(linear, left 0%, left 100%, from(#eff0f1), to(#3daee9));
+  background-image: -webkit-linear-gradient(top, #eff0f1 0%, #eff0f1 90%, #3daee9 100%);
+  background-image:    -moz-linear-gradient(top, #eff0f1 0%, #eff0f1 90%, #3daee9 100%);
+  background-image:         linear-gradient(to bottom, #eff0f1 0%, #eff0f1 90%, #3daee9 100%);
 }
 
 .navbar-inverse .navbar-nav > .active > a,
@@ -4923,7 +4929,7 @@ a.list-group-item.active > .badge,
   font-weight: 200;
   line-height: 2.1428571435;
   color: inherit;
-  background-color: #eeeeee;
+  background-color: #fcfcfc;
 }
 
 .jumbotron h1 {

@@ -44,7 +44,45 @@
 .extra h2{font-size:34px;margin:0 0 .75em;color:#fff;text-shadow:0 1px 0 rgba(0,0,0,0.1)}
 .newsletter-form{float:left;width:300px;margin:0 10px;float:right;background:transparent;padding:0;border:0;box-shadow:none}
 
-#footer-email-form h3{font-size:34px;margin:0 0 .75em;color:#fff;text-shadow:0 1px 0 rgba(0,0,0,0.1)}#footer-email-form .form-contents,#footer-email-form .form-submit{width:auto;float:none;margin:0 0 20px}#footer-email-form .field-email input{width:80%;padding:10px 5%;border-radius:.5em}#footer-email-form a:link,#footer-email-form a:visited{color:#fff}#footer-email-form .button{width:90%;padding:10px 5%}#firefox-promo{padding-top:10px;padding-bottom:0;margin:0;position:relative}#firefox-promo .container{width:960px;padding-top:40px;padding-bottom:10px;margin:0 auto}#firefox-promo h3{font-size:40px;letter-spacing:-0.05em;margin:-35px 0 0;padding:40px 0 0;width:70%;color:#999;float:left}#firefox-promo h3 b{font-family:'Open Sans','Droid Arabic Naskh',sans-serif;border-right:1px dotted #d6d6d6;color:#484848;font-weight:normal;margin-right:10px;padding-right:20px}#firefox-promo img{float:left;margin:-30px 20px -5px 0}#firefox-promo #firefox-promo-link{margin:0;position:static}#firefox-promo #firefox-promo-link:hover,#firefox-promo #firefox-promo-link:focus,#firefox-promo #firefox-promo-link:active{text-decoration:none}#firefox-promo .download-button{margin-top:-5px;float:right;max-width:40%;padding-bottom:6px}#firefox-promo .download-link{width:280px}#firefox-promo .download-content{padding:15px 20px 15px 65px;background-position:20px 24px}#firefox-promo .download-title{display:none}#firefox-promo .download-subtitle{color:#fff;text-transform:uppercase;font-weight:bold;display:block;font-size:18px;line-height:1.1;letter-spacing:-0.05em;position:static;width:auto;text-align:left}#firefox-promo .download-lang,#firefox-promo .download-platform{font-family:'Open Sans Light','Droid Arabic Naskh',sans-serif;font-weight:normal;color:#360;display:inline;font-size:11px;font-weight:bold;text-shadow:0 1px #9c6}#firefox-promo .download-lang{position:static;text-align:left;width:auto}#firefox-promo .download-platform:before{content:'• '}.html-rtl #firefox-promo h3{float:right}.html-rtl #firefox-promo h3 b{border-right:0;border-left:1px dotted #d6d6d6;margin-right:0;margin-left:10px;padding-right:0;padding-left:20px}.html-rtl #firefox-promo img{float:right;margin:-30px 0 -5px 20px}.html-rtl #firefox-promo .download-button{float:left}.extra-news{float:left;width:540px;margin:0 10px}.extra-news .hfeed{list-style:none;margin:0 0 .5em}.extra-news .hentry{margin:0}.extra-news .entry-title{font-size:20px;line-height:1.2;font-family:'Open Sans','Droid Arabic Naskh',sans-serif}.js .extra-news .hentry{height:6em}.news-buttons{border-right:1px solid #ccc;margin-right:10px}.news-buttons button{background:transparent url(/media/img/home/control-arrows.png) no-repeat;border:0;cursor:pointer;display:inline-block;height:25px;margin:0 10px 0 0;overflow:hidden;padding:0;text-indent:-99em;width:25px}.news-buttons .btn-next{background-position:-30px 0}.news-buttons .btn-prev{background-position:0 0}.news-buttons .disabled{opacity:.5}.news-buttons .disabled:hover,.news-buttons .disabled:focus{opacity:.8}.extra-contribute{float:left;width:540px;margin:0 10px}.extra-contribute p{font-family:'Open Sans Light','Droid Arabic Naskh',sans-serif;font-weight:normal;font-size:20px}.extra-news a:link,.extra-news a:visited,.extra-contribute a:link,.extra-contribute a:visited{color:#fff;text-shadow:0 1px 0 rgba(0,0,0,0.1)}.extra-contribute a{font-weight:bold}.news-buttons button{background-image:url(/media/img/home/control-arrows-lt.png)}
+#footer-email-form h3{font-size:34px;margin:0 0 .75em;color:#fff;text-shadow:0 1px 0 rgba(0,0,0,0.1)}
+#footer-email-form .form-contents,#footer-email-form .form-submit{width:auto;float:none;margin:0 0 20px}
+#footer-email-form .field-email input{width:80%;padding:10px 5%;border-radius:.5em}
+#footer-email-form a:link,#footer-email-form a:visited{color:#fff}
+#footer-email-form .button{width:90%;padding:10px 5%}
+#firefox-promo{padding-top:10px;padding-bottom:0;margin:0;position:relative}
+#firefox-promo .container{width:960px;padding-top:40px;padding-bottom:10px;margin:0 auto}
+#firefox-promo h3{font-size:40px;letter-spacing:-0.05em;margin:-35px 0 0;padding:40px 0 0;width:70%;color:rgba(49, 54, 59, 0.4);float:left}
+#firefox-promo h3 b{font-family:'Open Sans','Droid Arabic Naskh',sans-serif;border-right:1px dotted #d6d6d6;color:rgba(49, 54, 59, 0.6);font-weight:normal;margin-right:10px;padding-right:20px}
+#firefox-promo img{float:left;margin:-30px 20px -5px 0}
+#firefox-promo #firefox-promo-link{margin:0;position:static}
+#firefox-promo #firefox-promo-link:hover,#firefox-promo #firefox-promo-link:focus,#firefox-promo #firefox-promo-link:active{text-decoration:none}
+#firefox-promo .download-button{margin-top:-5px;float:right;max-width:40%;padding-bottom:6px}
+#firefox-promo .download-link{width:280px}
+#firefox-promo .download-content{padding:15px 20px 15px 65px;background-position:20px 24px}
+#firefox-promo .download-title{display:none}
+#firefox-promo .download-subtitle{color:#fff;text-transform:uppercase;font-weight:bold;display:block;font-size:18px;line-height:1.1;letter-spacing:-0.05em;position:static;width:auto;text-align:left}
+#firefox-promo .download-lang,#firefox-promo .download-platform{font-family:'Open Sans Light','Droid Arabic Naskh',sans-serif;font-weight:normal;color:#360;display:inline;font-size:11px;font-weight:bold;text-shadow:0 1px #9c6}
+#firefox-promo .download-lang{position:static;text-align:left;width:auto}
+#firefox-promo .download-platform:before{content:'• '}
+.html-rtl #firefox-promo h3{float:right}
+.html-rtl #firefox-promo h3 b{border-right:0;border-left:1px dotted #d6d6d6;margin-right:0;margin-left:10px;padding-right:0;padding-left:20px}
+.html-rtl #firefox-promo img{float:right;margin:-30px 0 -5px 20px}
+.html-rtl #firefox-promo .download-button{float:left}
+.extra-news{float:left;width:540px;margin:0 10px}
+.extra-news .hfeed{list-style:none;margin:0 0 .5em}
+.extra-news .hentry{margin:0}
+.extra-news .entry-title{font-size:20px;line-height:1.2;font-family:'Open Sans','Droid Arabic Naskh',sans-serif}
+.js .extra-news .hentry{height:6em}
+.news-buttons{border-right:1px solid #ccc;margin-right:10px}
+.news-buttons button{background:transparent url(/media/img/home/control-arrows.png) no-repeat;border:0;cursor:pointer;display:inline-block;height:25px;margin:0 10px 0 0;overflow:hidden;padding:0;text-indent:-99em;width:25px}
+.news-buttons .btn-next{background-position:-30px 0}
+.news-buttons .btn-prev{background-position:0 0}
+.news-buttons .disabled{opacity:.5}
+.news-buttons .disabled:hover,.news-buttons .disabled:focus{opacity:.8}
+.extra-contribute{float:left;width:540px;margin:0 10px}
+.extra-contribute p{font-family:'Open Sans Light','Droid Arabic Naskh',sans-serif;font-weight:normal;font-size:20px}
+.extra-news a:link,.extra-news a:visited,.extra-contribute a:link,.extra-contribute a:visited{color:#fff;text-shadow:0 1px 0 rgba(0,0,0,0.1)}
+.extra-contribute a{font-weight:bold}.news-buttons button{background-image:url(/media/img/home/control-arrows-lt.png)}
 
 @media only screen and (min-width:760px) and (max-width:1000px) {#masthead,.container,.newsletter-form,.mission,.pillars{width:720px}.mission .tagline{font-size:42px}.pillars{background-image:url(/media/img/home/box-shadow-760.png);padding-bottom:32px}.panel-title{font-size:16px;width:152px}.wide .panel-content{font-size:16px;height:280px;width:250px;padding:80px 20px 20px 200px}.wide .panel-content .panel-logo{left:200px;top:30px}.wide .panel-content .go{font-size:16px}.wide .panel-content>a{padding:80px 20px 20px 200px}.extra-news,.extra-contribute{float:left;width:400px;margin:0 10px}.js .extra-news .hentry{height:7.2em}.extra-download{float:left;width:280px;margin:0 10px;float:right}.extra-download .download-button{margin:0 auto}.extra .newsletter-form{float:left;width:280px;margin:0 10px;float:right}#firefox-promo .container{width:720px}#firefox-promo h3{width:60%;font-size:28px}#firefox-promo h3 b{border:0;display:block;font-size:32px;margin:0 0 .15em;padding:0}}
 
@@ -78,9 +116,9 @@
 #panel-framework.expanded { background-position: -65px -5px, 0 0; }
 /* When another panel is mouse-over */
 #panel-framework.compressed { background-position: -130px -50px, 0 0; }
-#panel-framework .panel-title i{display:block}
-#panel-framework .go{color:#0096dd}
-/* #panel-framework .panel-content h3{color:#0096dd} */
+#panel-framework .panel-title i{display:block; color:#fcfcfc}
+#panel-framework .go{color:#3daee9}
+#panel-framework .panel-content {color:#fcfcfc}
 #panel-framework .panel-title {
     background: #424f5a;
     background: rgba(66,79,90,0.8);
@@ -98,9 +136,9 @@
 #panel-webapp.expanded { background-position: -50px -100px, 0 0; }
 /* When another panel is mouse-over */
 #panel-webapp.compressed { background-position: -163px 0px, 0 0; }
-#panel-webapp .panel-title i{display:block}
-/* #panel-webapp .go{color:#0096dd} */
-/* #panel-webapp .panel-content h3{color:#0096dd} */
+#panel-webapp .panel-title i{display:block; color:#fcfcfc}
+#panel-webapp .go{color:#3daee9}
+#panel-webapp .panel-content h3{color:#fcfcfc}
 #panel-webapp .panel-title{
     background:#159391;
     background:rgba(21,147,145,0.8);
@@ -118,10 +156,10 @@
 #panel-database.expanded { background-position: -220px -10px, 0 0; }
 /* When another panel is mouse-over */
 #panel-database.compressed { background-position: -255px -20px, 0 0; }
-#panel-database .panel-title i{display:block; color:#ff3c3e}
-#panel-database .go{color:#0096dd}
-#panel-database .panel-content{color:#fff}
-/* #panel-database .panel-content h3{color:#0096dd} */
+#panel-database .panel-title i{display:block; color:#fcfcfc}
+#panel-database .go{color:#3daee9}
+#panel-database .panel-content{color:#fcfcfc}
+/* #panel-database .panel-content h3{color:#fcfcfc} */
 #panel-database .panel-title {
     background:#000;
     background:rgba(0,0,0,0.8);
@@ -153,10 +191,9 @@
     background-size: 258.5px 211px, 500px 358.5px;
     background-position: 210px -211px, -80px -30px;
 }
-#panel-research .panel-title i{display:block;}
-#panel-research .go{color:#0096dd}
-#panel-research .panel-content{color:#fff}
-/* #panel-research .panel-content h3{color:#0096dd} */
+#panel-research .panel-title i{display:block; color:#fcfcfc}
+#panel-research .go{color:#3daee9}
+#panel-research .panel-content{color:#fcfcfc}
 #panel-research .panel-title {
     background:#a81f19;
     background:rgba(168,31,25,0.8);
