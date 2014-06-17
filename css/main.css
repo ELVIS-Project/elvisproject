@@ -31,9 +31,9 @@ div.div-outer-wrapper {
     position: relative;
     top: -6px;
 }
-body.new-home { background-color: rgb(248, 237, 223); }
-section.pillars { background-color: rgb(248, 237, 223); }
-main.main-content { background-color: rgb(248, 237, 223); }
+body.new-home { background-color: #fcfcfc; }
+section.pillars { background-color: #fcfcfc; }
+main.main-content { background-color: #fcfcfc; }
 
 /* Settings for the other pages */
 div.jumbotron {
