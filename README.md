@@ -14,7 +14,7 @@ This is how the server configuration file looks (it's `/etc/httpd/conf.d/elvispr
 
         RewriteEngine On
         RewriteRule ^/api$ /api/
-        RewriteRule ^/api/(.*)$ http://vis-framework.readthedocs.org/$1 [R=301,L]
+        RewriteRule ^/api/(.*)$ http://vis-framework.readthedocs.org/en/ [R=301,L]
 
         DocumentRoot /var/www/html/elvisproject
     </VirtualHost>
