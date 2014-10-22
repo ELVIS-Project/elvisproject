@@ -7,17 +7,52 @@ body.new-home { background-color: #fcfcfc; }
 section.pillars { background-color: #fcfcfc; }
 main.main-content { background-color: #fcfcfc; }
 
-/* Settings for the other pages */
+/* Settings for all pages */
 img.jumbotron-logo {
     width: 80%;
     margin-left: auto;
     margin-right: auto;
 }
 
+/* Settings for <body> */
 body {
+    background-color: #fcfcfc;
+    color: #31363b;
+}
+
+/* Settings for the jumbotron */
+.jumbotron {
     background-color: #fcfcfc;
 }
 
-.jumbotron {
-    background-color: #fcfcfc;
+/* Settings for the navbar */
+.navbar {
+    background-color: #eff0f1;
+    background-image: url("/img/ELVIS_logo_swoosh.png");
+    background-position: right top;
+    text-shadow: none;
+    border-color: #e1e2e3;
+    /*color: #31363b;*/  /* You might like to think this @color does something, but no. */
+}
+.navbar .navbar-brand {
+    color: #31363b;
+}
+.navbar .navbar-nav > li > a {
+    color: #31363b;
+}
+.navbar .navbar-brand:focus,
+.navbar .navbar-brand:hover {
+    background-color: #3daee9;
+    background-image:        -webkit-gradient(linear, left 0%, left 100%, from(#eff0f1), to(#3daee9));
+    background-image: -webkit-linear-gradient(top, #eff0f1 0%, #eff0f1 90%, #3daee9 100%);
+    background-image:    -moz-linear-gradient(top, #eff0f1 0%, #eff0f1 90%, #3daee9 100%);
+    background-image:         linear-gradient(to bottom, #eff0f1 0%, #eff0f1 90%, #3daee9 100%);
+}
+.navbar .navbar-nav > li > a:hover,
+.navbar .navbar-nav > li > a:focus {
+    background-color: #3daee9;
+    background-image:        -webkit-gradient(linear, left 0%, left 100%, from(#eff0f1), to(#3daee9));
+    background-image: -webkit-linear-gradient(top, #eff0f1 0%, #eff0f1 90%, #3daee9 100%);
+    background-image:    -moz-linear-gradient(top, #eff0f1 0%, #eff0f1 90%, #3daee9 100%);
+    background-image:         linear-gradient(to bottom, #eff0f1 0%, #eff0f1 90%, #3daee9 100%);
 }
