@@ -2,47 +2,22 @@
    Author's custom styles
    ========================================================================== */
 
-/* footer p {font-size: 80%;} */
-
-/* Settings for the iframe that holds the site's main menu */
-iframe.topmenu {
-    border: 0px;
-    width: 100%;
-    height: 51px;
-    padding: 0px;
-    margin: 0px;
-}
-
-/* Settings for the iframe that holds the site's footer */
-iframe.footer {
-    border: 0px;
-    width: 100%;
-    height: 230px;
-}
-
-/* Settings for the new home page */
-header.mission {
-    /* space on top of the logo */
-    padding: 0px;
-    padding-top: 15px;
-}
-div.div-outer-wrapper {
-    /* (try to) eliminate white space below the menu */
-    position: relative;
-    top: -6px;
-}
+/* For the Mozilla-styled home page */
 body.new-home { background-color: #fcfcfc; }
 section.pillars { background-color: #fcfcfc; }
 main.main-content { background-color: #fcfcfc; }
 
 /* Settings for the other pages */
-div.jumbotron {
-    /* eliminate white space below the menu */
-    position: relative;
-    top: -5px;
-}
 img.jumbotron-logo {
     width: 80%;
     margin-left: auto;
     margin-right: auto;
+}
+
+body {
+    background-color: #fcfcfc;
+}
+
+.jumbotron {
+    background-color: #fcfcfc;
 }
