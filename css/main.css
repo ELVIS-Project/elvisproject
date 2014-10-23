@@ -14,6 +14,58 @@ h2.panel-title { font-family: 'Oxygen'; }
             box-sizing: content-box;
 }
 
+/* For the "ELVIS | Computer Music Analysis" footer */
+section#firefox-promo {
+    border-bottom-color: #ddd;
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
+    padding-top: 10px;
+}
+#firefox-promo .container {
+    padding: 0;
+    padding-top: 40px;
+    padding-bottom: 10px;
+    width: 960px;
+}
+#firefox-promo h3 {
+    color: rgba(49, 54, 59, 0.4);
+    font-size: 40px;
+    margin: 0;
+    letter-spacing: -2px;
+}
+#firefox-promo h3 b {
+    color: rgba(49, 54, 59, 0.6);
+    font-family: 'Linux Libertine';
+    font-weight: 400;
+    padding-right: 20px;
+    border-right-color: #d6d6d6;
+    border-right-style: dotted;
+    border-right-width: 1px;
+    margin-right: 10px;
+}
+footer#colophon {
+    padding: 40px 0;
+}
+footer#colophon div.row {
+    margin: 0 auto;
+    width: 960px;
+}
+#colophon .footer-logo {
+    margin: 0 10px;
+    width: 140px;
+    float: left;
+}
+#colophon .footer-logo img {
+    width: 100%;
+}
+div.footer-license {
+    margin: 0 10px;
+}
+div.footer-license > p {
+    margin-bottom: 10px;
+    font-size: 0.9em;
+}
+
 /* Settings for all pages */
 img.jumbotron-logo {
     width: 80%;
