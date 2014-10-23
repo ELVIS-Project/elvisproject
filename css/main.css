@@ -17,19 +17,27 @@ h2.panel-title { font-family: 'Oxygen'; }
 /* Settings for all pages */
 img.jumbotron-logo {
     width: 80%;
-    margin-left: auto;
-    margin-right: auto;
+    margin: 0 auto;
+    display: block;
 }
 
 /* Settings for <body> */
 body {
     background-color: #fcfcfc;
     color: #31363b;
+    font-family: 'Oxygen';
+}
+
+/* Settings for the <body>'s "container" */
+body > .container {
+    padding: 0 20px;
 }
 
 /* Settings for the jumbotron */
 .jumbotron {
     background-color: #fcfcfc;
+    padding-top: 20px;
+    padding-bottom: 0;
 }
 
 /* Settings for the navbar */
