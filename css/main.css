@@ -131,11 +131,8 @@ body > .container {
     border-color: -moz-use-text-color currentColor;
     border-style: none;
     border-width: 0;
-    -webkit-box-sizing: content-box;
-       -moz-box-sizing: content-box;
-            box-sizing: content-box;
 }
-h2.panel-title {
+section.pillars * {
     -webkit-box-sizing: content-box;
        -moz-box-sizing: content-box;
             box-sizing: content-box;
