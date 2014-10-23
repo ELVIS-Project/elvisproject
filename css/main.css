@@ -6,6 +6,13 @@
 body.new-home { background-color: #fcfcfc; }
 section.pillars { background-color: #fcfcfc; }
 main.main-content { background-color: #fcfcfc; }
+h3 { font-family: 'Oxygen'; }
+h2.panel-title { font-family: 'Oxygen'; }
+.pillars {
+    -webkit-box-sizing: content-box;
+       -moz-box-sizing: content-box;
+            box-sizing: content-box;
+}
 
 /* Settings for all pages */
 img.jumbotron-logo {
@@ -55,4 +62,20 @@ body {
     background-image: -webkit-linear-gradient(top, #eff0f1 0%, #eff0f1 90%, #3daee9 100%);
     background-image:    -moz-linear-gradient(top, #eff0f1 0%, #eff0f1 90%, #3daee9 100%);
     background-image:         linear-gradient(to bottom, #eff0f1 0%, #eff0f1 90%, #3daee9 100%);
+}
+
+/* On the homepage, we need to undo some of the Bootstrap things, to let Mozilla's defaults go */
+.panel {
+    border-radius: 0;
+    border-color: -moz-use-text-color currentColor;
+    border-style: none;
+    border-width: 0;
+    -webkit-box-sizing: content-box;
+       -moz-box-sizing: content-box;
+            box-sizing: content-box;
+}
+h2.panel-title {
+    -webkit-box-sizing: content-box;
+       -moz-box-sizing: content-box;
+            box-sizing: content-box;
 }
