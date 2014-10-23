@@ -103,6 +103,7 @@ body > .container {
 }
 .navbar .navbar-brand {
     color: #31363b;
+    font-family: 'Linux Libertine';
 }
 .navbar .navbar-nav > li > a {
     color: #31363b;
