@@ -16,3 +16,9 @@
   font-weight: 700;
   src: url('/fonts/Oxygen_300_latin.woff') format('woff');
 }
+@font-face {
+    font-family: 'Linux Libertine';
+    font-style: normal;
+    font-weight: 400;
+    src: url('/fonts/LinLibertine_R.woff') format('woff');
+}
