@@ -131,11 +131,11 @@
 /*********************************/
 /* middle-left panel, large-size */
 /* Set background image and default position, then the colour behind it */
-#panel-webapp { background:url(../img/bg-green-2.png) -80px 0px no-repeat, #159391; }
+#panel-webapp { background:url(../img/bg-green-3.png) -88px -5px no-repeat, #159391; }
 /* Position of the background image in mouse-over */
-#panel-webapp.expanded { background-position: -50px -100px, 0 0; }
+#panel-webapp.expanded { background-position: -90px -50px, 0 0; }
 /* When another panel is mouse-over */
-#panel-webapp.compressed { background-position: -163px 0px, 0 0; }
+#panel-webapp.compressed { background-position: -120px 0px, 0 0; }
 #panel-webapp .panel-title i{display:block; color:#fcfcfc}
 #panel-webapp .go{color:#3daee9}
 #panel-webapp .panel-content h3{color:#fcfcfc}
@@ -151,11 +151,11 @@
 /**********************************/
 /* middle-right panel, large-size */
 /* Set background image and default position, then the colour behind it */
-#panel-database { background:url(../img/bg-black-2.png) -200px -20px no-repeat, #1c1c1c; }
+#panel-database { background:url(../img/bg-black-3.png) -75px -75px no-repeat, #37393d; }
 /* Position of the background image in mouse-over */
-#panel-database.expanded { background-position: -220px -10px, 0 0; }
+#panel-database.expanded { background-position: -20px 0px, 0 0; }
 /* When another panel is mouse-over */
-#panel-database.compressed { background-position: -255px -20px, 0 0; }
+#panel-database.compressed { background-position: -75px -75px, 0 0; }
 #panel-database .panel-title i{display:block; color:#fcfcfc}
 #panel-database .go{color:#3daee9}
 #panel-database .panel-content{color:#fcfcfc}
