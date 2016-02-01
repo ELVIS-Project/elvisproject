@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>ELVIS Technical Summary</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <style type="text/css">
+      @import 'Droid_Serif.css';
+      @import 'Yanone_Kaffeesatz.css';
+
+      body {
+        font-family: 'Droid Serif';
+        font-size: 20px;
+      }
+      h1, h2, h3 {
+        font-family: 'Yanone Kaffeesatz';
+        font-weight: 400;
+        margin-bottom: 0;
+      }
+      h1 { font-size: 4em; }
+      h2 { font-size: 2em; }
+      h3 { font-size: 1.6em; }
+      .footnote {
+        position: absolute;
+        bottom: 3em;
+      }
+      li p { line-height: 1.25em; }
+      .red { color: #fa0000; }
+      .orange { color: #ff9933; }
+      .large { font-size: 2em; }
+      a, a > code {
+        color: rgb(249, 38, 114);
+        text-decoration: none;
+      }
+      code {
+        -moz-border-radius: 5px;
+        -web-border-radius: 5px;
+        background: #e7e8e2;
+        border-radius: 5px;
+        font-size: 16px;
+      }
+      .pull-left {
+        float: left;
+        width: 47%;
+      }
+      .pull-right {
+        float: right;
+        width: 47%;
+      }
+      .pull-right ~ p {
+        clear: both;
+      }
+      #slideshow .slide .content code {
+        font-size: 0.8em;
+      }
+      #slideshow .slide .content pre code {
+        font-size: 0.9em;
+        padding: 15px;
+      }
+      .inverse {
+        background: #272822;
+        color: #777872;
+        text-shadow: 0 0 20px #333;
+      }
+      .inverse h1, .inverse h2 {
+        color: #f3f3f3;
+        line-height: 0.8em;
+      }
+
+      /* Slide-specific styling */
+      #slide-inverse .footnote {
+        bottom: 12px;
+        left: 20px;
+      }
+      #slide-how .slides {
+        font-size: 0.9em;
+        position: absolute;
+        top:  151px;
+        right: 140px;
+      }
+      #slide-how .slides h3 {
+        margin-top: 0.2em;
+      }
+      #slide-how .slides .first, #slide-how .slides .second {
+        padding: 1px 20px;
+        height: 90px;
+        width: 120px;
+        -moz-box-shadow: 0 0 10px #777;
+        -webkit-box-shadow: 0 0 10px #777;
+        box-shadow: 0 0 10px #777;
+      }
+      #slide-how .slides .first {
+        background: #fff;
+        position: absolute;
+        top: 20%;
+        left: 20%;
+        z-index: 1;
+      }
+      #slide-how .slides .second {
+        position: relative;
+        background: #fff;
+        z-index: 0;
+      }
+
+      /* Two-column layout */
+      .left-column {
+        color: #777;
+        width: 20%;
+        height: 92%;
+        float: left;
+      }
+        .left-column h2:last-of-type, .left-column h3:last-child {
+          color: #000;
+        }
+      .right-column {
+        width: 75%;
+        float: right;
+        padding-top: 2em;
+      }
+    </style>
+  </head>
+  <body>
+    <textarea id="source">
+
+name: inverse
+layout: true
+class: center, middle, inverse
+
+---
+
+# ELVIS Technical Summary
+We have not quite yet left the building...
+
+---
+
+layout: false
+
+# Agenda
+
+1. Getting Started
+1. Building a Database
+1. Early Programming Efforts
+1. SMT/AMS/SEM 2012
+1. December 2012: First Rewrite
+1. May 2013: the Software Engineering Revolution
+1. Summer 2013: Writing the New Architecture
+1. Fall 2013: Realizing We Have a Framework
+1. Imagination Match: the N-Gram Indexer
+???
+- Each of these agenda items represents a different set of technical goals for ELVIS.
+- I assume you already know the basic trajectory of the project's work.
+- This presentation focusses on the technical goals, and some of our reasons for those goals.
+- I hope to help build an institutional memory, and to share our findings with others.
+
+---
+
+# Getting Started
+
+- Drupal and Postgres
+
+- Started with Palestrina
+
+- Database was a priority
+???
+- When the grant started in January 2012, the first thing we did was start assembling the database website.
+- We chose Drupal and Postgres because we were already familiar with them, meaning we could start a meaningful website as fast as possible.
+- At this stage, many participants thought that our database would be the most important goal the project was guaranteed to accomplish, and therefore the most urgent task.
+- The first pieces uploaded were from Palestrina's masses.
+
+---
+
+# Building a Database
+
+- We have a unique collection of music
+
+- We have well-thought-out &ldquo;best practices&rdquo;
+
+- We have more than 5000 files
+
+- We have Natasha
+???
+- We spent considerable effort compiling Mediaeval and Renaissance polyphonic music from various sources. Through careful curation, we have a unique collection of music.
+- For much of our content, we are the only almost-publicly-accessible source&mdash;other researchers are given access to our database on request.
+- Temporally, there are many holes in our database, like most of the 18th and 19th centuries. However, not only is music for these periods often available from other sources, we also hold these files privately. We simply haven't had the time to upload them yet.
+- For many months in 2012, Cynthia Leive helped guide us in establishing &ldquo;best practices&rdquo; for the database. It was these discussions that gave rise to our entertaining bickering, which remains a highlight of most meetings&mdash;especially when discussing the database website's &ldquo;tag hierarchy.&rdquo;
+- Since about September 2012, we've had a consistent method for uploading. We currently have more than 5000 files. We probably have another 5000 sitting on our computers, waiting to be uploaded.
+- Natasha has single-handedly uploaded 3800 of those pieces. She says it's no big deal, but I've uploaded several hundred myself, so I can say with some confidence that  her effort and attention to detail is very much appreciated in such a repetitive task.
+
+---
+
+# Early Programming Efforts
+
+- I learned Python and music21
+
+- Our first program, _IntSec_ , counted soprano-and-bass intervals
+
+- 26 June 2012: program renamed to _vis_ , used interval n-grams
+
+- August 2012: PyQt desktop interface for great victory
+???
+- At some point, I was thankfully relieved of my piece-uploading duties. I started to learn Python then music21. Since I already knew Ruby and C, I basically wrote what made sense, and fixed whatever didn't work. In retrospect, I wish somebody had told me to pay more attention to PEP8 and &ldquo;Pythonic&rdquo; code (look those up), to finish language tutorials rather than stop as soon as you can do something useful, and to do what I thought was right rather than model on our libraries.
+- Thus, <span class="orange">fair warning</span>: the music21 code ignores many widely-accepted Python conventions. Unless you're contributing directly to music21, I don't recommend you follow the music21 conventions.
+- My first ELVIS program made a list of the highest and lowest notes ina  piece at a moment. There were no n-grams&mdash;it just counted vertical intervals. The program was called _IntSec_, which probably meant &ldquo;Interval Secessions&rdquo; (yes, I know, it should have been _IntSuc_).
+- In June, I made the first commit to the &ldquo;vis&rdquo; repository on GitHub. This was a command-line program that did basically what you expect: found n-grams of vertical intervals in all voice pairs.
+- In July, I added a desktop interface, and an improved one followed in August. The second interface is essentially what we retain in the current desktop application, and it was more or less recreated as-is in the Web App. I chose the PyQt GUI library because there's no way I was going to make a Tk-based application, I didn't and still don't really know what wxWidgets is or who uses it, and I've used KDE for nearly a decade so Qt wins over GTK+ any time.
+- It was around this time that Jamie Klassen joined our development team. For the year he worked with us, Jamie would prove to be a good counter-balance, and I appreciate his contributions for this reason.
+
+---
+
+# SMT/AMS/SEM 2012
+
+- Fun-filled desktop application
+
+- Lots of ELVIS things
+
+- Software was an outgrowth of _IntSec_ :
+    - new features collected
+    - lots of exceptions and work-arounds
+    - finding errors was too difficult
+
+???
+- The presentations at SMT/AMS/SEM 2012 were a major milestone for us. Julie Cumming presented about our project during a panel, the ELVIS researchers presented for our advisory panel outside the conference schedule, and there was some sort of lunch-time workshop event that I don't really remember.
+- By then, our desktop application had acquired many features, including several innovative uses of LilyPond that we've since lost. (It's because nobody's asked for them, and there's always something more urgent than features that only the programmers remember. This is, by the way, a good way to avoid features that are unreasonably difficult in consideration of their scholarly gain&mdash;say it's not the most urgent thing, and people will forget in a month).
+- The software demonstrated at SMT/AMS/SEM had fundamentally the same design as the first interval-counting program I wrote in March of that year (it's tagged as [seven](https://github.com/ELVIS-Project/vis/tree/seven/) in the GitHub repository, if you wish to look).
+- As that single-use program grew additional functionality, we required a lot of logical exceptions and work-arounds, and each component became too complicated for its own good. Errors would pop up and, not only would we not know why, but we wouldn't know in which component we should start looking for the problem.
+
+---
+
+# First Rewrite
+
+.left-column[December 2012]
+.right-column[
+
+- Planned a vastly revised internal architecture, new for _vis_.
+
+- Primary goals:
+    - separate interface from analysis components
+    - modularize analysis components for flexibility, testing, features
+
+- By May 2013, we'd had enough&mdash;but we learned a lot!]
+
+???
+- Thus, considering out position on testing, and after a meeting with Peter, Jamie and I set to work planning a new internal architecture for VIS.
+- The primary goals were to separate the graphical interface from the analysis components, so we could use many interfaces with the same backend, and to modularize the analysis components for increased flexibility, more detailed testing, and additional features.
+- In particular, we wanted to make interval n-grams &ldquo;recoverable,&rdquo; in the sense that we would be able to locate them in the score and find what happens before and after, without having to re-do the entire analysis.
+- In retrospect, we could have come much closer to that goal. Our re-finding algorithm would still have been O(n) (i.e., with running time directly proportional to the length of a score) when we should have been able to do much better.
+- Even so, we only sort of accomplished our other goals, which made an awkward situation in May 2013 when we demonstrated how far we'd come while at the same time we were planning to abandon that program and rewrite it from scratch.
+- Short-lived though it was, the first rewrite was a necessary step in helping us learn about designing software. Basically, we created a back-end architecture that reflected the stages of processing in our user interface, and we made sure there was enough flexibility for what we were being asked to do. Turns out, that's not the way to design an effective program.
+- It's not that our interface and back-end components were too tightly integrated&mdash;we used the PyQt model-view-controller paradigm as well as we could. In fact, I still believe it's wise to pattern/model/design a user interface after the stages of processing, since it helps users understand what they're doing, and that's the whole point of a user interface. The problem was that the back-end should have been data-oriented rather than process-oriented.
+
+
+
+---
+
+# Software Engineering
+
+.left-column[May 2013]
+.right-column[
+
+- In April, we re-planned _vis_ again.
+
+- We wanted enough flexibility for automating all imaginable queries.
+
+- We learned how to do what we wanted, rather than wanted what we knew how to do.]
+
+???
+- Jamie and I had a meeting in April, where we re-planned _vis_ again, laying the foundation for what we have today. It's a significant improvement over our previous attempts, and we've yet to even imagine a limit in its flexbility.
+- Our goal this time was to build a system with enough flexibility for automating all the queries ELVIS members had ever thought of asking. To this end, we developed trial queries (some are simple, most are complicated), then designed a workflow to account accomplish them. We tried to share as many modules as possible, so the back-end would be built with reusable components. The trial queries are available in the [engineering directory](https://github.com/ELVIS-Project/vis/tree/visX/engineering) of our repository, and although you'll notice most of the modules aren't yet implemented, it's just that nobody's done it _yet_, not that it's impossible.
+- The design difference&mdash;the reason we have modular workflows&mdash;is that our analysis data is the focus of the back-end. In early 2013, every new step in the workflow consumed different input and produced different output, so every module must support every other module it _might_ be linked with. In late 2013, our data is always in one of two formats (a music21 Score or a pandas DataFrame), and always managed by a single object (called an IndexedPiece).
+- Strangely, this architecture allows us to be _both_ more object-oriented and more functional. You don't do things to data, you ask an IndexedPiece to run an analyzer on itself and give you the result. Similarly, you don't do things to data, you write an analyzer with a function for an IndexedPiece to apply to itself.
+- We kind of got lucky, but the more I think about it, the more I like it.
+
+---
+
+# Writing the New Architecture
+
+.left-column[Summer 2013]
+.right-column[
+
+- This rewrite took a long time:
+    - we insisted on higher quality (documentation, testing, uncompromising features)
+    - we had to learn new libraries, strategies, and languages
+
+- We've abandoned many features, including multiprocessing and the _VisTrails_ interface.
+
+- But our core functionality is well-tested.]
+
+???
+- Rewriting the program this time took much longer. There are two main reasons for this:
+    - First of all, we insisted on much higher quality for our software, including documentation, testing, and not compromising design goals to meet a deadline.
+    - Secondly, our unwillingness to compromise meant we needed to learn and use a variety of new software libraries, design strategies, and even a new programming language.
+- My hard drive is littered with experimental features that didn't turn out, and have been abandoned.
+- One of these casualties is the [_VisTrails_ interface](http://www.vistrails.org/). We planned to use _VisTrails_ as a workflow-management tool to replace the desktop application. Instead, the Web App has all the functionality of the previous desktop app, and we've yet to allow workflows complicated enough to warrant _VisTrails_, so we've abandoned a desktop-specific application for now.
+- A more problematic loss is multiprocessing. We spent nearly two months trying various multiprocessing implementations, and finally found a workable solution for desktop and server deployments with [Celery](http://celeryproject.org/). Unfortunately, with Jamie's departure from the project, I was unable to implement and test multiprocessing _and_ the back-end's more necessarily functionality.
+- On the plus side, our core functionality is thoroughly tested&mdash;while our program may be slow, we're quite sure of its accuracy. Furthermore, the back-end's modular design means we'll be able to add multiprocessing without much disruption to existing components.
+
+---
+
+# We Have a Framework! Restart Revising Here!
+
+.left-column[Fall 2013]
+.right-column[
+
+- There are three programs: analysis components, desktop interface, Web interface
+
+- The framework is probably our software legacy.
+
+- We did it intentionally, but we weren't confident enough in ourselves to call it what it was.]
+
+???
+- Shortly after abandoning _VisTrails_, I realized we no longer had one program, but three: there's the music analysis components, the desktop interface, and the Web interface.
+- The framework is probably our software legacy; it will probably (hopefully?) be the most-used piece of software we developed. It's not just for analyzing contrapuntal modules: we wrote a program to analyze anything in music.
+- We did it intentionally, too. (See above, May 2013). But it was several months before anybody made the mental leap: these back-end components aren't just for our programs; because they're intentionally abstracted and interface independent, they're more than just back-end components. It's a middleware for music analysis software, and all sorts of people with all sorts of goals can use it to write their own apps for the Web or desktop or neither.
+
+---
+template: inverse
+
+# Imagination Match: the N-Gram Indexer
+???
+- This section is an "imagination match" because I hope it lights your imagination on fire! Terrible pun, I know, but work with me, we're almost done.
+- I just want to illustrate the level of abstraction and flexibility in our "n-gram indexer." At the highest level, this module makes connected chains of "things and things."
+- Here are six examples of the kinds of things it can connect!
+
+---
+
+# Example One
+
+<object data="example1.svg" width="1680" type="image/svg+xml" />
+
+???
+- This is our initial contrapuntal module that started the n-gram craze. We have connected chains of harmonic intervals and the melodic intervals of the lower part.
+
+---
+
+# Example Two
+
+<object data="example2.svg" width="1680" type="image/svg+xml" />
+
+???
+- We've just started using this many-part contrapuntal module for figured-bass analysis. We have the harmonic intervals between the upper parts and the lowest part, connected with the melodic intervals of the lowest part.
+
+---
+
+# Example Three
+
+<object data="example3.svg" width="1680" type="image/svg+xml" />
+
+???
+- Our experimental chord n-grams, with a chain of chord names connected to a chain of the neo-Riemannian transformations from one to the next.
+
+---
+
+# Example Four
+
+<object data="example4.svg" width="1680" type="image/svg+xml" />
+
+???
+- Inspired by David Sears, chains of harmonic intervals connected to chains of their durations. The numbers are a music21 "quarterLength," by the way.
+
+---
+
+# Example Five
+
+<object data="example5.svg" width="1680" type="image/svg+xml" />
+
+???
+- For my own research, chains of harmonic function connected to chains of the scale degrees.
+
+---
+
+# Example Six
+
+<object data="example6.svg" width="1680" type="image/svg+xml" />
+
+???
+- The final example, inspired by Sarig Sela's search for melodic patterns on the music21 mailing list, is chains of melodic intervals connected the note's duration.
+
+---
+
+# The NGramIndexer
+
+- Coordinated pattern analysis of two musical dimensions.
+
+- You provide the dimensions, we coordinate them and find patterns.
+???
+- The NGramIndexer is for coordinated pattern analysis of two musical dimensions. You have to provide moment-by-moment indices of the musical characteristics, we'll coordinate simultaneous events and find the patterns.
+
+---
+template: inverse
+
+# Fin
+???
+Well, thanks for coming. I guess this is it, then.
+
+---
+template: inverse
+
+# Counterpoint Web App Demo
+Follow [this link](http://counterpoint.elvisproject.ca)!
+???
+Oh but wait, there's just one more thing!
+
+    </textarea>
+    <script src="remark-0.5.9.min.js" type="text/javascript">
+    </script>
+    <script type="text/javascript">
+      var slideshow = remark.create();
+    </script>
+  </body>
+</html>

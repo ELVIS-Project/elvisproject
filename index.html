@@ -1,93 +1,146 @@
 <!DOCTYPE html>
-<html class="no-js">
+<html class="linux js loaded" dir="ltr" lang="en-US">
     <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta http-equiv="content-type" content="text/html; charset=UTF-8">
         <title>ELVIS Project</title>
-        <meta name="description" content="">
-        <meta name="viewport" content="width=device-width">
-
-        <link rel="stylesheet" href="css/bootstrap.min.css">
-        <style>
-            body {
-                padding-top: 50px;
-                padding-bottom: 20px;
-            }
-        </style>
-        <link rel="stylesheet" href="css/bootstrap-theme.min.css">
-        <link rel="stylesheet" href="css/main.css">
-
-        <script src="js/vendor/modernizr-2.6.2.min.js"></script>
+        <meta name="description" content="Homepage of the ELVIS Project.">
+        <meta property="og:type" content="website">
+        <meta property="og:site_name" content="ELVIS">
+        <meta property="og:locale" content="en_US">
+        <meta property="og:url" content="http://elvisproject.ca/">
+        <meta property="og:image" content="/img/ELVIS_logo.png">
+        <meta property="og:title" content="ELVIS Project">
+        <meta property="og:description" content="">
+        <link rel="canonical" hreflang="en-US" href="http://elvisproject.ca/">
+        <link rel="shortcut icon" href="/img/favicon.ico">
+        <link rel="stylesheet" href="/css/elvis-fonts.css">
+        <link rel="stylesheet" href="/css/bootstrap.css">
+        <link rel="stylesheet" href="/css/bootstrap-theme.css">
+        <script src="/js/vendor/modernizr-2.6.2.min.js"></script>
+        <!-- only load these two on the homepage -->
+        <link rel="stylesheet" media="screen,projection,tv" href="/new_index_files/responsive-min.css">
+        <link rel="stylesheet" media="screen,projection,tv" href="/new_index_files/home-min.css">
+        <link rel="stylesheet" href="/css/main.css">
+        <!--[if IE 9]>
+        <link rel="stylesheet" media="screen,projection,tv" href="new_index_files/home-ie9-min.css" />
+        <![endif]-->
+        <!--[if IE 8]>
+        <link rel="stylesheet" media="screen,projection,tv" href="new_index_files/home-ie8-min.css" />
+        <![endif]-->
+        <!--[if lt IE 8]>
+        <link rel="stylesheet" media="screen,projection,tv" href="new_index_files/home-ie-min.css" />
+        <![endif]-->
+        <script src="/new_index_files/site-min.js"></script>
     </head>
-    <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
-      <div class="container">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="#">ELVIS Project</a>
-        </div>
-        <div class="navbar-collapse collapse">
-          <ul class="nav navbar-nav">
-            <li class="active"><a href="#">Home</a></li>
-            <li><a href="about.html">About</a></li>
-            <!-- <li><a href="contact.html">Contact</a></li> -->
-          </ul>
-        </div><!--/.navbar-collapse -->
-      </div>
-    </div>
 
-    <!-- Main jumbotron for a primary marketing message or call to action -->
-    <div class="jumbotron">
-      <div class="container">
-        <img src="img/ELVIS_logo.png" width="100%" alt="ELVIS Project logo" />
-        <p>We are an interdisciplinary team that produces free-and-open source software and databases for music research.</p>
-        <p><a class="btn btn-primary btn-lg" href="about.html">Learn more &raquo;</a></p>
-      </div>
-    </div>
+    <!-- was:  <body id="home" class="html-ltr sand lang-en-US wide"> -->
+    <body id="home" class="new-home">
+        <!-- START standard menu -->
+            <div class="navbar navbar-default" role="navigation">
+                <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#elvis-navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="/">ELVIS Project</a>
+                </div>
+                <div class="navbar-collapse collapse" id="elvis-navbar">
+                    <ul class="nav navbar-nav">
+                    <li><a href="/api/">Framework</a></li>
+                    <li><a href="http://counterpoint.elvisproject.ca/">Web App</a></li>
+                    <li><a href="http://database.elvisproject.ca/">Database</a></li>
+                    <li><a href="/about.html">Research</a></li>
+                    </ul>
+                </div><!--/.navbar-collapse -->
+                </div>
+            </div>
+        <!-- END standard menu -->
 
-    <div class="container">
-      <!-- Example row of columns -->
-      <div class="row">
-       <div class="col-lg-4">
-          <h2>Symbolic Music Database</h2>
-          <p>Search and use the ELVIS database of symbolic music.</p>
-          <p><a class="btn btn-default" href="http://elvis.music.mcgill.ca/">Go &raquo;</a></p>
-       </div>
-        <div class="col-lg-4">
-          <h2>Analysis Tools</h2>
-          <p>Our counterpoint web app, desktop version, API, and sonification platform.</p>
-          <p><a class="btn btn-default" href="tools.html">Go &raquo;</a></p>
-        </div>
-        <div class="col-lg-4">
-          <h2>Documentation</h2>
-          <p>Our blog, written documentation, and GitHub source code.</p>
-          <p><a class="btn btn-default" href="docs.html">Go &raquo;</a></p>
-        </div>
-         <!-- <div class="col-lg-4">
-          <h2>Blog</h2>
-          <p>Link to our sibling project's blog, which features many ELVIS-related posts.</p>
-          <p><a class="btn btn-default" href="http://simssa.ca/blog">Go &raquo;</a></p>
-        </div>
-        <div class="col-lg-4">
-          <h2>Source Code</h2>
-          <p>Link to the GitHub page with source code for the software developed by the ELVIS team at McGill University.</p>
-          <p><a class="btn btn-default" href="https://github.com/ELVIS-Project">Go &raquo;</a></p>
-        </div> -->
-      </div>
-      <hr>
+        <div id="outer-wrapper" class="div-outer-wrapper">
+            <main id="main-content" role="main" class="main-content">
+                <header class="mission">
+                    <img src="img/ELVIS_logo_wordmark.png" alt="ELVIS Project Logo" height="200px" />
+                </header>
 
-      <footer>
-        <p>Copyright &copy; 2013 Christopher Antila and Mike Winters, <a href="https://creativecommons.org/licenses/by-sa/3.0/">CC-BY-SA 3.0</a></p>
-      </footer>
-    </div> <!-- /container -->        <script src="js/vendor/jquery-1.10.1.min.js"></script>
-        <!--<script>window.jQuery || document.write('<script src="js/vendor/jquery-1.10.1.min.js"><\/script>')</script>-->
+                <section class="pillars">
+                    <ul class="accordion">
+                        <li style="width: 25%; overflow: hidden;" id="panel-framework" class="panel" tabindex="0">
+                            <h2 style="display: block;" class="panel-title">Music Analysis Framework</h2>
+                            <div class="panel-inner">
+                                <div style="display: none;" class="panel-content">
+                                    <a href="/api/">
+                                        <h3>Build New Analysis Programs</h3>
+                                        <p>Use our music21-based API as the basis for your next music analysis project!</p>
+                                        <p class="go">Get Started Now</p>
+                                    </a>
+                                </div>
+                            </div>
+                        </li>
 
-        <script src="js/vendor/bootstrap.min.js"></script>
+                        <li style="width: 25%; overflow: hidden;" id="panel-webapp" class="panel" tabindex="0">
+                            <h2 style="display: block;" class="panel-title">Counterpoint Web App</h2>
+                            <div class="panel-inner">
+                                <div class="panel-content">
+                                    <a href="http://counterpoint.elvisproject.ca/" hreflang="en-US">
+                                        <div class="angle">
+                                            <div class="content">
+                                                <h3>Find Repeated Patterns</h3>
+                                                <p>Use our one-of-a-kind Web App to find repeated contrapuntal patterns.</p>
+                                                <p class="go">Start the App</p>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                        </li>
 
-        <script src="js/main.js"></script>
+                        <li style="width: 25%; overflow: hidden;" id="panel-database" class="panel" tabindex="0">
+                            <h2 style="display: block;" class="panel-title">Database of Symbolic Music</h2>
+                            <div class="panel-inner">
+                                <div class="panel-content">
+                                    <a href="http://database.elvisproject.ca/">
+                                        <h3>Download What You Need</h3>
+                                        <p>Consult our extensive collection symbolic music.</p>
+                                        <p class="go">Browse the Database</p>
+                                    </a>
+                                </div>
+                            </div>
+                        </li>
+
+                        <li style="width: 25%; overflow: hidden;" id="panel-research" class="panel" tabindex="0">
+                            <h2 style="display: block;" class="panel-title">Research Activities</h2>
+                            <div class="panel-inner">
+                                <div class="panel-content">
+                                    <a href="/about.html">
+                                        <h3>What We Do</h3>
+                                        <p>Learn about our project and the research we produce.</p>
+                                        <p class="go">Find Out More</p>
+                                    </a>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </section>
+            </main>
+        </div><!-- close #outer-wrapper -->
+
+        <!-- START standard visible footer -->
+            <section id="firefox-promo" class="billboard">
+                <div class="container"><h3><b>ELVIS</b> Computer Music Analysis</h3></div>
+            </section>
+            <footer id="colophon" class="">
+                <div class="row">
+                    <div class="footer-logo"><img src="/img/ELVIS_logo_swoosh-footer.png" alt="ELVIS logo swoosh" height="40px" /></div>
+                    <div class="footer-license"><p>Copyright &copy; 2013&ndash;14<br /><a href="/colophon.html">ELVIS Contributors</a></p></div>
+                </div>
+            </footer>
+        <!-- END standard visible footer -->
+
+        <!-- These make the "pillars" thing work -->
+        <script src="/new_index_files/mozorg-resp-min.js"></script>
+        <script src="/new_index_files/home-min.js"></script>
     </body>
 </html>

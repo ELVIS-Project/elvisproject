@@ -2,4 +2,138 @@
    Author's custom styles
    ========================================================================== */
 
-footer p {font-size: 80%;}
+/* For the Mozilla-styled home page */
+body.new-home { background-color: #fcfcfc; }
+section.pillars { background-color: #fcfcfc; }
+main.main-content { background-color: #fcfcfc; }
+h3 { font-family: 'Oxygen'; }
+h2.panel-title { font-family: 'Oxygen'; }
+.pillars {
+    -webkit-box-sizing: content-box;
+       -moz-box-sizing: content-box;
+            box-sizing: content-box;
+}
+
+/* For the "ELVIS | Computer Music Analysis" footer */
+section#firefox-promo {
+    border-bottom-color: #ddd;
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
+    padding-top: 10px;
+}
+#firefox-promo .container {
+    padding: 0;
+    padding-top: 40px;
+    padding-bottom: 10px;
+    width: 960px;
+}
+#firefox-promo h3 {
+    color: rgba(49, 54, 59, 0.4);
+    font-size: 40px;
+    margin: 0;
+    letter-spacing: -2px;
+}
+#firefox-promo h3 b {
+    color: rgba(49, 54, 59, 0.6);
+    font-family: 'Linux Libertine';
+    font-weight: 400;
+    padding-right: 20px;
+    border-right-color: #d6d6d6;
+    border-right-style: dotted;
+    border-right-width: 1px;
+    margin-right: 10px;
+}
+footer#colophon {
+    padding: 40px 0;
+}
+footer#colophon div.row {
+    margin: 0 auto;
+    width: 960px;
+}
+#colophon .footer-logo {
+    margin: 0 10px;
+    width: 140px;
+    float: left;
+}
+#colophon .footer-logo img {
+    width: 100%;
+}
+div.footer-license {
+    margin: 0 10px;
+}
+div.footer-license > p {
+    margin-bottom: 10px;
+    font-size: 0.9em;
+}
+
+/* Settings for all pages */
+img.jumbotron-logo {
+    width: 80%;
+    margin: 0 auto;
+    display: block;
+}
+
+/* Settings for <body> */
+body {
+    background-color: #fcfcfc;
+    color: #31363b;
+    font-family: 'Oxygen';
+}
+
+/* Settings for the <body>'s "container" */
+body > .container {
+    padding: 0 20px;
+}
+
+/* Settings for the jumbotron */
+.jumbotron {
+    background-color: #fcfcfc;
+    padding-top: 20px;
+    padding-bottom: 0;
+}
+
+/* Settings for the navbar */
+.navbar {
+    background-color: #eff0f1;
+    background-image: url("/img/ELVIS_logo_swoosh.png");
+    background-position: right top;
+    text-shadow: none;
+    border-color: #e1e2e3;
+    /*color: #31363b;*/  /* You might like to think this @color does something, but no. */
+}
+.navbar .navbar-brand {
+    color: #31363b;
+    font-family: 'Linux Libertine';
+}
+.navbar .navbar-nav > li > a {
+    color: #31363b;
+}
+.navbar .navbar-brand:focus,
+.navbar .navbar-brand:hover {
+    background-color: #3daee9;
+    background-image:        -webkit-gradient(linear, left 0%, left 100%, from(#eff0f1), to(#3daee9));
+    background-image: -webkit-linear-gradient(top, #eff0f1 0%, #eff0f1 90%, #3daee9 100%);
+    background-image:    -moz-linear-gradient(top, #eff0f1 0%, #eff0f1 90%, #3daee9 100%);
+    background-image:         linear-gradient(to bottom, #eff0f1 0%, #eff0f1 90%, #3daee9 100%);
+}
+.navbar .navbar-nav > li > a:hover,
+.navbar .navbar-nav > li > a:focus {
+    background-color: #3daee9;
+    background-image:        -webkit-gradient(linear, left 0%, left 100%, from(#eff0f1), to(#3daee9));
+    background-image: -webkit-linear-gradient(top, #eff0f1 0%, #eff0f1 90%, #3daee9 100%);
+    background-image:    -moz-linear-gradient(top, #eff0f1 0%, #eff0f1 90%, #3daee9 100%);
+    background-image:         linear-gradient(to bottom, #eff0f1 0%, #eff0f1 90%, #3daee9 100%);
+}
+
+/* On the homepage, we need to undo some of the Bootstrap things, to let Mozilla's defaults go */
+.panel {
+    border-radius: 0;
+    border-color: -moz-use-text-color currentColor;
+    border-style: none;
+    border-width: 0;
+}
+section.pillars * {
+    -webkit-box-sizing: content-box;
+       -moz-box-sizing: content-box;
+            box-sizing: content-box;
+}
