@@ -3,23 +3,27 @@ elvisproject
 
 The elvisproject.ca Website
 
-This is how the server configuration file looks (it's `/etc/httpd/conf.d/elvisproject.conf`)::
+Current virtual server configuration for Nginx::
+```
+server {
+    listen 80;
+    server_name elvisproject.ca;
 
-    <VirtualHost _default_:80>
-        ServerName elvisproject.ca
+    # Index
+    index index.html index.php;
 
-        <Directory /var/www/html/elvisproject>
-                Require all granted
-        </Directory>
+    # Root location
+    root /srv/webapps/elvisproject;
 
-        RewriteEngine On
-        RewriteRule ^/api$ /api/
-        RewriteRule ^/api/(.*)$ http://vis-framework.readthedocs.org/en/ [R=301,L]
+    # Logs
+    access_log /var/log/nginx/access.log;
+    error_log /var/log/nginx/error.log;
 
-        RewriteRule ^/ismir2014$ /ismir2014/
-        RewriteRule ^/ismir2014/(.*)$ /research/ismir2014/($1)
-
-        DocumentRoot /var/www/html/elvisproject
-    </VirtualHost>
-
+    # Rewrites
+    rewrite ^/api$ /api/;
+    rewrite ^/api/(.*)$ http://vis-framework.readthedocs.io;
+    rewrite ^/ismir2014$ /ismir2014/;
+    rewrite ^/ismir2014/(.*)$ /research/ismir2014/($1);
+}
+```
 So that's that!
